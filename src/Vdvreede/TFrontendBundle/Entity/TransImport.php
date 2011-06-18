@@ -67,4 +67,134 @@ class TransImport
     private $account;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set accountId
+     *
+     * @param integer $accountId
+     */
+    public function setAccountId($accountId)
+    {
+        $this->accountId = $accountId;
+    }
+
+    /**
+     * Get accountId
+     *
+     * @return integer $accountId
+     */
+    public function getAccountId()
+    {
+        return $this->accountId;
+    }
+
+    /**
+     * Set descriptionField
+     *
+     * @param integer $descriptionField
+     */
+    public function setDescriptionField($descriptionField)
+    {
+        $this->descriptionField = $descriptionField;
+    }
+
+    /**
+     * Get descriptionField
+     *
+     * @return integer $descriptionField
+     */
+    public function getDescriptionField()
+    {
+        return $this->descriptionField;
+    }
+
+    /**
+     * Set memoField
+     *
+     * @param integer $memoField
+     */
+    public function setMemoField($memoField)
+    {
+        $this->memoField = $memoField;
+    }
+
+    /**
+     * Get memoField
+     *
+     * @return integer $memoField
+     */
+    public function getMemoField()
+    {
+        return $this->memoField;
+    }
+
+    /**
+     * Set dateField
+     *
+     * @param integer $dateField
+     */
+    public function setDateField($dateField)
+    {
+        $this->dateField = $dateField;
+    }
+
+    /**
+     * Get dateField
+     *
+     * @return integer $dateField
+     */
+    public function getDateField()
+    {
+        return $this->dateField;
+    }
+
+    /**
+     * Set amountField
+     *
+     * @param integer $amountField
+     */
+    public function setAmountField($amountField)
+    {
+        $this->amountField = $amountField;
+    }
+
+    /**
+     * Get amountField
+     *
+     * @return integer $amountField
+     */
+    public function getAmountField()
+    {
+        return $this->amountField;
+    }
+
+    /**
+     * Set account
+     *
+     * @param Vdvreede\TFrontendBundle\Entity\Account $account
+     */
+    public function setAccount(\Vdvreede\TFrontendBundle\Entity\Account $account)
+    {
+        $this->account = $account;
+    }
+
+    /**
+     * Get account
+     *
+     * @return Vdvreede\TFrontendBundle\Entity\Account $account
+     */
+    public function getAccount()
+    {
+        return $this->account;
+    }
 }

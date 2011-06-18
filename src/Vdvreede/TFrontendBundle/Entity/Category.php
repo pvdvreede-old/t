@@ -74,4 +74,154 @@ class Category
     private $user;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer $userId
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set description
+     *
+     * @param text $description
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return text $description
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set colour
+     *
+     * @param string $colour
+     */
+    public function setColour($colour)
+    {
+        $this->colour = $colour;
+    }
+
+    /**
+     * Get colour
+     *
+     * @return string $colour
+     */
+    public function getColour()
+    {
+        return $this->colour;
+    }
+
+    /**
+     * Set type
+     *
+     * @param integer $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get type
+     *
+     * @return integer $type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set reportable
+     *
+     * @param boolean $reportable
+     */
+    public function setReportable($reportable)
+    {
+        $this->reportable = $reportable;
+    }
+
+    /**
+     * Get reportable
+     *
+     * @return boolean $reportable
+     */
+    public function getReportable()
+    {
+        return $this->reportable;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Vdvreede\TFrontendBundle\Entity\User $user
+     */
+    public function setUser(\Vdvreede\TFrontendBundle\Entity\User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Vdvreede\TFrontendBundle\Entity\User $user
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

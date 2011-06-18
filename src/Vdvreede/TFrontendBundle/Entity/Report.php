@@ -57,4 +57,114 @@ class Report
     private $graphY;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer $id
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set sql
+     *
+     * @param string $sql
+     */
+    public function setSql($sql)
+    {
+        $this->sql = $sql;
+    }
+
+    /**
+     * Get sql
+     *
+     * @return string $sql
+     */
+    public function getSql()
+    {
+        return $this->sql;
+    }
+
+    /**
+     * Set columns
+     *
+     * @param string $columns
+     */
+    public function setColumns($columns)
+    {
+        $this->columns = $columns;
+    }
+
+    /**
+     * Get columns
+     *
+     * @return string $columns
+     */
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+
+    /**
+     * Set graph
+     *
+     * @param boolean $graph
+     */
+    public function setGraph($graph)
+    {
+        $this->graph = $graph;
+    }
+
+    /**
+     * Get graph
+     *
+     * @return boolean $graph
+     */
+    public function getGraph()
+    {
+        return $this->graph;
+    }
+
+    /**
+     * Set graphX
+     *
+     * @param string $graphX
+     */
+    public function setGraphX($graphX)
+    {
+        $this->graphX = $graphX;
+    }
+
+    /**
+     * Get graphX
+     *
+     * @return string $graphX
+     */
+    public function getGraphX()
+    {
+        return $this->graphX;
+    }
+
+    /**
+     * Set graphY
+     *
+     * @param string $graphY
+     */
+    public function setGraphY($graphY)
+    {
+        $this->graphY = $graphY;
+    }
+
+    /**
+     * Get graphY
+     *
+     * @return string $graphY
+     */
+    public function getGraphY()
+    {
+        return $this->graphY;
+    }
 }
