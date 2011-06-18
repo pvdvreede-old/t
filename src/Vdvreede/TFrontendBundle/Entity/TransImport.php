@@ -2,64 +2,66 @@
 
 namespace Vdvreede\TFrontendBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Vdv\AccountBundle\Entity\TransImport
  *
- * @Table(name="trans_import")
- * @Entity
+ * @ORM\Table(name="trans_import")
+ * @ORM\Entity
  */
 class TransImport
 {
     /**
      * @var integer $id
      *
-     * @Column(name="id", type="integer", nullable=false)
-     * @Id
-     * @GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;    
 
     /**
      * @var integer $accountId
      *
-     * @Column(name="account_id", type="integer", nullable=false)
+     * @ORM\Column(name="account_id", type="integer", nullable=false)
      */
     private $accountId;
 
     /**
      * @var integer $descriptionField
      *
-     * @Column(name="description_field", type="integer", nullable=false)
+     * @ORM\Column(name="description_field", type="integer", nullable=false)
      */
     private $descriptionField;
 
     /**
      * @var integer $memoField
      *
-     * @Column(name="memo_field", type="integer", nullable=true)
+     * @ORM\Column(name="memo_field", type="integer", nullable=true)
      */
     private $memoField;
 
     /**
      * @var integer $dateField
      *
-     * @Column(name="date_field", type="integer", nullable=false)
+     * @ORM\Column(name="date_field", type="integer", nullable=false)
      */
     private $dateField;
 
     /**
      * @var integer $amountField
      *
-     * @Column(name="amount_field", type="integer", nullable=false)
+     * @ORM\Column(name="amount_field", type="integer", nullable=false)
      */
     private $amountField;
 
     /**
      * @var Account
      *
-     * @ManyToOne(targetEntity="Account")
-     * @JoinColumns({
-     *   @JoinColumn(name="account_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Account")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="account_id", referencedColumnName="id")
      * })
      */
     private $account;

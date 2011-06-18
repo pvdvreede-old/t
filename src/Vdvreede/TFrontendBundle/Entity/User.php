@@ -2,34 +2,36 @@
 
 namespace Vdvreede\TFrontendBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
+
 /**
  * Vdv\AccountBundle\Entity\User
  *
- * @Table(name="user")
- * @Entity
+ * @ORM\Table(name="user")
+ * @ORM\Entity
  */
 class User
 {
     /**
      * @var integer $id
      *
-     * @Column(name="id", type="integer", nullable=false)
-     * @Id
-     * @GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string $email
      *
-     * @Column(name="email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
 
     /**
      * @var string $openId
      *
-     * @Column(name="open_id", type="string", length=255, nullable=false)
+     * @ORM\Column(name="open_id", type="string", length=255, nullable=false)
      */
     private $openId;
 
