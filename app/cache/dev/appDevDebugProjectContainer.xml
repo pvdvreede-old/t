@@ -277,9 +277,9 @@
     <parameter key="doctrine.class">Symfony\Bundle\DoctrineBundle\Registry</parameter>
     <parameter key="doctrine.dbal.connection_factory.types" type="collection"/>
     <parameter key="doctrine.connections" type="collection">
-      <parameter key="default">doctrine.dbal.default_connection</parameter>
+      <parameter key="main">doctrine.dbal.main_connection</parameter>
     </parameter>
-    <parameter key="doctrine.default_connection">default</parameter>
+    <parameter key="doctrine.default_connection">main</parameter>
     <parameter key="doctrine.orm.configuration.class">Doctrine\ORM\Configuration</parameter>
     <parameter key="doctrine.orm.entity_manager.class">Doctrine\ORM\EntityManager</parameter>
     <parameter key="doctrine.orm.cache.array.class">Doctrine\Common\Cache\ArrayCache</parameter>
@@ -1616,21 +1616,21 @@
     <service id="doctrine" class="Symfony\Bundle\DoctrineBundle\Registry">
       <argument type="service" id="service_container"/>
       <argument type="collection">
-        <argument key="default">doctrine.dbal.default_connection</argument>
+        <argument key="main">doctrine.dbal.main_connection</argument>
       </argument>
       <argument type="collection">
         <argument key="default">doctrine.orm.default_entity_manager</argument>
       </argument>
-      <argument>default</argument>
+      <argument>main</argument>
       <argument>default</argument>
     </service>
-    <service id="doctrine.dbal.default_connection" class="Doctrine\DBAL\Connection" factory-method="createConnection" factory-service="doctrine.dbal.connection_factory">
+    <service id="doctrine.dbal.main_connection" class="Doctrine\DBAL\Connection" factory-method="createConnection" factory-service="doctrine.dbal.connection_factory">
       <argument type="collection">
-        <argument key="dbname">symfony</argument>
+        <argument key="driver">pdo_mysql</argument>
+        <argument key="dbname">t_dev</argument>
         <argument key="host">localhost</argument>
         <argument key="user">root</argument>
-        <argument key="password"></argument>
-        <argument key="driver">pdo_mysql</argument>
+        <argument key="password">null</argument>
         <argument key="port">null</argument>
         <argument key="driverOptions" type="collection"/>
       </argument>
@@ -1646,7 +1646,7 @@
           <call method="addEventSubscriber">
             <argument type="service">
               <service class="Doctrine\DBAL\Event\Listeners\MysqlSessionInit" public="false">
-                <tag name="doctrine.event_subscriber" connection="default"/>
+                <tag name="doctrine.event_subscriber" connection="main"/>
                 <argument>UTF8</argument>
               </service>
             </argument>
@@ -1667,7 +1667,7 @@
       <argument type="service" id="doctrine"/>
     </service>
     <service id="doctrine.orm.default_entity_manager" class="Doctrine\ORM\EntityManager" factory-method="create">
-      <argument type="service" id="doctrine.dbal.default_connection"/>
+      <argument type="service" id="doctrine.dbal.main_connection"/>
       <argument type="service">
         <service class="Doctrine\ORM\Configuration" public="false">
           <call method="setEntityNamespaces">
@@ -2413,7 +2413,7 @@
       <argument type="service" id="swiftmailer.transport"/>
     </service>
     <service id="debug.event_dispatcher" alias="event_dispatcher"/>
-    <service id="database_connection" alias="doctrine.dbal.default_connection"/>
+    <service id="database_connection" alias="doctrine.dbal.main_connection"/>
     <service id="doctrine.orm.entity_manager" alias="doctrine.orm.default_entity_manager"/>
   </services>
 </container>

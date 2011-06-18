@@ -180,7 +180,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getDoctrineService()
     {
-        return $this->services['doctrine'] = new \Symfony\Bundle\DoctrineBundle\Registry($this, array('default' => 'doctrine.dbal.default_connection'), array('default' => 'doctrine.orm.default_entity_manager'), 'default', 'default');
+        return $this->services['doctrine'] = new \Symfony\Bundle\DoctrineBundle\Registry($this, array('main' => 'doctrine.dbal.main_connection'), array('default' => 'doctrine.orm.default_entity_manager'), 'main', 'default');
     }
 
     /**
@@ -197,14 +197,14 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
-     * Gets the 'doctrine.dbal.default_connection' service.
+     * Gets the 'doctrine.dbal.main_connection' service.
      *
      * This service is shared.
      * This method always returns the same instance of the service.
      *
      * @return Doctrine\DBAL\Connection A Doctrine\DBAL\Connection instance.
      */
-    protected function getDoctrine_Dbal_DefaultConnectionService()
+    protected function getDoctrine_Dbal_MainConnectionService()
     {
         $a = new \Doctrine\DBAL\Configuration();
         $a->setSQLLogger($this->get('doctrine.dbal.logger'));
@@ -212,7 +212,7 @@ class appDevDebugProjectContainer extends Container
         $b = new \Doctrine\Common\EventManager();
         $b->addEventSubscriber(new \Doctrine\DBAL\Event\Listeners\MysqlSessionInit('UTF8'));
 
-        return $this->services['doctrine.dbal.default_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('dbname' => 'symfony', 'host' => 'localhost', 'user' => 'root', 'password' => '', 'driver' => 'pdo_mysql', 'port' => NULL, 'driverOptions' => array()), $a, $b);
+        return $this->services['doctrine.dbal.main_connection'] = $this->get('doctrine.dbal.connection_factory')->createConnection(array('driver' => 'pdo_mysql', 'dbname' => 't_dev', 'host' => 'localhost', 'user' => 'root', 'password' => NULL, 'port' => NULL, 'driverOptions' => array()), $a, $b);
     }
 
     /**
@@ -248,7 +248,7 @@ class appDevDebugProjectContainer extends Container
         $e->setAutoGenerateProxyClasses(true);
         $e->setClassMetadataFactoryName('Doctrine\\ORM\\Mapping\\ClassMetadataFactory');
 
-        return $this->services['doctrine.orm.default_entity_manager'] = call_user_func(array('Doctrine\\ORM\\EntityManager', 'create'), $this->get('doctrine.dbal.default_connection'), $e);
+        return $this->services['doctrine.orm.default_entity_manager'] = call_user_func(array('Doctrine\\ORM\\EntityManager', 'create'), $this->get('doctrine.dbal.main_connection'), $e);
     }
 
     /**
@@ -1820,11 +1820,11 @@ class appDevDebugProjectContainer extends Container
     /**
      * Gets the database_connection service alias.
      *
-     * @return Doctrine\DBAL\Connection An instance of the doctrine.dbal.default_connection service
+     * @return Doctrine\DBAL\Connection An instance of the doctrine.dbal.main_connection service
      */
     protected function getDatabaseConnectionService()
     {
-        return $this->get('doctrine.dbal.default_connection');
+        return $this->get('doctrine.dbal.main_connection');
     }
 
     /**
@@ -2379,9 +2379,9 @@ class appDevDebugProjectContainer extends Container
 
             ),
             'doctrine.connections' => array(
-                'default' => 'doctrine.dbal.default_connection',
+                'main' => 'doctrine.dbal.main_connection',
             ),
-            'doctrine.default_connection' => 'default',
+            'doctrine.default_connection' => 'main',
             'doctrine.orm.configuration.class' => 'Doctrine\\ORM\\Configuration',
             'doctrine.orm.entity_manager.class' => 'Doctrine\\ORM\\EntityManager',
             'doctrine.orm.cache.array.class' => 'Doctrine\\Common\\Cache\\ArrayCache',
