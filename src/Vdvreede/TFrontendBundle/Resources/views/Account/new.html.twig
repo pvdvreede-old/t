@@ -1,15 +1,9 @@
+{% extends '::base.html.twig' %}
+
 {% block body %}
 
-<form action="{{ path('account_new') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_errors(form) }}
+<h3>New account</h3>
 
-    {{ form_row(form.name) }}
-    {{ form_row(form.description) }}
-    {{ form_row(form.type) }}
-
-    {{ form_rest(form) }}
-
-    <input type="submit" />
-</form>
+{% include 'VdvreedeTFrontendBundle:Account:form.html.twig' with {'form': form} %}
 
 {% endblock %}

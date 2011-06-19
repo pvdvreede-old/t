@@ -94,7 +94,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface {
     }
     
     public function getRoles() {
-        return array();
+        return array('ROLE_ADMIN');
     }
     
     public function getSalt() {
