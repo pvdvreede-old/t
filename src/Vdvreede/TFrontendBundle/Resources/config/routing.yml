@@ -9,3 +9,15 @@ account_edit:
 account_list:
   pattern: /account
   defaults: { _controller: VdvreedeTFrontendBundle:Account:index }
+  
+category_new:
+  pattern: /category/new
+  defaults: { _controller: VdvreedeTFrontendBundle:Category:new }
+  
+category_edit:
+  pattern: /category/edit/{categoryId}
+  defaults: { _controller: VdvreedeTFrontendBundle:Category:edit }
+  
+category_list:
+  pattern: /category
+  defaults: { _controller: VdvreedeTFrontendBundle:Category:index }

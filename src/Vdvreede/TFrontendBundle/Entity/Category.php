@@ -8,10 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
  * Vdv\AccountBundle\Entity\Category
  *
  * @ORM\Table(name="category")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vdvreede\TFrontendBundle\Repository\CategoryRepository")
  */
 class Category
 {
+    
+    public static $INCOME = 0;
+    public static $EXPENSE = 1;
+    
+    
     /**
      * @var integer $id
      *
@@ -178,11 +183,18 @@ class Category
     /**
      * Get type
      *
-     * @return integer $type
+     * @return string $type
      */
     public function getType()
     {
-        return $this->type;
+        switch($this->type) {
+            case self::$INCOME:
+                return 'Income';
+                break;
+            case self::$EXPENSE:
+                return 'Expense';
+                break;
+        }
     }
 
     /**

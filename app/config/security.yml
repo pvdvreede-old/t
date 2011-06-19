@@ -30,6 +30,11 @@ security:
           pattern: ^/account
           http_basic:
             realm: "Test security"
+            
+        accounts:
+          pattern: ^/category
+          http_basic:
+            realm: "Test security"
         
         secured_area:
             pattern:    ^/demo/secured/

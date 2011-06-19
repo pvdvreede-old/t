@@ -1,0 +1,9 @@
+{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
+
+{% block title%}Categories{% endblock %}
+
+{% block content %}
+
+{% include 'VdvreedeTFrontendBundle:Category:list.html.twig' with {'list': list} %}
+
+{% endblock %}
