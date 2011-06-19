@@ -8,23 +8,36 @@ class AccountController extends Controller
 {
     public function indexAction()
     {
+        $em = $this->getDoctrine()->getEntityManager();
+        $currentUser = $this->getCurrentUser();
         
+        $accounts = $em->getRepository('VdvreedeTFrontendBundle:Account')->findAllByUser($currentUser->getId());
         
-        
-        return $this->render('VdvreedeTFrontendBundle:Default:index.html.twig');
+        return $this->render('VdvreedeTFrontendBundle:Account:index.html.twig', array(
+            'list' => $accounts
+        ));
     }
     
     public function newAction()
     {
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->getCurrentUser();
         
         return $this->processAccount(new \Vdvreede\TFrontendBundle\Entity\Account, $currentUser, 'VdvreedeTFrontendBundle:Account:new.html.twig');                        
+    }
+    
+    public function viewAction($itemId) {
+        
+        $em = $this->getDoctrine()->getEntityManager();
+        $currentUser = $this->getCurrentUser();
+        
+        $account = $em->getRepository('VdvreedeTFrontendBundle:Account')->findOneByIdAndUser($accountId, $currentUser->getId());
+        
     }
     
     public function editAction($accountId) {
         
         $em = $this->getDoctrine()->getEntityManager();
-        $currentUser = $this->get('security.context')->getToken()->getUser();
+        $currentUser = $this->getCurrentUser();
         
         $account = $em->getRepository('VdvreedeTFrontendBundle:Account')->findOneByIdAndUser($accountId, $currentUser->getId());    
 
@@ -57,5 +70,9 @@ class AccountController extends Controller
             'form' => $form->createView(),
             'account' => $account
         ));
+    }
+    
+    private function getCurrentUser() {
+        return $this->get('security.context')->getToken()->getUser();
     }
 }

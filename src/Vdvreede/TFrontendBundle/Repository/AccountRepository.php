@@ -23,4 +23,15 @@ class AccountRepository extends EntityRepository
         
     }
     
+    public function findAllByUser($userId) {
+        
+        $query = $this->createQueryBuilder('a')
+                ->where('a.userId = :userId')
+                ->setParameter('userId', $userId)
+                ->getQuery()->execute();
+        
+        return $query;
+        
+    }
+    
 }

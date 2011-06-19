@@ -5,3 +5,7 @@ account_new:
 account_edit:
   pattern: /account/edit/{accountId}
   defaults: { _controller: VdvreedeTFrontendBundle:Account:edit }
+  
+account_list:
+  pattern: /account
+  defaults: { _controller: VdvreedeTFrontendBundle:Account:index }

@@ -149,11 +149,20 @@ class Account
     /**
      * Get type
      *
-     * @return integer $type
+     * @return string $type
      */
     public function getType()
     {
-        return $this->type;
+        switch($this->type) {
+            
+            case Account::$SAVINGS:
+                return 'Savings';
+                break;
+            case Account::$TRANSACTION:
+                return 'Transaction';
+                break;
+        }
+
     }
 
     /**
