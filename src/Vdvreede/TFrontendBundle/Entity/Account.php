@@ -12,6 +12,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Account
 {
+    
+    public static $SAVINGS = 1;
+    public static $TRANSACTION = 2;
+    
+    
     /**
      * @var integer $id
      *
