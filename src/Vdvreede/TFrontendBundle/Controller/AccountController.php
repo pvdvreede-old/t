@@ -27,7 +27,7 @@ class AccountController extends Controller
             
             if ($form->isValid()) {
                 
-                $account->setUserId();
+                $account->setUser($this->get('security.context')->getToken()->getUser());
                 
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($account);

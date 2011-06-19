@@ -18,16 +18,16 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface {
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    
+     */   
     private $id;
+    
     /**
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
-     */
-    
+     */   
     private $email;
+    
     /**
      * @var string $openId
      *
@@ -80,7 +80,7 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface {
         return $this->openId;
     }
 
-    public function equals() {
+    public function equals(\Symfony\Component\Security\Core\User\UserInterface $user) {
         return true;
     }
     
@@ -94,11 +94,11 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface {
     }
     
     public function getRoles() {
-        return null;
+        return array();
     }
     
     public function getSalt() {
-        return '.';
+        return '';
     }
     
     public function getUsername() {

@@ -7,11 +7,12 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        in_memory:
-            users:
-                user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-
+      main:
+        entity: { class: Vdvreede\TFrontendBundle\Entity\User, property: email }
+        
+    encoders:
+        Vdvreede\TFrontendBundle\Entity\User: plaintext
+        
     firewalls:
         profiler:
             pattern:  ^/_profiler
@@ -24,7 +25,12 @@ security:
         login:
             pattern:  ^/demo/secured/login$
             security: false
-
+        
+        accounts:
+          pattern: ^/account
+          http_basic:
+            realm: "Test security"
+        
         secured_area:
             pattern:    ^/demo/secured/
             form_login:
