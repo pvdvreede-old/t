@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity
  */
-class User
-{
+class User implements \Symfony\Component\Security\Core\User\UserInterface {
+
     /**
      * @var integer $id
      *
@@ -19,15 +19,15 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    
     private $id;
-
     /**
      * @var string $email
      *
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
+    
     private $email;
-
     /**
      * @var string $openId
      *
@@ -35,15 +35,12 @@ class User
      */
     private $openId;
 
-
-
     /**
      * Get id
      *
      * @return integer $id
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -52,8 +49,7 @@ class User
      *
      * @param string $email
      */
-    public function setEmail($email)
-    {
+    public function setEmail($email) {
         $this->email = $email;
     }
 
@@ -62,8 +58,7 @@ class User
      *
      * @return string $email
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return $this->email;
     }
 
@@ -72,8 +67,7 @@ class User
      *
      * @param string $openId
      */
-    public function setOpenId($openId)
-    {
+    public function setOpenId($openId) {
         $this->openId = $openId;
     }
 
@@ -82,8 +76,34 @@ class User
      *
      * @return string $openId
      */
-    public function getOpenId()
-    {
+    public function getOpenId() {
         return $this->openId;
     }
+
+    public function equals() {
+        return true;
+    }
+    
+    public function eraseCredentials()
+    {
+    
+    }
+    
+    public function getPassword() {
+        return 'test';
+    }
+    
+    public function getRoles() {
+        return null;
+    }
+    
+    public function getSalt() {
+        return '.';
+    }
+    
+    public function getUsername() {
+        return $this->getEmail();
+    }
+    
+
 }
