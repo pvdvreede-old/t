@@ -1,3 +1,5 @@
+{% block body %}
+
 <form action="{{ path('account_new') }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
 
@@ -9,3 +11,5 @@
 
     <input type="submit" />
 </form>
+
+{% endblock %}

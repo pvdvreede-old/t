@@ -26,6 +26,9 @@ class AccountController extends Controller
             $form->bindRequest($request);
             
             if ($form->isValid()) {
+                
+                $account->setUserId();
+                
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($account);
                 $em->flush();

@@ -14,8 +14,8 @@ class AccountType extends AbstractType
         $builder->add('description', 'textarea');
         $builder->add('type', 'choice', array(
             'choices' => array(
-                Account::$SAVINGS => 'Savings',
-                Account::$TRANSACTION => 'Transaction'
+                Entity\Account::$SAVINGS => 'Savings',
+                Entity\Account::$TRANSACTION => 'Transaction'
                 ),
             'required' => true
         ));
