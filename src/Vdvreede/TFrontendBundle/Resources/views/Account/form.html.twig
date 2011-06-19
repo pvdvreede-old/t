@@ -1,5 +1,5 @@
 
-<form action="{{ path('account_new') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ action_url }}" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
 
     {{ form_row(form.name) }}

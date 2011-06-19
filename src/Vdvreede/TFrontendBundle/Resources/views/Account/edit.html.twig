@@ -1,0 +1,9 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<h3>Edit account</h3>
+
+{% include 'VdvreedeTFrontendBundle:Account:form.html.twig' with {'form': form, 'action_url' : path('account_edit', { 'accountId' : account.id } ) } %}
+
+{% endblock %}
