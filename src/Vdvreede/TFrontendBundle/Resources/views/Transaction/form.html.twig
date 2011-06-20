@@ -1,0 +1,15 @@
+
+<form action="{{ action_url }}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}
+
+    {{ form_row(form.memo) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.amount) }}
+    {{ form_row(form.account) }}
+
+    {{ form_rest(form) }}
+
+    <input type="submit" />
+</form>
+

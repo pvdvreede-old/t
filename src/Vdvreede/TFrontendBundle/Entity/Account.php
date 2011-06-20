@@ -16,7 +16,6 @@ class Account
     public static $SAVINGS = 1;
     public static $TRANSACTION = 2;
     
-    
     /**
      * @var integer $id
      *
@@ -64,7 +63,14 @@ class Account
      */
     private $user;
 
-
+    /**
+     * Returns the account name.
+     * 
+     * @return string
+     */
+    public function __toString() {
+        return $this->name;
+    }
 
     /**
      * Get id

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Vdv\AccountBundle\Entity\Transaction
  *
  * @ORM\Table(name="transaction")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vdvreede\TFrontendBundle\Repository\TransactionRepository")
  */
 class Transaction
 {
@@ -17,16 +17,14 @@ class Transaction
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
     /**
      * @var integer $categoryId
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\Column(name="category_id", type="integer", nullable=true)
      */
     private $categoryId;
 
@@ -34,8 +32,6 @@ class Transaction
      * @var integer $userId
      *
      * @ORM\Column(name="user_id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $userId;
 
@@ -43,8 +39,6 @@ class Transaction
      * @var integer $accountId
      *
      * @ORM\Column(name="account_id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $accountId;
 
