@@ -19,7 +19,10 @@ class ImportFileType extends AbstractType
                           ->andWhere('accountId = :accountId')
                           ->setParameter('userId', 1)
                           ->setParameter('accountId', 1);
-             }
+             },
+             'multiple' => false,
+             'required' => false,
+             'label' => 'Import type to use'
         ));	
 
     }

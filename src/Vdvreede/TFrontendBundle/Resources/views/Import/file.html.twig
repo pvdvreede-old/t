@@ -4,6 +4,13 @@
 
 {% block content %}
 
+<form action="{{  }}" method="post" {{ form_enctype(form) }}>
 
+    {{ form_row(form.file) }}
+
+    {{ form_row(form.import_name, { 'empty_value' : 'Create a new Import' } ) }}
+
+    <input type="submit" value="Next" />
+</form>
 
 {% endblock %}
