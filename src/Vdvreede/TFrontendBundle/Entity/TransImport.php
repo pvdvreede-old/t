@@ -29,6 +29,13 @@ class TransImport
     private $accountId;
 
     /**
+     * @var integer $userId
+     *
+     * @ORM\Column(name="user_id", type="integer", nullable=false)
+     */
+    private $userId;
+
+    /**
      * @var integer $descriptionField
      *
      * @ORM\Column(name="description_field", type="integer", nullable=false)
@@ -66,7 +73,15 @@ class TransImport
      */
     private $account;
 
-
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
 
     /**
      * Get id
