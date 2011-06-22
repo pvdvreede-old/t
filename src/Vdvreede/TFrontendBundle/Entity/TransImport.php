@@ -19,7 +19,14 @@ class TransImport
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;    
+    private $id;   
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=50, nullable=false)
+     */
+    private $name;  
 
     /**
      * @var integer $accountId
