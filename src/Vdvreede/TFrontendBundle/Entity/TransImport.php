@@ -229,4 +229,64 @@ class TransImport
     {
         return $this->account;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string $name
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set userId
+     *
+     * @param integer $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * Get userId
+     *
+     * @return integer $userId
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Vdvreede\TFrontendBundle\Entity\User $user
+     */
+    public function setUser(\Vdvreede\TFrontendBundle\Entity\User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Vdvreede\TFrontendBundle\Entity\User $user
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

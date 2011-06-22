@@ -3,24 +3,24 @@
 namespace Vdvreede\TFrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Vdvreede\TFrontendBundle\Entity\ImportFile;
+use Vdvreede\TFrontendBundle\Form\ImportFileType;
 
 class ImportController extends Controller
 {
     public function fileAction($accountId)
-    {       
-	
-        
-        $form = $this->createForm(new Form\ImportFileType(), new Entity\ImportFile());
+    {       	        
+        $form = $this->createForm(new ImportFileType(), new ImportFile());
 
-	return $this->render('VdvreedeTFrontendBundle:Import:file', array(
+	return $this->render('VdvreedeTFrontendBundle:Import:file.html.twig', array(
           'form' => $form->createView()
         ));
     }
 
     public function csvAction($accountId) {
        
-      $file = new Entity\ImportFile(); 
-      $form = $this->createForm(new Form\ImportFileType(), $file);
+      $file = new ImportFile(); 
+      $form = $this->createForm(new ImportFileType(), $file);
 
       $request = $this->get('request');
 
@@ -29,7 +29,7 @@ class ImportController extends Controller
       if ($form->isValid()) {
 	$form['file']->move('/home/paul/', 'temp.csv');
      
-        $handle = fopen('temp.csv', 'r');
+        $handle = fopen('/home/paul/temp.csv', 'r');
         
         $i = 0;
         $count = 0;

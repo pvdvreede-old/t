@@ -13,9 +13,17 @@ class ImportFile {
   public function getFile() {
     return $this->file;
   }
+  
+  public function setFile($value) {
+      $this->file = $value;
+  }
 
   public function getImportName() {
     return $this->importName;
+  }
+  
+  public function setImportName($value) {
+      $this->importName = $value;
   }
 
 }

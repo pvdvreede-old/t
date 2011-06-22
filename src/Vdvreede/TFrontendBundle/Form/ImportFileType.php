@@ -10,13 +10,15 @@ class ImportFileType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('file', 'file');
+        $builder->add('file', 'file', array(
+            'label' => 'CSV File to upload'
+        ));
         $builder->add('importName', 'entity', array(
             'class' => 'Vdvreede\\TFrontendBundle\\Entity\\TransImport',
             'query_builder' => function($er) {
                 return $er->createQueryBuilder('i')
-                          ->where('userId = :userId)
-                          ->andWhere('accountId = :accountId')
+                          ->where('i.userId = :userId')
+                          ->andWhere('i.accountId = :accountId')
                           ->setParameter('userId', 1)
                           ->setParameter('accountId', 1);
              },
