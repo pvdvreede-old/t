@@ -33,3 +33,10 @@ transaction_edit:
 transaction_list:
   pattern: /transaction
   defaults: { _controller: VdvreedeTFrontendBundle:Transaction:index }
+
+import_file:
+  pattern: /import/{accountId}
+  defaults: { _controller: VdvreedeTFrontendBundle:Import:file }
+  requirements:
+    accountId: \d+
+    _method: GET
