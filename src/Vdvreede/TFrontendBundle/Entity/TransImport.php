@@ -91,6 +91,16 @@ class TransImport
     private $user;
 
     /**
+     * Get to string
+     *
+     * @return integer $id
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
      * Get id
      *
      * @return integer $id

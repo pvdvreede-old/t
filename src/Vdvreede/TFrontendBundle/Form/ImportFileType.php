@@ -11,7 +11,7 @@ class ImportFileType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('file', 'file');
-        $builder->add('import_name', 'entity', array(
+        $builder->add('importName', 'entity', array(
             'class' => 'Vdvreede\\TFrontendBundle\\Entity\\TransImport',
             'query_builder' => function($er) {
                 return $er->createQueryBuilder('i')
