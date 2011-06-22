@@ -6,9 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class ImportController extends Controller
 {
-    public function fileAction()
+    public function fileAction($accountId)
     {
         
+    }
+
+    public function csvAction($accountId) {
+
     }
     
 }

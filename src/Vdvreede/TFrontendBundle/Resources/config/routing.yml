@@ -40,3 +40,10 @@ import_file:
   requirements:
     accountId: \d+
     _method: GET
+
+import_csv:
+  pattern: /import/{accountId}
+  defaults: { _controller: VdvreedeTFrontendBundle:Import:csv }
+  requirements:
+    accountId: \d+
+    _method: POST
