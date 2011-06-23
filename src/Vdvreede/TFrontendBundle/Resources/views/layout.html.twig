@@ -19,6 +19,17 @@
     {% endblock %}
     </div>
 
+    {% if app.session.hasFlash('notice') %}
+    <div class="flash-notice">
+        {{ app.session.flash('notice') }}
+    </div>
+    {% endif %}
+    {% if app.session.hasFlash('error') %}
+    <div class="flash-error">
+        {{ app.session.flash('error') }}
+    </div>
+    {% endif %}
+
     <div id="page-header">
         <h3>
         {% block pageheader %}
