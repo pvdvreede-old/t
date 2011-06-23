@@ -2,3 +2,4 @@
 /app/cache/dev/*.*
 /app/log/*.*
 *.php~
+.idea
