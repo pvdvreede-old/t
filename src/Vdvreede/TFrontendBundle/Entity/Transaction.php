@@ -71,20 +71,6 @@ class Transaction
     private $amount;
 
     /**
-     * @var datetime $lastmodified
-     *
-     * @ORM\Column(name="lastmodified", type="datetime", nullable=true)
-     */
-    private $lastmodified;
-
-    /**
-     * @var datetime $created
-     *
-     * @ORM\Column(name="created", type="datetime", nullable=false)
-     */
-    private $created;
-
-    /**
      * @var boolean $split
      *
      * @ORM\Column(name="split", type="boolean", nullable=false)

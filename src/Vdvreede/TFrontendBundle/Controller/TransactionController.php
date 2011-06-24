@@ -56,7 +56,6 @@ class TransactionController extends Controller
             if ($form->isValid()) {
                 
                 $trans->setUser($user);
-                $trans->setCreated(new \DateTime());
                 $trans->setSplit(false);
                 
                 $em = $this->getDoctrine()->getEntityManager();
