@@ -39,11 +39,10 @@ import_file:
   defaults: { _controller: VdvreedeTFrontendBundle:Import:file }
   requirements:
     accountId: \d+
-    _method: GET
 
-import_csv:
-  pattern: /import/{accountId}
-  defaults: { _controller: VdvreedeTFrontendBundle:Import:csv }
+import_process:
+  pattern: /import/{accountId}/process
+  defaults: { _controller: VdvreedeTFrontendBundle:Import:process }
   requirements:
     accountId: \d+
     _method: POST
