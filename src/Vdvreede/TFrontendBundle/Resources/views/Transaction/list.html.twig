@@ -1,0 +1,15 @@
+<table>
+<th>Date</th>
+<th>Description</th>
+<th>Amount</th>
+<th>Action</th>
+{% for item in list %}
+<tr>
+<td>{{item.date|date("d/m/Y")}}</td>
+<td>{{item.description}}</td>
+<td>{{item.amount}}</td>
+<td>0</td>
+<td><a href="{{ path('transaction_edit', {'transId' : item.id}) }}">Edit</a></td>
+</tr>
+{% endfor %}
+</table>

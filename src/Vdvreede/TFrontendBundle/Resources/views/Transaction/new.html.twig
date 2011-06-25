@@ -1,0 +1,11 @@
+{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
+
+{% block title%}New Transaction{% endblock %}
+
+{% block content %}
+
+<h3>New transaction</h3>
+
+{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': form, 'action_url' : path('transaction_new')} %}
+
+{% endblock %}

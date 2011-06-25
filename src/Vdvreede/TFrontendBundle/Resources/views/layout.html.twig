@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+    
+    <div id="header">
+    {% block header %}
+        <h1>T</h1>
+    {% endblock %}
+    </div>
+
+    <div id="top-menu">
+    {% block topmenu %}
+        <h4>Menu</h4>
+        <ul>
+        <li><a href="{{ path('account_list') }}">Accounts</a><ul><li><a href="{{ path('account_new') }}">New</a></li></ul></li>
+        <li><a href="{{ path('category_list') }}">Categories</a><ul><li><a href="{{ path('category_new') }}">New</a></li></ul></li>
+        <li><a href="{{ path('transaction_list') }}">Transactions</a><ul><li><a href="{{ path('transaction_new') }}">New</a></li></ul></li>
+        </ul>
+    {% endblock %}
+    </div>
+
+    {% if app.session.hasFlash('notice') %}
+    <div class="flash-notice">
+        {{ app.session.flash('notice') }}
+    </div>
+    {% endif %}
+    {% if app.session.hasFlash('error') %}
+    <div class="flash-error">
+        {{ app.session.flash('error') }}
+    </div>
+    {% endif %}
+
+    <div id="page-header">
+        <h3>
+        {% block pageheader %}
+
+        {% endblock %}
+        </h3>
+    </div>
+
+    <div id="content">
+    {% block content %}
+
+
+    {% endblock %}
+    </div>
+
+    <div id="footer">
+    {% block footer %}
+
+        <p>&copy; Copyright Paul Van de Vreede 2011</p>
+
+    {% endblock %}
+    </div>
+
+{% endblock %}

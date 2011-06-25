@@ -24,7 +24,7 @@ _profiler:
     prefix:   /_profiler
 
 _configurator:
-    resource: "@SensioDistributionBundle/Resources/config/routing/webconfigurator.xml"
+    resource: "@SymfonyWebConfiguratorBundle/Resources/config/routing/configurator.xml"
     prefix:   /_configurator
 
 _main:

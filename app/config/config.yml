@@ -13,11 +13,34 @@ framework:
     session:
         default_locale: %locale%
         auto_start:     true
+        storage_id: session.storage.pdo
+
+parameters:
+    pdo.db_options:
+        db_table:    session
+        db_id_col:   session_id
+        db_data_col: session_value
+        db_time_col: session_time
+
+services:
+    session.storage.pdo:
+        class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
+        arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
+
+    pdo:
+        class: PDO
+        arguments:
+            dsn:      "mysql:dbname=t_session_dev"
+            user:     root
+            password: null
 
 # Twig Configuration
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+        resources:
+            - 'form_table_layout.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -33,12 +56,9 @@ assetic:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%
+        driver:   pdo_mysql
         charset:  UTF8
+        default_connection: main
 
     orm:
         auto_generate_proxy_classes: %kernel.debug%

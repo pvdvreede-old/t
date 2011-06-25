@@ -1,0 +1,9 @@
+
+
+<form action="{{ path('import_process', { 'accountId' : accountId }) }}" method="post" {{ form_enctype(form) }}>
+
+    {{ form_widget(form) }}
+    {{ form_rest(form) }}
+
+    <input type="submit" value="Next" />
+</form>

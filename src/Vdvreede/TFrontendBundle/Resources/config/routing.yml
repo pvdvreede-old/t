@@ -1,0 +1,48 @@
+account_new:
+  pattern: /account/new
+  defaults: { _controller: VdvreedeTFrontendBundle:Account:new }
+  
+account_edit:
+  pattern: /account/edit/{accountId}
+  defaults: { _controller: VdvreedeTFrontendBundle:Account:edit }
+  
+account_list:
+  pattern: /account
+  defaults: { _controller: VdvreedeTFrontendBundle:Account:index }
+  
+category_new:
+  pattern: /category/new
+  defaults: { _controller: VdvreedeTFrontendBundle:Category:new }
+  
+category_edit:
+  pattern: /category/edit/{categoryId}
+  defaults: { _controller: VdvreedeTFrontendBundle:Category:edit }
+  
+category_list:
+  pattern: /category
+  defaults: { _controller: VdvreedeTFrontendBundle:Category:index }
+  
+transaction_new:
+  pattern: /transaction/new
+  defaults: { _controller: VdvreedeTFrontendBundle:Transaction:new }
+  
+transaction_edit:
+  pattern: /transaction/edit/{transId}
+  defaults: { _controller: VdvreedeTFrontendBundle:Transaction:edit }
+  
+transaction_list:
+  pattern: /transaction
+  defaults: { _controller: VdvreedeTFrontendBundle:Transaction:index }
+
+import_file:
+  pattern: /import/{accountId}
+  defaults: { _controller: VdvreedeTFrontendBundle:Import:file }
+  requirements:
+    accountId: \d+
+
+import_process:
+  pattern: /import/{accountId}/process
+  defaults: { _controller: VdvreedeTFrontendBundle:Import:process }
+  requirements:
+    accountId: \d+
+    _method: POST

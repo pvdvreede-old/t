@@ -1,0 +1,9 @@
+{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
+
+{% block title%}New Account{% endblock %}
+
+{% block content %}
+
+{% include 'VdvreedeTFrontendBundle:Account:form.html.twig' with {'form': form, 'action_url' : path('account_new')} %}
+
+{% endblock %}

@@ -21,3 +21,12 @@ monolog:
 
 assetic:
     use_controller: true
+    
+doctrine:
+  dbal:   
+    connections:
+      main:
+        dbname: t_dev
+        user: root
+        password: null
+        host: localhost
