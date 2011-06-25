@@ -124,10 +124,10 @@ class Transaction
      */
     private $user;
     
+    
     public function __toString() {
         return $this->description;
     }
-
 
     /**
      * Set id
@@ -287,46 +287,6 @@ class Transaction
     public function getAmount()
     {
         return $this->amount;
-    }
-
-    /**
-     * Set lastmodified
-     *
-     * @param datetime $lastmodified
-     */
-    public function setLastmodified($lastmodified)
-    {
-        $this->lastmodified = $lastmodified;
-    }
-
-    /**
-     * Get lastmodified
-     *
-     * @return datetime $lastmodified
-     */
-    public function getLastmodified()
-    {
-        return $this->lastmodified;
-    }
-
-    /**
-     * Set created
-     *
-     * @param datetime $created
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-    }
-
-    /**
-     * Get created
-     *
-     * @return datetime $created
-     */
-    public function getCreated()
-    {
-        return $this->created;
     }
 
     /**
