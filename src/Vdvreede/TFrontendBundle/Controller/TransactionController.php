@@ -2,7 +2,6 @@
 
 namespace Vdvreede\TFrontendBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -14,7 +13,7 @@ use Vdvreede\TFrontendBundle\Form\TransactionType;
  *
  * @Route("/transaction")
  */
-class TransactionController extends Controller
+class TransactionController extends BaseController
 {
     /**
      * Lists all Transaction entities.
@@ -26,7 +25,7 @@ class TransactionController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAll();
+        $entities = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAllByUserId($this->getCurrentUser()->getId());
 
         return array('entities' => $entities);
     }
@@ -41,7 +40,7 @@ class TransactionController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->find($id);
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Transaction entity.');
@@ -89,6 +88,9 @@ class TransactionController extends Controller
             $form->bindRequest($request);
 
             if ($form->isValid()) {
+                
+                $entity->setUser($this->getCurrentUser());
+                
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entity);
                 $em->flush();
@@ -114,7 +116,7 @@ class TransactionController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->find($id);
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Transaction entity.');
@@ -141,7 +143,7 @@ class TransactionController extends Controller
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->find($id);
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Transaction entity.');
@@ -187,7 +189,7 @@ class TransactionController extends Controller
 
             if ($form->isValid()) {
                 $em = $this->getDoctrine()->getEntityManager();
-                $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->find($id);
+                $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
 
                 if (!$entity) {
                     throw $this->createNotFoundException('Unable to find Transaction entity.');

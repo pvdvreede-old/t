@@ -13,12 +13,11 @@ class TransactionType extends AbstractType
             ->add('description', 'textarea')
             ->add('memo')
             ->add('date')
-            ->add('amount')
+            ->add('amount', 'money', array('currency' => 'USD'))
             ->add('split')
             ->add('reportable')
             ->add('account')
             ->add('category')
-            ->add('parentTransaction')
         ;
     }
 }
