@@ -1,9 +1,0 @@
-{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
-
-{% block title%}New Category{% endblock %}
-
-{% block content %}
-
-{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': form, 'action_url' : path('category_new')} %}
-
-{% endblock %}

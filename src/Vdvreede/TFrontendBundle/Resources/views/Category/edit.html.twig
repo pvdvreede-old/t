@@ -1,9 +1,0 @@
-{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
-
-{% block title%}Edit Category {{category.name}}{% endblock %}
-
-{% block content %}
-
-{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': form, 'action_url' : path('category_edit', { 'categoryId' : category.id } ) } %}
-
-{% endblock %}
