@@ -123,7 +123,10 @@ class Transaction
      * })
      */
     private $user;
-
+    
+    public function __toString() {
+        return $this->description;
+    }
 
 
     /**

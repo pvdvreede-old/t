@@ -3,77 +3,209 @@
 namespace Vdvreede\TFrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Vdvreede\TFrontendBundle\Entity\Transaction;
+use Vdvreede\TFrontendBundle\Form\TransactionType;
 
+/**
+ * Transaction controller.
+ *
+ * @Route("/transaction")
+ */
 class TransactionController extends Controller
 {
+    /**
+     * Lists all Transaction entities.
+     *
+     * @Route("/", name="transaction")
+     * @Template()
+     */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $currentUser = $this->getCurrentUser();
-        
-        $transactions = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAllByUser($currentUser->getId());
-        
-        return $this->render('VdvreedeTFrontendBundle:Transaction:index.html.twig', array(
-            'list' => $transactions
-        ));
+
+        $entities = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAll();
+
+        return array('entities' => $entities);
     }
-    
+
+    /**
+     * Finds and displays a Transaction entity.
+     *
+     * @Route("/{id}/show", name="transaction_show")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Transaction entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Displays a form to create a new Transaction entity.
+     *
+     * @Route("/new", name="transaction_new")
+     * @Template()
+     */
     public function newAction()
     {
-        $currentUser = $this->getCurrentUser();
-        
-        return $this->processTransaction(new \Vdvreede\TFrontendBundle\Entity\Transaction, $currentUser, 'VdvreedeTFrontendBundle:Transaction:new.html.twig');                        
-    }
-    
-    public function viewAction($itemId) {
-        
-        $em = $this->getDoctrine()->getEntityManager();
-        $currentUser = $this->getCurrentUser();
-        
-        $trans = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($itemId, $currentUser->getId());
-        
-    }
-    
-    public function editAction($transId) {
-        
-        $em = $this->getDoctrine()->getEntityManager();
-        $currentUser = $this->getCurrentUser();
-        
-        $trans = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($transId, $currentUser->getId());    
+        $entity = new Transaction();
+        $form   = $this->createForm(new TransactionType(), $entity);
 
-        return $this->processTransaction($trans, $currentUser, 'VdvreedeTFrontendBundle:Transaction:edit.html.twig');        
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
     }
-    
-    private function processTransaction($trans, $user, $view) {
-        
-        $form = $this->createForm(new \Vdvreede\TFrontendBundle\Form\TransactionType(), $trans);
 
-        $request = $this->get('request');
-        
-        if ($request->getMethod() == 'POST') {
+    /**
+     * Creates a new Transaction entity.
+     *
+     * @Route("/create", name="transaction_create")
+     * @Method("post")
+     * @Template("VdvreedeTFrontendBundle:Transaction:new.html.twig")
+     */
+    public function createAction()
+    {
+        $entity  = new Transaction();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new TransactionType(), $entity);
+
+        if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
-            
+
             if ($form->isValid()) {
-                
-                $trans->setUser($user);
-                $trans->setSplit(false);
-                
                 $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($trans);
+                $em->persist($entity);
                 $em->flush();
+
+                return $this->redirect($this->generateUrl('transaction_show', array('id' => $entity->getId())));
                 
-                $this->get('session')->setFlash('notice', 'Transaction has been created!');
             }
         }
-        
-        
-        return $this->render($view, array(
-            'form' => $form->createView(),
-            'transaction' => $trans
-        ));
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
     }
-    
-    private function getCurrentUser() {
-        return $this->get('security.context')->getToken()->getUser();
+
+    /**
+     * Displays a form to edit an existing Transaction entity.
+     *
+     * @Route("/{id}/edit", name="transaction_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Transaction entity.');
+        }
+
+        $editForm = $this->createForm(new TransactionType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Edits an existing Transaction entity.
+     *
+     * @Route("/{id}/update", name="transaction_update")
+     * @Method("post")
+     * @Template("VdvreedeTFrontendBundle:Transaction:edit.html.twig")
+     */
+    public function updateAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Transaction entity.');
+        }
+
+        $editForm   = $this->createForm(new TransactionType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        $request = $this->getRequest();
+
+        if ('POST' === $request->getMethod()) {
+            $editForm->bindRequest($request);
+
+            if ($editForm->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('transaction_edit', array('id' => $id)));
+            }
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Transaction entity.
+     *
+     * @Route("/{id}/delete", name="transaction_delete")
+     * @Method("post")
+     */
+    public function deleteAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        if ('POST' === $request->getMethod()) {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->find($id);
+
+                if (!$entity) {
+                    throw $this->createNotFoundException('Unable to find Transaction entity.');
+                }
+
+                $em->remove($entity);
+                $em->flush();
+            }
+        }
+
+        return $this->redirect($this->generateUrl('transaction'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
     }
 }

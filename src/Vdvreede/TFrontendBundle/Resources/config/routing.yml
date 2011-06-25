@@ -21,18 +21,6 @@ category_edit:
 category_list:
   pattern: /category
   defaults: { _controller: VdvreedeTFrontendBundle:Category:index }
-  
-transaction_new:
-  pattern: /transaction/new
-  defaults: { _controller: VdvreedeTFrontendBundle:Transaction:new }
-  
-transaction_edit:
-  pattern: /transaction/edit/{transId}
-  defaults: { _controller: VdvreedeTFrontendBundle:Transaction:edit }
-  
-transaction_list:
-  pattern: /transaction
-  defaults: { _controller: VdvreedeTFrontendBundle:Transaction:index }
 
 import_file:
   pattern: /import/{accountId}
@@ -46,3 +34,8 @@ import_process:
   requirements:
     accountId: \d+
     _method: POST
+    
+transactions:
+  resource: "@VdvreedeTFrontendBundle/Controller/TransactionController.php"
+  type: annotation
+  

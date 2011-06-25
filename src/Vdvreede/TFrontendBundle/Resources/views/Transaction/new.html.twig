@@ -1,11 +1,16 @@
-{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
+<h1>Transaction creation</h1>
 
-{% block title%}New Transaction{% endblock %}
+<form action="{{ path('transaction_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
 
-{% block content %}
-
-<h3>New transaction</h3>
-
-{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': form, 'action_url' : path('transaction_new')} %}
-
-{% endblock %}
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('transaction') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
