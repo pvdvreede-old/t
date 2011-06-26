@@ -30,3 +30,8 @@ doctrine:
         user: root
         password: null
         host: localhost
+      audit:
+        dbname: t_audit_dev
+        user: root
+        password: null
+        host: localhost

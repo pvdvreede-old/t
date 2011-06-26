@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="trans_import")
  * @ORM\Entity(repositoryClass="Vdvreede\TFrontendBundle\Repository\TransImportRepository")
+ * @Gedmo\Loggable
  */
 class TransImport
 {

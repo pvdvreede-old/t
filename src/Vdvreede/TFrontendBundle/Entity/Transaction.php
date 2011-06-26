@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="transaction")
  * @ORM\Entity(repositoryClass="Vdvreede\TFrontendBundle\Repository\TransactionRepository")
+ * @Gedmo\Loggable
  */
 class Transaction
 {

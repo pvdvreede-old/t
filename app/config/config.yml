@@ -60,9 +60,17 @@ doctrine:
         charset:  UTF8
         default_connection: main
 
-    orm:
+    orm: 
         auto_generate_proxy_classes: %kernel.debug%
-        auto_mapping: true
+        entity_managers:
+          default:
+            connection: main            
+            mappings:
+              VdvreedeTFrontendBundle: ~
+          audit:
+            connection: audit
+            mappings:
+              StofDoctrineExtensionsBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -79,7 +87,16 @@ jms_security_extra:
 stof_doctrine_extensions:
     default_locale: en_US
     orm:
+        audit:
+          tree: false
+          sluggable: false
+          translatable: false
+          loggable: true
+          timestampable: false
         main:
           tree: false
           sluggable: false
           translatable: false
+          loggable: false
+          timestampable: true
+          

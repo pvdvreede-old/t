@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="report")
  * @ORM\Entity
+ * @Gedmo\Loggable
  */
 class Report
 {

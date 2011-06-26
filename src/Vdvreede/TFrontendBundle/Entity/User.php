@@ -10,6 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity
+ * @Gedmo\Loggable
  */
 class User implements \Symfony\Component\Security\Core\User\UserInterface {
 
