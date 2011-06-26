@@ -1,15 +1,4 @@
-account_new:
-  pattern: /account/new
-  defaults: { _controller: VdvreedeTFrontendBundle:Account:new }
-  
-account_edit:
-  pattern: /account/edit/{accountId}
-  defaults: { _controller: VdvreedeTFrontendBundle:Account:edit }
-  
-account_list:
-  pattern: /account
-  defaults: { _controller: VdvreedeTFrontendBundle:Account:index }
-  
+
 category_new:
   pattern: /category/new
   defaults: { _controller: VdvreedeTFrontendBundle:Category:new }
@@ -37,5 +26,9 @@ import_process:
     
 transactions:
   resource: "@VdvreedeTFrontendBundle/Controller/TransactionController.php"
+  type: annotation
+  
+accounts:
+  resource: "@VdvreedeTFrontendBundle/Controller/AccountController.php"
   type: annotation
   
