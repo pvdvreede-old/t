@@ -2,18 +2,6 @@
 {% block content %}
 <h1>Transaction creation</h1>
 
-<form action="{{ path('transaction_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
+{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': form, 'action_url' : path('transaction_create') } %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('transaction') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

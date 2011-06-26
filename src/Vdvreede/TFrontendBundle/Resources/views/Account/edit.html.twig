@@ -2,24 +2,6 @@
 {% block content %}
 <h1>Account edit</h1>
 
-<form action="{{ path('account_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
+{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': edit_form, 'action_url' : path('account_update', { 'id' : entity.id } ) } %}
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('account') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('account_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
 {% endblock %}
