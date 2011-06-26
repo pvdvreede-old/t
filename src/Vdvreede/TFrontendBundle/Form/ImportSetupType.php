@@ -14,7 +14,9 @@ class ImportSetupType extends AbstractType
   public function buildForm(FormBuilder $builder, array $options)
   {
     $builder->add('name', 'text');
-    $builder->add('has_header', 'checkbox');
+    $builder->add('has_header', 'checkbox', array(
+        'required' => false
+    ));
     $builder->add('columns', $this->columnFormType);
   }
 

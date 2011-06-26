@@ -18,10 +18,11 @@ import_file:
     accountId: \d+
 
 import_process:
-  pattern: /import/{accountId}/process
-  defaults: { _controller: VdvreedeTFrontendBundle:Import:process }
+  pattern: /import/{accountId}/process/{transImportId}
+  defaults: { _controller: VdvreedeTFrontendBundle:Import:process, transImportId: 0 }
   requirements:
     accountId: \d+
+    transImportId: \d+
     _method: POST
     
 transactions:

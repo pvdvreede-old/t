@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Vdv\AccountBundle\Entity\TransImport
  *
  * @ORM\Table(name="trans_import")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Vdvreede\TFrontendBundle\Repository\TransImportRepository")
  */
 class TransImport
 {
