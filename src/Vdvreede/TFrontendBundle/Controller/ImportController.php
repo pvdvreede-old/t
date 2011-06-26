@@ -139,6 +139,11 @@ class ImportController extends BaseController {
         }
 
         $em->flush();
+        
+        return $this->render('VdvreedeTFrontendBundle:Import:process.html.twig', array(
+            'errors' => $errors,
+            'inserted' => $inserted
+        ));
     }
 
     private function createImportSetupForm($columnCount) {

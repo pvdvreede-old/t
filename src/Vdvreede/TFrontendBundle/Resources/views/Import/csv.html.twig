@@ -1,4 +1,5 @@
-
+{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
+{% block content %}
 
 <form action="{{ path('import_process', { 'accountId' : accountId }) }}" method="post" {{ form_enctype(form) }}>
 
@@ -7,3 +8,5 @@
 
     <input type="submit" value="Next" />
 </form>
+
+{% endblock %}

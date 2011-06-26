@@ -1,0 +1,9 @@
+{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
+
+{% block content %}
+<h3>Processing complete</h3>
+
+<p>Errors: {{ errors }} </p>
+<p>Items inserted: {{ inserted }} </p>
+<p><a href="{{ path('transaction') }}">View transactions</a></p>
+{% endblock %}
