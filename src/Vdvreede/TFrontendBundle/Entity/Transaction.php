@@ -3,6 +3,7 @@
 namespace Vdvreede\TFrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Vdv\AccountBundle\Entity\Transaction
@@ -123,6 +124,22 @@ class Transaction
      * })
      */
     private $user;
+    
+     /**
+     * @var datetime $created
+     * 
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+     
+    /**
+     * @var datetime $updated
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
     
     
     public function __toString() {

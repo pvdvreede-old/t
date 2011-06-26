@@ -3,6 +3,7 @@
 namespace Vdvreede\TFrontendBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Vdv\AccountBundle\Entity\User
@@ -34,6 +35,22 @@ class User implements \Symfony\Component\Security\Core\User\UserInterface {
      * @ORM\Column(name="open_id", type="string", length=255, nullable=false)
      */
     private $openId;
+    
+     /**
+     * @var datetime $created
+     * 
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="create")
+     */
+    private $created;
+     
+    /**
+     * @var datetime $updated
+     *
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
 
     /**
      * Get id
