@@ -1,9 +1,7 @@
 {% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
-
-{% block title%}Edit Category {{category.name}}{% endblock %}
-
 {% block content %}
+<h1>Category edit</h1>
 
-{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': form, 'action_url' : path('category_edit', { 'categoryId' : category.id } ) } %}
+{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': edit_form, 'action_url' : path('category_update', { 'id' : entity.id } ) } %}
 
 {% endblock %}

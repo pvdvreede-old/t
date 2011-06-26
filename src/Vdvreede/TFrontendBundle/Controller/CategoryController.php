@@ -3,76 +3,211 @@
 namespace Vdvreede\TFrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Vdvreede\TFrontendBundle\Entity\Category;
+use Vdvreede\TFrontendBundle\Form\CategoryType;
 
-class CategoryController extends Controller
+/**
+ * Category controller.
+ *
+ * @Route("/category")
+ */
+class CategoryController extends BaseController
 {
+    /**
+     * Lists all Category entities.
+     *
+     * @Route("/", name="category")
+     * @Template()
+     */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $currentUser = $this->getCurrentUser();
-        
-        $accounts = $em->getRepository('VdvreedeTFrontendBundle:Category')->findAllByUser($currentUser->getId());
-        
-        return $this->render('VdvreedeTFrontendBundle:Category:index.html.twig', array(
-            'list' => $accounts
-        ));
+
+        $entities = $em->getRepository('VdvreedeTFrontendBundle:Category')->findAllByUserId($this->getCurrentUser()->getId());
+
+        return array('entities' => $entities);
     }
-    
+
+    /**
+     * Finds and displays a Category entity.
+     *
+     * @Route("/{id}/show", name="category_show")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Category entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Displays a form to create a new Category entity.
+     *
+     * @Route("/new", name="category_new")
+     * @Template()
+     */
     public function newAction()
     {
-        $currentUser = $this->getCurrentUser();
-        
-        return $this->processCategory(new \Vdvreede\TFrontendBundle\Entity\Category, $currentUser, 'VdvreedeTFrontendBundle:Category:new.html.twig');                        
-    }
-    
-    public function viewAction($itemId) {
-        
-        $em = $this->getDoctrine()->getEntityManager();
-        $currentUser = $this->getCurrentUser();
-        
-        $account = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($accountId, $currentUser->getId());
-        
-    }
-    
-    public function editAction($categoryId) {
-        
-        $em = $this->getDoctrine()->getEntityManager();
-        $currentUser = $this->getCurrentUser();
-        
-        $category = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($categoryId, $currentUser->getId());    
+        $entity = new Category();
+        $form   = $this->createForm(new CategoryType(), $entity);
 
-        return $this->processCategory($category, $currentUser, 'VdvreedeTFrontendBundle:Category:edit.html.twig');        
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
     }
-    
-    private function processCategory($category, $user, $view) {
-        
-        $form = $this->createForm(new \Vdvreede\TFrontendBundle\Form\CategoryType(), $category);
 
-        $request = $this->get('request');
-        
-        if ($request->getMethod() == 'POST') {
+    /**
+     * Creates a new Category entity.
+     *
+     * @Route("/create", name="category_create")
+     * @Method("post")
+     * @Template("VdvreedeTFrontendBundle:Category:new.html.twig")
+     */
+    public function createAction()
+    {
+        $entity  = new Category();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new CategoryType(), $entity);
+
+        if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
-            
+
             if ($form->isValid()) {
-                
-                $category->setUser($user);
+                $entity->setUser($this->getCurrentUser());
                 
                 $em = $this->getDoctrine()->getEntityManager();
-                $em->persist($category);
+                $em->persist($entity);
                 $em->flush();
+
+                return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
                 
-                $this->get('session')->setFlash('notice', 'Category has been created!');
             }
         }
-        
-        
-        return $this->render($view, array(
-            'form' => $form->createView(),
-            'category' => $category
-        ));
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
     }
-    
-    private function getCurrentUser() {
-        return $this->get('security.context')->getToken()->getUser();
+
+    /**
+     * Displays a form to edit an existing Category entity.
+     *
+     * @Route("/{id}/edit", name="category_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Category entity.');
+        }
+
+        $editForm = $this->createForm(new CategoryType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Edits an existing Category entity.
+     *
+     * @Route("/{id}/update", name="category_update")
+     * @Method("post")
+     * @Template("VdvreedeTFrontendBundle:Category:edit.html.twig")
+     */
+    public function updateAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Category entity.');
+        }
+
+        $editForm   = $this->createForm(new CategoryType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        $request = $this->getRequest();
+
+        if ('POST' === $request->getMethod()) {
+            $editForm->bindRequest($request);
+
+            if ($editForm->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $em->persist($entity);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('category_edit', array('id' => $id)));
+            }
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Category entity.
+     *
+     * @Route("/{id}/delete", name="category_delete")
+     * @Method("post")
+     */
+    public function deleteAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        if ('POST' === $request->getMethod()) {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getEntityManager();
+                $entity = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
+
+                if (!$entity) {
+                    throw $this->createNotFoundException('Unable to find Category entity.');
+                }
+
+                $em->remove($entity);
+                $em->flush();
+            }
+        }
+
+        return $this->redirect($this->generateUrl('category'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
     }
 }

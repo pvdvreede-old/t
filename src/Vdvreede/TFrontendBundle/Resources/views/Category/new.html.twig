@@ -1,9 +1,7 @@
 {% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
-
-{% block title%}New Category{% endblock %}
-
 {% block content %}
+<h1>Category creation</h1>
 
-{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': form, 'action_url' : path('category_new')} %}
+{% include 'VdvreedeTFrontendBundle::form.html.twig' with {'form': form, 'action_url' : path('category_update', { 'id' : entity.id } ) } %}
 
 {% endblock %}

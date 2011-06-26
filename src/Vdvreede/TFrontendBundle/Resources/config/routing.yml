@@ -1,16 +1,3 @@
-
-category_new:
-  pattern: /category/new
-  defaults: { _controller: VdvreedeTFrontendBundle:Category:new }
-  
-category_edit:
-  pattern: /category/edit/{categoryId}
-  defaults: { _controller: VdvreedeTFrontendBundle:Category:edit }
-  
-category_list:
-  pattern: /category
-  defaults: { _controller: VdvreedeTFrontendBundle:Category:index }
-
 import_file:
   pattern: /import/{accountId}
   defaults: { _controller: VdvreedeTFrontendBundle:Import:file }
@@ -31,5 +18,9 @@ transactions:
   
 accounts:
   resource: "@VdvreedeTFrontendBundle/Controller/AccountController.php"
+  type: annotation
+  
+categories:
+  resource: "@VdvreedeTFrontendBundle/Controller/CategoryController.php"
   type: annotation
   
