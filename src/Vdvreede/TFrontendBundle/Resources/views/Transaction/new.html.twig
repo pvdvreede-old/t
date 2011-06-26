@@ -1,3 +1,5 @@
+{% extends 'VdvreedeTFrontendBundle::layout.html.twig' %}
+{% block content %}
 <h1>Transaction creation</h1>
 
 <form action="{{ path('transaction_create') }}" method="post" {{ form_enctype(form) }}>
@@ -14,3 +16,4 @@
         </a>
     </li>
 </ul>
+{% endblock %}
