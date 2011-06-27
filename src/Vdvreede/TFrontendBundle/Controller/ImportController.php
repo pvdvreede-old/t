@@ -22,12 +22,12 @@ class ImportController extends BaseController {
 
             if ($fileForm->isValid()) {
 
-// move the file to a temp place
+                // move the file to a temp place
                 $filename = $this->generateFileName();
                 $fullFilename = self::$fileDirectory . $filename;
                 $fileImport->getFile()->move(self::$fileDirectory, $filename);
 
-// if an import type is selected then set the session and redirect to the next step
+                // if an import type is selected then set the session and redirect to the next step
                 if ($fileForm['importName']->getNormData() != '') {
                     $request->getSession()->set('import', $fullFilename);
 
@@ -39,11 +39,11 @@ class ImportController extends BaseController {
 
                 $handle = fopen($fullFilename, 'r');
 
-// create form and add items for each column
+                // create form and add items for each column
                 $columnCount = count(fgetcsv($handle, 1000, ','));
                 $mainForm = $this->createImportSetupForm($columnCount);
 
-// finally if there have not been any errors, set the filename to the session
+                // finally if there have not been any errors, set the filename to the session
                 $request->getSession()->set('import', $fullFilename);
 
                 return $this->render('VdvreedeTFrontendBundle:Import:csv.html.twig', array(
@@ -70,7 +70,6 @@ class ImportController extends BaseController {
         fclose($handle);
 
         if ($transImportId == '0') {
-            // get column count
 
             $form = $this->createImportSetupForm($columnCount);
 
@@ -92,6 +91,7 @@ class ImportController extends BaseController {
                 $transImport->setName($form['name']->getNormData());
                 $transImport->setAccount($account);
                 $transImport->setUser($this->getCurrentUser());
+                $transImport->setHasHeader($form['has_header']->getNormData());
 
                 $em->persist($transImport);
                 $em->flush();
@@ -111,6 +111,11 @@ class ImportController extends BaseController {
         $inserted = 0;
         $errors = 0;
         $handle = fopen($fullFilename, 'r');
+
+        // loop through the first line to get rid of the header before inserting.
+        if ($transImport->getHasHeader()) {
+          $header = fgetcsv($handle, 1000, ',');
+        }
 
         // Run through the file and import the transactions
         while (($data = fgetcsv($handle, 1000, ',')) !== false) {
@@ -139,7 +144,7 @@ class ImportController extends BaseController {
         }
 
         $em->flush();
-        
+
         return $this->render('VdvreedeTFrontendBundle:Import:process.html.twig', array(
             'errors' => $errors,
             'inserted' => $inserted

@@ -28,7 +28,14 @@ class TransImport
      *
      * @ORM\Column(name="name", type="string", length=50, nullable=false)
      */
-    private $name;  
+    private $name;
+
+    /**
+     * @var string $hasHeader
+     *
+     * @ORM\Column(name="has_header", type="boolean", length=50, nullable=true)
+     */
+    private $hasHeader;
 
     /**
      * @var integer $accountId
@@ -146,6 +153,26 @@ class TransImport
     public function getAccountId()
     {
         return $this->accountId;
+    }
+
+    /**
+     * Set accountId
+     *
+     * @param integer $accountId
+     */
+    public function setHasHeader($hasHeader)
+    {
+        $this->hasHeader = $hasHeader;
+    }
+
+    /**
+     * Get accountId
+     *
+     * @return integer $accountId
+     */
+    public function getHasHeader()
+    {
+        return $this->hasHeader;
     }
 
     /**
