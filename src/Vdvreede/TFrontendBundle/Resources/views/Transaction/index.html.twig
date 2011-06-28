@@ -2,49 +2,14 @@
 {% block content %}
 <h1>Transaction list</h1>
 
-<table class="records_list">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Categoryid</th>
-            <th>Userid</th>
-            <th>Accountid</th>
-            <th>Description</th>
-            <th>Memo</th>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Split</th>
-            <th>Reportable</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('transaction_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.categoryId }}</td>
-            <td>{{ entity.userId }}</td>
-            <td>{{ entity.accountId }}</td>
-            <td>{{ entity.description }}</td>
-            <td>{{ entity.memo }}</td>
-            <td>{{ entity.date|date('Y-m-d H:i:s') }}</td>
-            <td>{{ entity.amount }}</td>
-            <td>{{ entity.split }}</td>
-            <td>{{ entity.reportable }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('transaction_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('transaction_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+{% include 'VdvreedeTFrontendBundle::list.html.twig' with {
+'header'    : ['Date', 'Description', 'Amount'], 
+'entities'  : entities, 
+'methods'   : ['name', 'description', 'type'],
+'actions'   : [],
+'paginator' : paginator,
+'item_type' : 'transaction'
+} %}
 
 <ul>
     <li>

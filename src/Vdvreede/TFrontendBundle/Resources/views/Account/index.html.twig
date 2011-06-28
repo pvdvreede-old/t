@@ -2,6 +2,15 @@
 {% block content %}
 <h1>Account list</h1>
 
+{% include 'VdvreedeTFrontendBundle::list.html.twig' with {
+'header': ['item1', 'item2'], 
+'entities' : entities, 
+'methods' : ['name', 'description', 'type'] ,
+'actions' : ['edit', 'show']
+} %}
+
+
+
 <table class="records_list">
     <thead>
         <tr>

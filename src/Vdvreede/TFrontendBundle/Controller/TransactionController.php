@@ -18,16 +18,23 @@ class TransactionController extends BaseController
     /**
      * Lists all Transaction entities.
      *
-     * @Route("/", name="transaction")
+     * @Route("/{offset}", name="transaction", defaults={"offset" = "1"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($offset)
     {
         $em = $this->getDoctrine()->getEntityManager();
+        
+        $limit = 20;
+        $midRange = 7;
+        
+        $itemCount = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->countAllByUserId($this->getCurrentUser()->getId());
+        
+        $paginator = new \Vdvreede\TFrontendBundle\Helper\Paginator($itemCount, $offset, $limit, $midRange);
+        
+        $entities = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAllByUserId($this->getCurrentUser()->getId(), ($offset-1)*$limit, $limit);
 
-        $entities = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAllByUserId($this->getCurrentUser()->getId());
-
-        return array('entities' => $entities);
+        return array('entities' => $entities, 'paginator' => $paginator);
     }
 
     /**

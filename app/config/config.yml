@@ -23,6 +23,11 @@ parameters:
         db_time_col: session_time
 
 services:
+    vdvreede.twig.extension.call:
+      class: Vdvreede\TFrontendBundle\Twig\Extensions
+      tags:
+        - { name: twig.extension }
+    
     session.storage.pdo:
         class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
         arguments: [@pdo, %session.storage.options%, %pdo.db_options%]
