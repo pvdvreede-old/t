@@ -100,6 +100,45 @@ class BasicInheritanceMappingTest extends \Doctrine\Tests\OrmTestCase
         
         $this->assertTrue(isset($class->fieldMappings['id']));
     }
+    
+    /**
+     * @group DDC-1156
+     * @group DDC-1218
+     */
+    public function testGeneratedValueFromMappedSuperclass()
+    {
+        $class = $this->_factory->getMetadataFor(__NAMESPACE__ . '\\SuperclassEntity');
+        /* @var $class ClassMetadataInfo */
+        
+        $this->assertInstanceOf('Doctrine\ORM\Id\SequenceGenerator', $class->idGenerator);
+        $this->assertEquals(array('allocationSize' => 1, 'initialValue' => 10, 'sequenceName' => 'foo'), $class->sequenceGeneratorDefinition);
+    }
+    
+    /**
+     * @group DDC-1156
+     * @group DDC-1218
+     */
+    public function testSequenceDefinitionInHierachyWithSandwichMappedSuperclass()
+    {
+        $class = $this->_factory->getMetadataFor(__NAMESPACE__ . '\\HierachyD');
+        /* @var $class ClassMetadataInfo */
+        
+        $this->assertInstanceOf('Doctrine\ORM\Id\SequenceGenerator', $class->idGenerator);
+        $this->assertEquals(array('allocationSize' => 1, 'initialValue' => 10, 'sequenceName' => 'foo'), $class->sequenceGeneratorDefinition);
+    }
+    
+    /**
+     * @group DDC-1156
+     * @group DDC-1218
+     */
+    public function testMultipleMappedSuperclasses()
+    {
+        $class = $this->_factory->getMetadataFor(__NAMESPACE__ . '\\MediumSuperclassEntity');
+        /* @var $class ClassMetadataInfo */
+        
+        $this->assertInstanceOf('Doctrine\ORM\Id\SequenceGenerator', $class->idGenerator);
+        $this->assertEquals(array('allocationSize' => 1, 'initialValue' => 10, 'sequenceName' => 'foo'), $class->sequenceGeneratorDefinition);
+    }
 }
 
 class TransientBaseClass {
@@ -151,7 +190,8 @@ class EntitySubClass2 extends MappedSuperclassBase {
 abstract class HierachyBase
 {
     /**
-     * @Column(type="integer") @Id @GeneratedValue
+     * @Column(type="integer") @Id @GeneratedValue(strategy="SEQUENCE")
+     * @SequenceGenerator(sequenceName="foo", initialValue="10")
      * @var int
      */
     public $id;
@@ -216,8 +256,25 @@ class SuperclassEntity extends SuperclassBase
 abstract class SuperclassBase
 {
     /**
-     * @Column(type="integer") @Id @GeneratedValue
+     * @Column(type="integer") @Id @GeneratedValue(strategy="SEQUENCE") 
+     * @SequenceGenerator(sequenceName="foo", initialValue="10")
      * @var int
      */
     public $id;
+}
+
+/**
+ * @MappedSuperclass
+ */
+abstract class MediumSuperclassBase extends SuperclassBase
+{
+    
+}
+
+/**
+ * @Entity
+ */
+class MediumSuperclassEntity extends MediumSuperclassBase
+{
+    
 }
