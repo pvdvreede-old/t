@@ -14,21 +14,27 @@ use Vdvreede\TFrontendBundle\Form\CategoryType;
  *
  * @Route("/category")
  */
-class CategoryController extends BaseController
-{
+class CategoryController extends BaseController {
+
     /**
      * Lists all Category entities.
      *
-     * @Route("/", name="category")
+     * @Route("/", name="category", defaults={"offset" = "1"})
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction($offset) {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('VdvreedeTFrontendBundle:Category')->findAllByUserId($this->getCurrentUser()->getId());
+        $limit = 20;
+        $midRange = 7;
 
-        return array('entities' => $entities);
+        $itemCount = $em->getRepository('VdvreedeTFrontendBundle:Category')->countAllByUserId($this->getCurrentUser()->getId());
+
+        $paginator = new \Vdvreede\TFrontendBundle\Helper\Paginator($itemCount, $offset, $limit, $midRange);
+
+        $entities = $em->getRepository('VdvreedeTFrontendBundle:Category')->findAllByUserId($this->getCurrentUser()->getId(), ($offset - 1) * $limit, $limit);
+
+        return array('entities' => $entities, 'paginator' => $paginator);
     }
 
     /**
@@ -37,8 +43,7 @@ class CategoryController extends BaseController
      * @Route("/{id}/show", name="category_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
@@ -50,7 +55,7 @@ class CategoryController extends BaseController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -61,14 +66,13 @@ class CategoryController extends BaseController
      * @Route("/new", name="category_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Category();
-        $form   = $this->createForm(new CategoryType(), $entity);
+        $form = $this->createForm(new CategoryType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form' => $form->createView()
         );
     }
 
@@ -79,30 +83,28 @@ class CategoryController extends BaseController
      * @Method("post")
      * @Template("VdvreedeTFrontendBundle:Category:new.html.twig")
      */
-    public function createAction()
-    {
-        $entity  = new Category();
+    public function createAction() {
+        $entity = new Category();
         $request = $this->getRequest();
-        $form    = $this->createForm(new CategoryType(), $entity);
+        $form = $this->createForm(new CategoryType(), $entity);
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
 
             if ($form->isValid()) {
                 $entity->setUser($this->getCurrentUser());
-                
+
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entity);
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('category_show', array('id' => $entity->getId())));
-                
             }
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form' => $form->createView()
         );
     }
 
@@ -112,8 +114,7 @@ class CategoryController extends BaseController
      * @Route("/{id}/edit", name="category_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
@@ -126,8 +127,8 @@ class CategoryController extends BaseController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -139,8 +140,7 @@ class CategoryController extends BaseController
      * @Method("post")
      * @Template("VdvreedeTFrontendBundle:Category:edit.html.twig")
      */
-    public function updateAction($id)
-    {
+    public function updateAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('VdvreedeTFrontendBundle:Category')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
@@ -149,7 +149,7 @@ class CategoryController extends BaseController
             throw $this->createNotFoundException('Unable to find Category entity.');
         }
 
-        $editForm   = $this->createForm(new CategoryType(), $entity);
+        $editForm = $this->createForm(new CategoryType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -167,8 +167,8 @@ class CategoryController extends BaseController
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -179,8 +179,7 @@ class CategoryController extends BaseController
      * @Route("/{id}/delete", name="category_delete")
      * @Method("post")
      */
-    public function deleteAction($id)
-    {
+    public function deleteAction($id) {
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
@@ -203,11 +202,11 @@ class CategoryController extends BaseController
         return $this->redirect($this->generateUrl('category'));
     }
 
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                ->add('id', 'hidden')
+                ->getForm()
         ;
     }
+
 }
