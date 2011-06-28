@@ -286,6 +286,16 @@ class Transaction
     {
         return $this->date;
     }
+    
+    /**
+     * Get the date a formated string.
+     * 
+     * @return string
+     */
+    public function getDateString()
+    {
+        return $this->date->format('d-m-Y');
+    }
 
     /**
      * Set amount

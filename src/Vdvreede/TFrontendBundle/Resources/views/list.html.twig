@@ -9,7 +9,7 @@
 {% for entity in entities %}
     <tr>
     {% for method in methods %}
-        <td>{{ entity|vdvreede_call_method(method) }} {% entity.{{method}}%}</td>
+        <td>{{ entity|call_method(method) }}</td>
     {% endfor %}
     </tr>
 {% endfor %}

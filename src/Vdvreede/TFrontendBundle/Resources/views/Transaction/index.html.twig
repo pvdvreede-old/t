@@ -5,8 +5,7 @@
 {% include 'VdvreedeTFrontendBundle::list.html.twig' with {
 'header'    : ['Date', 'Description', 'Amount'], 
 'entities'  : entities, 
-'methods'   : ['name', 'description', 'type'],
-'actions'   : [],
+'methods'   : ['DateString', 'Description', 'Amount'],
 'paginator' : paginator,
 'item_type' : 'transaction'
 } %}

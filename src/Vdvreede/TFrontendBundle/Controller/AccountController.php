@@ -19,16 +19,23 @@ class AccountController extends BaseController
     /**
      * Lists all Account entities.
      *
-     * @Route("/", name="account")
+     * @Route("/", name="account", defaults={"offset" = "1"})
      * @Template()
      */
-    public function indexAction()
+    public function indexAction($offset)
     {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entities = $em->getRepository('VdvreedeTFrontendBundle:Account')->findAllByUserId($this->getCurrentUser()->getId());
+        $limit = 20;
+        $midRange = 7;
+        
+        $itemCount = $em->getRepository('VdvreedeTFrontendBundle:Account')->countAllByUserId($this->getCurrentUser()->getId());
+        
+        $paginator = new \Vdvreede\TFrontendBundle\Helper\Paginator($itemCount, $offset, $limit, $midRange);
+        
+        $entities = $em->getRepository('VdvreedeTFrontendBundle:Account')->findAllByUserId($this->getCurrentUser()->getId(), ($offset-1)*$limit, $limit);
 
-        return array('entities' => $entities);
+        return array('entities' => $entities, 'paginator' => $paginator);
     }
 
     /**

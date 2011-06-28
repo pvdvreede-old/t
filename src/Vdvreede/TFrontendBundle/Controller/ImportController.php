@@ -47,11 +47,8 @@ class ImportController extends BaseController {
 
                 // Grab first 5 lines to render
                 for ($i = 0 ; $i < 6; $i++) {
-
                   $data = fgetcsv($handle, 1000, ',');
                   $first5Lines[] = $data;
-
-
                 }
 
                 // finally if there have not been any errors, set the filename to the session

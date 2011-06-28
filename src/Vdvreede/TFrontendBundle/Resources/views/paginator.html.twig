@@ -26,7 +26,8 @@
 
         {% endfor %}
 
-
+        {% if paginator.numpages > 1 %}
             <li> <a class="next" href="{{ path(item_type, {  'offset': paginator.currentpage+1 }) }}">Next</a>
+        {% endif %}
     </ul>
 </div>
