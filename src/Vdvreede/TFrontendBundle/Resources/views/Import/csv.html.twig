@@ -6,6 +6,11 @@
     {{ form_widget(form) }}
 
     <table>
+    {% for column in firstLines[0] %}
+    <th>
+    Column {{ loop.index - 1 }}
+    </th>
+    {% endfor %}
     {% for lines in firstLines %}
     <tr>
     {% for column in lines %}
