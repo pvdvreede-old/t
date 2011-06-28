@@ -78,6 +78,20 @@ class TransImport
      * @ORM\Column(name="amount_field", type="integer", nullable=false)
      */
     private $amountField;
+    
+    /**
+     * @var integer $creditField
+     *
+     * @ORM\Column(name="credit_field", type="integer", nullable=false)
+     */
+    private $creditField;
+    
+    /**
+     * @var integer $debitField
+     *
+     * @ORM\Column(name="debit_field", type="integer", nullable=false)
+     */
+    private $debitField;
 
     /**
      * @var Account
@@ -253,6 +267,46 @@ class TransImport
     public function getAmountField()
     {
         return $this->amountField;
+    }
+    
+    /**
+     * Set amountField
+     *
+     * @param integer $amountField
+     */
+    public function setCreditField($creditField)
+    {
+        $this->creditField = $creditField;
+    }
+
+    /**
+     * Get amountField
+     *
+     * @return integer $amountField
+     */
+    public function getCreditField()
+    {
+        return $this->creditField;
+    }
+    
+    /**
+     * Set amountField
+     *
+     * @param integer $amountField
+     */
+    public function setDebitField($debitField)
+    {
+        $this->debitField = $debitField;
+    }
+
+    /**
+     * Get amountField
+     *
+     * @return integer $amountField
+     */
+    public function getDebitField()
+    {
+        return $this->debitField;
     }
 
     /**
