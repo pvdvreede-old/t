@@ -43,12 +43,24 @@ class ImportController extends BaseController {
                 $columnCount = count(fgetcsv($handle, 1000, ','));
                 $mainForm = $this->createImportSetupForm($columnCount);
 
+                $first5Lines = array();
+
+                // Grab first 5 lines to render
+                for ($i = 0 ; $i < 6; $i++) {
+
+                  $data = fgetcsv($handle, 1000, ',');
+                  $first5Lines[] = $data;
+
+
+                }
+
                 // finally if there have not been any errors, set the filename to the session
                 $request->getSession()->set('import', $fullFilename);
 
                 return $this->render('VdvreedeTFrontendBundle:Import:csv.html.twig', array(
                     'form' => $mainForm->createView(),
-                    'accountId' => $accountId
+                    'accountId' => $accountId,
+                    'firstLines' => $first5Lines
                 ));
             }
         }
