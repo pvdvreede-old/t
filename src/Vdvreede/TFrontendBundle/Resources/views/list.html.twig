@@ -9,7 +9,11 @@
 {% for entity in entities %}
     <tr>
     {% for method in methods %}
+        {% if method == hyperlink %}
+        <td><a href="{{ path(edit_path, {'id' : entity.id }) }}">{{ entity|call_method(method) }}<a/></td>
+        {% else %}
         <td>{{ entity|call_method(method) }}</td>
+        {% endif %}
     {% endfor %}
     </tr>
 {% endfor %}
