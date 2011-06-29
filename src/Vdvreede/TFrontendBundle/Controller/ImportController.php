@@ -98,9 +98,12 @@ class ImportController extends BaseController {
                 }
 
                 $transImport->setName($form['name']->getNormData());
-                $transImport->setAccount($account);
                 $transImport->setUser($this->getCurrentUser());
                 $transImport->setHasHeader($form['has_header']->getNormData());
+
+                if ($transImport->getCreditField() != '0' && $transImport->getCreditField() != ''
+                && $transImport->getDebitField() != '0' && $transImport->getDebitField() != '')
+                  $transImport->setAmountField(0);
 
                 $em->persist($transImport);
                 $em->flush();
@@ -135,7 +138,19 @@ class ImportController extends BaseController {
 
                     $trans->setDescription($data[$transImport->getDescriptionField()]);
                     $trans->setMemo($data[$transImport->getMemoField()]);
-                    $trans->setAmount($data[$transImport->getAmountField()]);
+
+                    // Only use the amount field if there are no credit or debit fields
+                    if ($transImport->getAmountField() == 0) {
+
+                      if ($data[$transImport->getCreditField()] != '')
+                        $trans->setAmount($data[$transImport->getCreditField()]);
+                      else if ($data[$transImport->getDebitField()] != '')
+                        $trans->setAmount($data[$transImport->getDebitField()]);
+                                             
+                    } else {
+
+                      $trans->setAmount($data[$transImport->getAmountField()]);
+                    }
                     $trans->setDate(new \DateTime());
 
                     $trans->setUser($this->getCurrentUser());
