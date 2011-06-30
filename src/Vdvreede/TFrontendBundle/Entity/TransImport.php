@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Vdv\AccountBundle\Entity\TransImport
  *
- * @ORM\Table(name="trans_import")
+ * @ORM\Table(name="trans_import", uniqueConstraints={@ORM\UniqueConstraint(name="trans_import_row", columns={"name", "user_id"})})
  * @ORM\Entity(repositoryClass="Vdvreede\TFrontendBundle\Repository\TransImportRepository")
  * @Gedmo\Loggable
  */

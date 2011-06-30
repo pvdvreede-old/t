@@ -8,7 +8,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Vdv\AccountBundle\Entity\Transaction
  *
- * @ORM\Table(name="transaction")
+ * @ORM\Table(name="transaction", uniqueConstraints={@ORM\UniqueConstraint(name="transaction_row", columns={"user_id", "description", "amount", "date", "account_id"})})
  * @ORM\Entity(repositoryClass="Vdvreede\TFrontendBundle\Repository\TransactionRepository")
  * @Gedmo\Loggable
  */
