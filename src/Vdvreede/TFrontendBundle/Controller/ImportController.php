@@ -11,9 +11,7 @@ class ImportController extends BaseController {
     private static $fileDirectory = '/tmp/';
 
     public function fileAction($accountId) {
-        $fileImport = new \Vdvreede\TFrontendBundle\Entity\ImportFile();
-
-        $fileForm = $this->createForm(new ImportFileType(), $fileImport);
+        $fileForm = $this->createForm(new ImportFileType());
 
         $request = $this->getRequest();
 
@@ -25,7 +23,7 @@ class ImportController extends BaseController {
                 // move the file to a temp place
                 $filename = $this->generateFileName();
                 $fullFilename = self::$fileDirectory . $filename;
-                $fileImport->getFile()->move(self::$fileDirectory, $filename);
+                $fileForm['file']->getNormData()->move(self::$fileDirectory, $filename);
 
                 // if an import type is selected then set the session and redirect to the next step
                 if ($fileForm['importName']->getNormData() != '') {
@@ -44,9 +42,9 @@ class ImportController extends BaseController {
                 $mainForm = $this->createImportSetupForm($columnCount);
 
                 $first5Lines = array();
-                
+
                 fseek($handle, 0);
-                
+
                 // Grab first 5 lines to render
                 for ($i = 0; $i < 6; $i++) {
                     $data = fgetcsv($handle, 1000, ',');
@@ -102,10 +100,11 @@ class ImportController extends BaseController {
                 $transImport->setName($form['name']->getNormData());
                 $transImport->setUser($this->getCurrentUser());
                 $transImport->setHasHeader($form['has_header']->getNormData());
+                $transImport->setDateFormat($form['date_format']->getNormData());
                 $transImport->setAccount($account);
 
                 if ($transImport->getCreditField() != '0' && $transImport->getCreditField() != ''
-                        && $transImport->getDebitField() != '0' && $transImport->getDebitField() != '') 
+                        && $transImport->getDebitField() != '0' && $transImport->getDebitField() != '')
                     $transImport->setAmountField(0);
 
 
@@ -161,7 +160,12 @@ class ImportController extends BaseController {
 
                             $trans->setAmount($data[$transImport->getAmountField()]);
                         }
-                        $trans->setDate($data[$transImport->getDateField()]);
+
+                        $date = strtotime($data[$transImport->getDateField()]);                                            
+                        $this->get('logger')->info('Unix date time for '.$trans->getDescription().': '.$date);
+                        $dateObj = \DateTime::createFromFormat($transImport->getDateFormat(), $data[$transImport->getDateField()]);
+                        $this->get('logger')->info('Date from date object: '.$dateObj->format('d/m/Y'));
+                        $trans->setDate($dateObj); //new \DateTime(date('Y-m-d', $date)));
 
                         $trans->setUser($this->getCurrentUser());
                         $trans->setAccount($account);
@@ -182,7 +186,7 @@ class ImportController extends BaseController {
         } catch (Exception $ex) {
             $em->getConnection()->rollBack();
             $em->close();
-            throw $ex;
+            //throw $ex;
         }
 
         return $this->render('VdvreedeTFrontendBundle:Import:process.html.twig', array(
@@ -200,7 +204,7 @@ class ImportController extends BaseController {
 
         $mainFormType->setColumnType($columnFormType);
 
-// create main form and input column form
+        // create main form and input column form
         return $this->createForm($mainFormType);
     }
 

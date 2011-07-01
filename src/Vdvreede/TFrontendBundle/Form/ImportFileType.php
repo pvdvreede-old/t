@@ -8,6 +8,14 @@ use Vdvreede\TFrontendBundle\Entity;
 
 class ImportFileType extends AbstractType
 {
+    
+    
+    private $query;
+    
+    public function setQuery($query) {
+        $this->query = $query;
+    }
+    
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder->add('file', 'file', array(
@@ -25,7 +33,8 @@ class ImportFileType extends AbstractType
              'multiple' => false,
              'required' => false,
              'label' => 'Import type to use'
-        ));	
+        ));
+        
 
     }
 }

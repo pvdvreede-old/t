@@ -19,6 +19,7 @@ class CsvSetupType extends AbstractType {
         'Date' => 'Date'
     );
 
+
     public function buildForm(FormBuilder $builder, array $options) {
         for ($i = 0; $i < $this->columnCount; $i++) {
             $builder->add('column' . $i, 'choice', array(

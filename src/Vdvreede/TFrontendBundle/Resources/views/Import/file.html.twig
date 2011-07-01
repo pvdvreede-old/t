@@ -7,7 +7,6 @@
 <form action="" method="post" {{ form_enctype(form) }}>
     {{ form_errors(form) }}
     {{ form_row(form.file) }}
-    
     {{ form_label(form.importName) }}
     {{ form_widget(form.importName, { 'empty_value' : 'Create a new Import' } ) }}
     {{ form_rest(form) }}

@@ -92,6 +92,13 @@ class TransImport
      * @ORM\Column(name="debit_field", type="integer", nullable=true)
      */
     private $debitField;
+    
+     /**
+     * @var integer $dateFormat
+     *
+     * @ORM\Column(name="date_format", type="string", length=255, nullable=false)
+     */
+    private $dateFormat;
 
     /**
      * @var Account
@@ -187,6 +194,26 @@ class TransImport
     public function getHasHeader()
     {
         return $this->hasHeader;
+    }
+    
+    /**
+     * Set accountId
+     *
+     * @param integer $accountId
+     */
+    public function setDateFormat($hasHeader)
+    {
+        $this->dateFormat = $hasHeader;
+    }
+
+    /**
+     * Get accountId
+     *
+     * @return integer $accountId
+     */
+    public function getDateFormat()
+    {
+        return $this->dateFormat;
     }
 
     /**
