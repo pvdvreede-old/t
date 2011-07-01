@@ -3,9 +3,9 @@
 <h1>Transaction list</h1>
 
 {% include 'VdvreedeTFrontendBundle::list.html.twig' with {
-'header'    : ['Date', 'Description', 'Amount'], 
+'header'    : ['Date', 'Description', 'Amount', 'Account', 'Category'], 
 'entities'  : entities, 
-'methods'   : ['DateString', 'Description', 'Amount'],
+'methods'   : ['DateString', 'Description', 'Amount', 'Account', 'Category'],
 'hyperlink' : 'Description',
 'edit_path' : 'transaction_edit',
 'paginator' : paginator,
