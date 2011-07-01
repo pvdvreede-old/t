@@ -44,11 +44,13 @@ class ImportController extends BaseController {
                 $mainForm = $this->createImportSetupForm($columnCount);
 
                 $first5Lines = array();
-
+                
+                fseek($handle, 0);
+                
                 // Grab first 5 lines to render
-                for ($i = 0 ; $i < 6; $i++) {
-                  $data = fgetcsv($handle, 1000, ',');
-                  $first5Lines[] = $data;
+                for ($i = 0; $i < 6; $i++) {
+                    $data = fgetcsv($handle, 1000, ',');
+                    $first5Lines[] = $data;
                 }
 
                 // finally if there have not been any errors, set the filename to the session
@@ -76,7 +78,7 @@ class ImportController extends BaseController {
 
         $handle = fopen($fullFilename, 'r');
         $columnCount = count(fgetcsv($handle, 1000, ','));
-        fclose($handle);
+        fseek($handle, 0);
 
         if ($transImportId == '0') {
 
@@ -100,10 +102,12 @@ class ImportController extends BaseController {
                 $transImport->setName($form['name']->getNormData());
                 $transImport->setUser($this->getCurrentUser());
                 $transImport->setHasHeader($form['has_header']->getNormData());
+                $transImport->setAccount($account);
 
                 if ($transImport->getCreditField() != '0' && $transImport->getCreditField() != ''
-                && $transImport->getDebitField() != '0' && $transImport->getDebitField() != '')
-                  $transImport->setAmountField(0);
+                        && $transImport->getDebitField() != '0' && $transImport->getDebitField() != '') 
+                    $transImport->setAmountField(0);
+
 
                 $em->persist($transImport);
                 $em->flush();
@@ -126,48 +130,60 @@ class ImportController extends BaseController {
 
         // loop through the first line to get rid of the header before inserting.
         if ($transImport->getHasHeader()) {
-          $header = fgetcsv($handle, 1000, ',');
+            $header = fgetcsv($handle, 1000, ',');
         }
 
-        // Run through the file and import the transactions
-        while (($data = fgetcsv($handle, 1000, ',')) !== false) {
-            if (count($data) == $columnCount) {
-                try {
+        // put inserts into a transaction
+        $em->getConnection()->beginTransaction();
 
-                    $trans = new \Vdvreede\TFrontendBundle\Entity\Transaction();
+        try {
 
-                    $trans->setDescription($data[$transImport->getDescriptionField()]);
-                    $trans->setMemo($data[$transImport->getMemoField()]);
+            // Run through the file and import the transactions
+            while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                if (count($data) == $columnCount) {
+                    try {
 
-                    // Only use the amount field if there are no credit or debit fields
-                    if ($transImport->getAmountField() == 0) {
+                        $trans = new \Vdvreede\TFrontendBundle\Entity\Transaction();
 
-                      if ($data[$transImport->getCreditField()] != '')
-                        $trans->setAmount($data[$transImport->getCreditField()]);
-                      else if ($data[$transImport->getDebitField()] != '')
-                        $trans->setAmount($data[$transImport->getDebitField()]);
-                                             
-                    } else {
+                        $trans->setDescription($data[$transImport->getDescriptionField()]);
 
-                      $trans->setAmount($data[$transImport->getAmountField()]);
+                        if (isset($data[$transImport->getMemoField()]))
+                            $trans->setMemo($data[$transImport->getMemoField()]);
+
+                        // Only use the amount field if there are no credit or debit fields
+                        if ($transImport->getAmountField() == 0) {
+
+                            if ($data[$transImport->getCreditField()] != '')
+                                $trans->setAmount($data[$transImport->getCreditField()]);
+                            else if ($data[$transImport->getDebitField()] != '')
+                                $trans->setAmount($data[$transImport->getDebitField()]);
+                        } else {
+
+                            $trans->setAmount($data[$transImport->getAmountField()]);
+                        }
+                        $trans->setDate($data[$transImport->getDateField()]);
+
+                        $trans->setUser($this->getCurrentUser());
+                        $trans->setAccount($account);
+                        $trans->setSplit(false);
+                        $trans->setReportable(true);
+
+                        $em->persist($trans);
+
+                        $inserted++;
+                    } catch (Exception $ex) {
+                        $errors++;
                     }
-                    $trans->setDate(new \DateTime());
-
-                    $trans->setUser($this->getCurrentUser());
-                    $trans->setAccount($account);
-                    $trans->setSplit(false);
-                    $trans->setReportable(true);
-
-                    $em->persist($trans);
-
-                    $inserted++;
-                } catch (Exception $ex) {
-                    $errors++;
                 }
             }
-        }
 
-        $em->flush();
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (Exception $ex) {
+            $em->getConnection()->rollBack();
+            $em->close();
+            throw $ex;
+        }
 
         return $this->render('VdvreedeTFrontendBundle:Import:process.html.twig', array(
             'errors' => $errors,

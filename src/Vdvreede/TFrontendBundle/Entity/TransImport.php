@@ -82,14 +82,14 @@ class TransImport
     /**
      * @var integer $creditField
      *
-     * @ORM\Column(name="credit_field", type="integer", nullable=false)
+     * @ORM\Column(name="credit_field", type="integer", nullable=true)
      */
     private $creditField;
     
     /**
      * @var integer $debitField
      *
-     * @ORM\Column(name="debit_field", type="integer", nullable=false)
+     * @ORM\Column(name="debit_field", type="integer", nullable=true)
      */
     private $debitField;
 
