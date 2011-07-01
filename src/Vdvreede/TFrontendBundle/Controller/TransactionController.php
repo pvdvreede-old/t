@@ -209,7 +209,17 @@ class TransactionController extends BaseController
 
         return $this->redirect($this->generateUrl('transaction'));
     }
-
+    
+    /**
+     * Performs the action.
+     *
+     * @Route("/go", name="transaction_action")
+     * @Method("post")
+     */
+    public function actionAction() {
+        
+    }
+    
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))

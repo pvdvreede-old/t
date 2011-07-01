@@ -1,4 +1,3 @@
-
 <table class="read-only-list">
 <thead>
 {% for item in header %}
@@ -8,6 +7,9 @@
 <tbody>
 {% for entity in entities %}
     <tr>
+    {% if show_checkbox %}
+    <td><input type="checkbox" name="id[]" value="{{ entity.id }}" /></td>
+    {% endif %}
     {% for method in methods %}
         {% if method == hyperlink %}
         <td><a href="{{ path(edit_path, {'id' : entity.id }) }}">{{ entity|call_method(method) }}<a/></td>
@@ -19,7 +21,7 @@
 {% endfor %}
 </tbody>
 </table>
-
+</form>
 {% include 'VdvreedeTFrontendBundle::paginator.html.twig' with {
 'paginator' : paginator,
 'item_type' : item_type
