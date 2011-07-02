@@ -1,0 +1,21 @@
+
+<form action="{{ path('transaction') }}" method="get">
+    <select name="account">
+        <option value="0">Show all accounts</option>
+        {% for account in accounts %}
+        {% if current == account.id %}
+        <option selected value="{{ account.id }}">{{ account.name }}</option>
+        {% else %}
+        <option value="{{ account.id }}">{{ account.name }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+    
+    <a href="{{ path('account_new') }}">New</a>
+    {% if current != '0' %}
+    <a href="{{ path('account_edit', {'id' : current}) }}">Edit</a>
+    <a href="{{ path('import_file', {'accountId' : current}) }}">Import</a>
+    {% endif %}
+    <input type="submit" value="Go" />
+</form>
+

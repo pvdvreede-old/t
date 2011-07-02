@@ -13,28 +13,27 @@ use Vdvreede\TFrontendBundle\Form\TransactionType;
  *
  * @Route("/transaction")
  */
-class TransactionController extends BaseController
-{
+class TransactionController extends BaseController {
+
     /**
      * Lists all Transaction entities.
      *
-     * @Route("/{offset}", name="transaction", defaults={"offset" = "1"})
+     * @Route("/{account}/{offset}", name="transaction", defaults={"offset" = "1", "account" = "0"})
      * @Template()
      */
-    public function indexAction($offset)
-    {
+    public function indexAction($offset, $account) {
         $em = $this->getDoctrine()->getEntityManager();
-        
+
         $limit = 20;
         $midRange = 7;
-        
-        $itemCount = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->countAllByUserId($this->getCurrentUser()->getId());
-        
-        $paginator = new \Vdvreede\TFrontendBundle\Helper\Paginator($itemCount, $offset, $limit, $midRange);
-        
-        $entities = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAllByUserId($this->getCurrentUser()->getId(), ($offset-1)*$limit, $limit);
 
-        return array('entities' => $entities, 'paginator' => $paginator);
+        $itemCount = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->countAllByUserAccount($this->getCurrentUser()->getId(), $account)->getQuery()->getSingleScalarResult();
+
+        $paginator = new \Vdvreede\TFrontendBundle\Helper\Paginator($itemCount, $offset, $limit, $midRange);
+
+        $entities = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAllByUserAccount($this->getCurrentUser()->getId(), $account, ($offset - 1) * $limit, $limit)->getQuery()->execute();
+
+        return array('entities' => $entities, 'paginator' => $paginator, 'account' => $account);
     }
 
     /**
@@ -43,8 +42,7 @@ class TransactionController extends BaseController
      * @Route("/{id}/show", name="transaction_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
@@ -56,7 +54,7 @@ class TransactionController extends BaseController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -67,14 +65,13 @@ class TransactionController extends BaseController
      * @Route("/new", name="transaction_new")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction() {
         $entity = new Transaction();
-        $form   = $this->createForm(new TransactionType(), $entity);
+        $form = $this->createForm(new TransactionType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form' => $form->createView()
         );
     }
 
@@ -85,31 +82,29 @@ class TransactionController extends BaseController
      * @Method("post")
      * @Template("VdvreedeTFrontendBundle:Transaction:new.html.twig")
      */
-    public function createAction()
-    {
-        $entity  = new Transaction();
+    public function createAction() {
+        $entity = new Transaction();
         $request = $this->getRequest();
-        $form    = $this->createForm(new TransactionType(), $entity);
+        $form = $this->createForm(new TransactionType(), $entity);
 
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
 
             if ($form->isValid()) {
-                
+
                 $entity->setUser($this->getCurrentUser());
-                
+
                 $em = $this->getDoctrine()->getEntityManager();
                 $em->persist($entity);
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('transaction_show', array('id' => $entity->getId())));
-                
             }
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView()
+            'form' => $form->createView()
         );
     }
 
@@ -119,8 +114,7 @@ class TransactionController extends BaseController
      * @Route("/{id}/edit", name="transaction_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
@@ -133,8 +127,8 @@ class TransactionController extends BaseController
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -146,8 +140,7 @@ class TransactionController extends BaseController
      * @Method("post")
      * @Template("VdvreedeTFrontendBundle:Transaction:edit.html.twig")
      */
-    public function updateAction($id)
-    {
+    public function updateAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findOneByIdAndUser($id, $this->getCurrentUser()->getId());
@@ -156,7 +149,7 @@ class TransactionController extends BaseController
             throw $this->createNotFoundException('Unable to find Transaction entity.');
         }
 
-        $editForm   = $this->createForm(new TransactionType(), $entity);
+        $editForm = $this->createForm(new TransactionType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
@@ -174,8 +167,8 @@ class TransactionController extends BaseController
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -186,8 +179,7 @@ class TransactionController extends BaseController
      * @Route("/{id}/delete", name="transaction_delete")
      * @Method("post")
      */
-    public function deleteAction($id)
-    {
+    public function deleteAction($id) {
         $form = $this->createDeleteForm($id);
         $request = $this->getRequest();
 
@@ -209,7 +201,7 @@ class TransactionController extends BaseController
 
         return $this->redirect($this->generateUrl('transaction'));
     }
-    
+
     /**
      * Performs the action.
      *
@@ -219,12 +211,12 @@ class TransactionController extends BaseController
     public function actionAction() {
         
     }
-    
-    private function createDeleteForm($id)
-    {
+
+    private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
+                ->add('id', 'hidden')
+                ->getForm()
         ;
     }
+
 }

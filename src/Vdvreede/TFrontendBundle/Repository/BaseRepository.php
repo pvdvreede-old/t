@@ -33,7 +33,7 @@ class BaseRepository extends \Doctrine\ORM\EntityRepository {
             $query->setMaxResults ($limit);
 
 
-        return $query->getQuery()->execute();
+        return $query;
     }
 
     public function countAllByUserId($userId) {
@@ -41,8 +41,8 @@ class BaseRepository extends \Doctrine\ORM\EntityRepository {
         $query = $this->createQueryBuilder('a')
                         ->select('COUNT(a.id)')
                         ->where('a.userId = :userId')
-                        ->setParameter('userId', $userId)
-                        ->getQuery()->getSingleScalarResult();
+                        ->setParameter('userId', $userId);
+                        
 
         return $query;
     }
