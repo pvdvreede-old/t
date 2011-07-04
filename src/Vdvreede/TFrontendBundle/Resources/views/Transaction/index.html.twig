@@ -6,23 +6,44 @@
 <h1>Transaction list</h1>
 
 <form action="" method="post">
-{% include 'VdvreedeTFrontendBundle::list.html.twig' with {
-'header'    : ['', 'Date', 'Description', 'Amount', 'Account', 'Category'], 
-'entities'  : entities, 
-'methods'   : ['DateString', 'Description', 'Amount', 'Account', 'Category'],
-'hyperlink' : 'Description',
-'edit_path' : 'transaction_edit',
-'paginator' : paginator,
-'item_type' : 'transaction',
-'show_checkbox' : true
-} %}
-</form>
+<div id="actions">
+    {{ form_widget(form) }}
+    <input type="submit" value="Go" />
+</div>
+    <table>
+        <thead>
+        <th></th>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Account</th>
+        <th>Category</th>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+                <tr>
+                    <td><input type="checkbox" name="trans_id[]" value="{{ entity.id }}" /></td>
+                    <td>{{ entity.datestring }}</td>
+                    <td>{{ entity.description }} </td>
+                    <td>{{ entity.amount }}</td>
+                    <td>{{ entity.account }}</td>
+                    <td>{{ entity.category }}</td>
+                </tr>
+         {% endfor %}
+            </tbody>
+        </table>
+    </form>
 
-<ul>
-    <li>
-        <a href="{{ path('transaction_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+{% include 'VdvreedeTFrontendBundle::paginator.html.twig' with {
+'paginator' : paginator,
+'item_type' : 'transaction'
+} %}
+
+    <ul>
+        <li>
+            <a href="{{ path('transaction_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
 {% endblock %}

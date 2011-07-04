@@ -28,11 +28,11 @@ class CategoryController extends BaseController {
         $limit = 20;
         $midRange = 7;
 
-        $itemCount = $em->getRepository('VdvreedeTFrontendBundle:Category')->countAllByUserId($this->getCurrentUser()->getId());
+        $itemCount = $em->getRepository('VdvreedeTFrontendBundle:Category')->countAllByUserId($this->getCurrentUser()->getId())->getQuery()->getSingleScalarResult();
 
         $paginator = new \Vdvreede\TFrontendBundle\Helper\Paginator($itemCount, $offset, $limit, $midRange);
 
-        $entities = $em->getRepository('VdvreedeTFrontendBundle:Category')->findAllByUserId($this->getCurrentUser()->getId(), ($offset - 1) * $limit, $limit);
+        $entities = $em->getRepository('VdvreedeTFrontendBundle:Category')->findAllByUserId($this->getCurrentUser()->getId(), ($offset - 1) * $limit, $limit)->getQuery()->execute();
 
         return array('entities' => $entities, 'paginator' => $paginator);
     }

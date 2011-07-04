@@ -26,5 +26,21 @@ class TransactionRepository extends BaseRepository {
 
         return $query;
     }
+    
+    public function updateByUserId($userId, $ids, $fields) {
+        
+        $qb = $this->createQueryBuilder('a');
+        
+        $query = $qb->update()
+                ->where('a.userId = :userId')
+                ->setParameter('userId', $userId)
+                ->andWhere($qb->expr()->in('a.id', $ids));
+        
+        foreach ($fields as $name => $value) {
+            $query->set('a.'.$name, $value);
+        }
+        
+        return $query;
+    }
 
 }

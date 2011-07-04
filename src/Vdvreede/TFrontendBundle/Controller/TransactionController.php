@@ -7,6 +7,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Vdvreede\TFrontendBundle\Entity\Transaction;
 use Vdvreede\TFrontendBundle\Form\TransactionType;
+use Vdvreede\TFrontendBundle\Form\TransactionActionsType;
 
 /**
  * Transaction controller.
@@ -23,7 +24,37 @@ class TransactionController extends BaseController {
      */
     public function indexAction($offset, $account) {
         $em = $this->getDoctrine()->getEntityManager();
-
+        
+        // process actions first
+        $request = $this->getRequest();
+        
+        $actionForm = $this->createForm(new TransactionActionsType($em->getRepository('VdvreedeTFrontendBundle:Category')->findAllByUserId($this->getCurrentUser()->getId()), $em->getRepository('VdvreedeTFrontendBundle:Account')->findAllByUserId($this->getCurrentUser()->getId()))); 
+        
+        if ($request->getMethod() == 'POST') {
+            
+            $actionForm->bindRequest($request);
+            
+            if ($actionForm->isValid()) {
+                
+                switch ($actionForm['action']->getNormData()) {
+                    
+                    case \Vdvreede\TFrontendBundle\Form\TransactionActionsType::$ACTION_DELETE:
+                        $this->deleteTransactions($request->request->get('trans_id'));
+                        break;
+                    
+                    case \Vdvreede\TFrontendBundle\Form\TransactionActionsType::$ACTION_MOVE:
+                        $this->moveTransactions($request->request->get('trans_id'), $actionForm['account']->getNormData());
+                        break;
+                    
+                    case \Vdvreede\TFrontendBundle\Form\TransactionActionsType::$ACTION_CATEGORY:
+                        $this->changeCategory($actionForm['id']->getNormData());
+                        break;
+                }
+                
+            }
+            
+        }
+        
         $limit = 20;
         $midRange = 7;
 
@@ -33,7 +64,7 @@ class TransactionController extends BaseController {
 
         $entities = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->findAllByUserAccount($this->getCurrentUser()->getId(), $account, ($offset - 1) * $limit, $limit)->getQuery()->execute();
 
-        return array('entities' => $entities, 'paginator' => $paginator, 'account' => $account);
+        return array('entities' => $entities, 'paginator' => $paginator, 'account' => $account, 'form' => $actionForm->createView());
     }
 
     /**
@@ -202,21 +233,35 @@ class TransactionController extends BaseController {
         return $this->redirect($this->generateUrl('transaction'));
     }
 
-    /**
-     * Performs the action.
-     *
-     * @Route("/go", name="transaction_action")
-     * @Method("post")
-     */
-    public function actionAction() {
-        
-    }
-
     private function createDeleteForm($id) {
         return $this->createFormBuilder(array('id' => $id))
                 ->add('id', 'hidden')
                 ->getForm()
         ;
+    }
+    
+    private function deleteTransactions($ids) {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $query = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->deleteByUserAndIds($this->getCurrentUser()->getId(), $ids)->getQuery();
+        
+        $rows = $query->execute();
+
+        $this->get('session')->setFlash('notice', $rows.' transactions have been deleted.');
+        
+        $this->redirect($this->getRequest()->getPathInfo());
+    }
+    
+    private function moveTransactions($ids, $account) {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $query = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->updateByUserId($this->getCurrentUser()->getId(), $ids, array('accountId' => $account->getId()))->getQuery();
+        
+        $rows = $query->execute();
+
+        $this->get('session')->setFlash('notice', $rows.' transactions have been updated.');
+        
+        $this->redirect($this->getRequest()->getPathInfo());
     }
 
 }

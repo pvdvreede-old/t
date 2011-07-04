@@ -46,5 +46,19 @@ class BaseRepository extends \Doctrine\ORM\EntityRepository {
 
         return $query;
     }
+    
+    public function deleteByUserAndIds($userId, $ids) {
+        
+        $qb = $this->createQueryBuilder('a');
+        
+        $query = $qb
+                ->delete()
+                ->where('a.userId = :userId')
+                ->setParameter('userId', $userId)
+                ->andWhere($qb->expr()->in('a.id', $ids));
+        
+        return $query;
+        
+    }
 
 }
