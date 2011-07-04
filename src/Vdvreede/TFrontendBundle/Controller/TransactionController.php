@@ -47,7 +47,7 @@ class TransactionController extends BaseController {
                         break;
                     
                     case \Vdvreede\TFrontendBundle\Form\TransactionActionsType::$ACTION_CATEGORY:
-                        $this->changeCategory($actionForm['id']->getNormData());
+                        $this->changeCategory($request->request->get('trans_id'), $actionForm['category']->getNormData());
                         break;
                 }
                 
@@ -256,6 +256,18 @@ class TransactionController extends BaseController {
         $em = $this->getDoctrine()->getEntityManager();
         
         $query = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->updateByUserId($this->getCurrentUser()->getId(), $ids, array('accountId' => $account->getId()))->getQuery();
+        
+        $rows = $query->execute();
+
+        $this->get('session')->setFlash('notice', $rows.' transactions have been updated.');
+        
+        $this->redirect($this->getRequest()->getPathInfo());
+    }
+    
+    private function changeCategory($ids, $category) {
+        $em = $this->getDoctrine()->getEntityManager();
+        
+        $query = $em->getRepository('VdvreedeTFrontendBundle:Transaction')->updateByUserId($this->getCurrentUser()->getId(), $ids, array('categoryId' => $category->getId()))->getQuery();
         
         $rows = $query->execute();
 
