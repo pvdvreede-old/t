@@ -15,7 +15,11 @@ class ImportSetupType extends AbstractType {
         'm-d-Y' => 'm-d-Y (eg 03-14-2011)',
         'Y/m/d' => 'Y/m/d (eg 2001/03/23)',
         'd/m/Y' => 'd/m/Y (eg 15/03/2011)',
-        'm/d/Y' => 'm/d/Y (eg 03/14/2011)'
+        'm/d/Y' => 'm/d/Y (eg 03/14/2011)',
+        'd-M-Y' => '23-Jan-2001',
+        'd-M-y' => '23-Jane-11',
+        'd/M/Y' => '23/Jan/2001',
+        'd-m-y' => '12-04-11'
     );
 
     public function buildForm(FormBuilder $builder, array $options) {
