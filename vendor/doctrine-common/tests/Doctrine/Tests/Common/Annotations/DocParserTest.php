@@ -5,6 +5,7 @@ namespace Doctrine\Tests\Common\Annotations;
 use Doctrine\Common\Annotations\Annotation\IgnorePhpDoc;
 use Doctrine\Common\Annotations\Annotation\IgnoreAnnotation;
 use Doctrine\Common\Annotations\DocParser;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 
 class DocParserTest extends \PHPUnit_Framework_TestCase
 {
@@ -31,9 +32,6 @@ class DocParserTest extends \PHPUnit_Framework_TestCase
     public function testBasicAnnotations()
     {
         $parser = $this->createTestParser();
-
-        $this->assertFalse($parser->isAutoloadAnnotations());
-        $parser->setAutoloadAnnotations(true);
 
         // Marker annotation
         $result = $parser->parse("@Name");
@@ -228,13 +226,33 @@ DOCBLOCK;
         $parser = new DocParser();
         $result = $parser->parse("@Doctrine\Tests\Common\Annotations\Name(@')");
     }
+    
+    /**
+     * @group DCOM-56
+     */
+    public function testAutoloadAnnotation()
+    {
+        $this->assertFalse(class_exists('Doctrine\Tests\Common\Annotations\Fixture\Annotation\Autoload', false), 'Pre-condition: Doctrine\Tests\Common\Annotations\Fixture\Annotation\Autoload not allowed to be loaded.');
+        
+        $parser = new DocParser();
+        
+        AnnotationRegistry::registerAutoloadNamespace('Doctrine\Tests\Common\Annotations\Fixtures\Annotation', __DIR__ . '/../../../../');
+        
+        $parser->setImports(array(
+            'autoload' => 'Doctrine\Tests\Common\Annotations\Fixtures\Annotation\Autoload',
+        ));
+        $annotations = $parser->parse('@Autoload');
+        
+        $this->assertEquals(1, count($annotations));
+        $this->assertInstanceOf('Doctrine\Tests\Common\Annotations\Fixtures\Annotation\Autoload', $annotations[0]);
+    }
 
     public function createTestParser()
     {
         $parser = new DocParser();
         $parser->setIgnoreNotImportedAnnotations(true);
         $parser->setImports(array(
-            'Name' => 'Doctrine\Tests\Common\Annotations\Name',
+            'name' => 'Doctrine\Tests\Common\Annotations\Name',
             '__NAMESPACE__' => 'Doctrine\Tests\Common\Annotations',
         ));
 
@@ -357,13 +375,13 @@ class Name extends \Doctrine\Common\Annotations\Annotation {
     public $foo;
 }
 
-class Marker {}
+class Marker extends \Doctrine\Common\Annotations\Annotation {}
 
-class True {}
+class True extends \Doctrine\Common\Annotations\Annotation {}
 
-class False {}
+class False extends \Doctrine\Common\Annotations\Annotation {}
 
-class Null {}
+class Null extends \Doctrine\Common\Annotations\Annotation {}
 
 namespace Doctrine\Tests\Common\Annotations\FooBar;
 
