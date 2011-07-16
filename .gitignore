@@ -1,4 +1,1 @@
-.idea
-app/cache
-app/logs
-web/bundles
+*.pyc
