@@ -2,10 +2,17 @@ from django.views.generic import *
 from t.transactions.models import *
 from t.transactions.forms import *
 
-class TransactionsListView(ListView):
+class AccountLoader():   
+    def get_accounts(user_id):
+        accounts = Account.objects.filter(user_id=user_id)       
+        return accounts
+
+class TransactionsListView(ListView, AccountLoader):
     model=Transaction
-    #query_set = Transaction.objects.get(user__exact=request.user.user_id)
     template_name="transaction_list.html" 
+    
+    def get_queryset(self):
+        return Transaction.objects.filter(user=self.request.user)
   
 class TransactionFormView(CreateView):
     model=Transaction
@@ -23,7 +30,9 @@ class TransactionEditView(UpdateView):
 class CategoryListView(ListView):
     model=Category
     template_name="transaction_list.html"
-    extra_content = { "url" : "category" }
+    
+    def get_queryset(self):
+        return Category.objects.filter(user=self.request.user)
     
 class CategoryFormView(CreateView):
     model=Category
