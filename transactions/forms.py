@@ -3,9 +3,6 @@ from t.transactions.models import *
 
 class UserModelForm(ModelForm):
     
-    def clean_user(self):
-        self.user=self.request.user
-    
     class Meta:
         includes=('name')
         excludes=('description')
