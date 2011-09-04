@@ -14,7 +14,6 @@
 		    	<div class="container">
 			    	<h3><a href="#">T</a></h3>
 			        <ul class="nav">
-			            <li {% block home-active %} {% endblock %}><a href="/">Home</a></li>
 			            <li {% block trans-active %} {% endblock %}><a href="/transaction/">Transactions</a></li>
 			            <li {% block cat-active %} {% endblock %}><a href="/category/">Categories</a></li>
 			        </ul>
@@ -26,10 +25,7 @@
     </div>
     
 	<div class="container">
-    <div id="content" style="margin-top: 40px;">
-
-    
-    
+    <div id="content" style="margin-top: 50px;">
         {% block content %}{% endblock %}
     </div>
     </div>
