@@ -3,29 +3,30 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
     <title>t - {% block title %}{% endblock %}</title>
 </head>
 
 <body>
-    <div id="sidebar" class="topbar-wrapper">
+    <div id="masthead" class="topbar-wrapper">
     	<div class="topbar">
 	    	<div class="topbar-inner">
 		    	<div class="container">
 			    	<h3><a href="#">T</a></h3>
-			        {% block sidebar %}
 			        <ul class="nav">
 			            <li {% block home-active %} {% endblock %}><a href="/">Home</a></li>
 			            <li {% block trans-active %} {% endblock %}><a href="/transaction/">Transactions</a></li>
+			            <li {% block cat-active %} {% endblock %}><a href="/category/">Categories</a></li>
 			        </ul>
-			        {% endblock %}
 		    	</div>
 	    	</div>
     	</div>
     </div>
     
-
-    <div id="content">
+	<div class="container">
+    <div id="content" style="margin-top: 40px;">
         {% block content %}{% endblock %}
+    </div>
     </div>
 </body>
 </html>
