@@ -13,6 +13,12 @@ class TransactionFormView(CreateView):
     form_class=TransactionForm
     success_url="/transaction"
     
+class TransactionEditView(UpdateView):
+    model=Transaction
+    template_name="transaction_form.html"
+    form_class=TransactionForm
+    success_url="/transaction"
+    
     
 class CategoryListView(ListView):
     model=Category
@@ -20,6 +26,12 @@ class CategoryListView(ListView):
     extra_content = { "url" : "category" }
     
 class CategoryFormView(CreateView):
+    model=Category
+    template_name="transaction_form.html"
+    form_class=CategoryForm
+    success_url="/category"
+    
+class CategoryEditView(UpdateView):
     model=Category
     template_name="transaction_form.html"
     form_class=CategoryForm

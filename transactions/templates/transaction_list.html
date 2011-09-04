@@ -7,12 +7,14 @@
 <th>Date</th>
 <th>Description</th>
 <th>Amount</th>
+<th>Category</th>
 {% for object in object_list %}
 <tr>
 <td>{{ object.account }}</td>
-<td>{{ object.date }}</td>
+<td><a href="/transaction/{{ object.id }}">{{ object.date }}</a></td>
 <td>{{ object.description }}</td>
 <td>{{ object.amount }}</td>
+<td>{{ object.category }}</td>
 </tr>
 {% endfor %}
 </table>
