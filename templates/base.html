@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css">
+    <title>t - {% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <div id="sidebar" class="topbar-wrapper">
+    	<div class="topbar">
+	    	<div class="topbar-inner">
+		    	<div class="container">
+			    	<h3><a href="#">T</a></h3>
+			        {% block sidebar %}
+			        <ul class="nav">
+			            <li {% block home-active %} {% endblock %}><a href="/">Home</a></li>
+			            <li {% block trans-active %} {% endblock %}><a href="/transaction/">Transactions</a></li>
+			        </ul>
+			        {% endblock %}
+		    	</div>
+	    	</div>
+    	</div>
+    </div>
+    
+
+    <div id="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

@@ -14,5 +14,5 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^transaction/', include(TransactionListView.as_view())
+    url(r'^transaction/', TransactionsListView.as_view())
 )

@@ -1,0 +1,14 @@
+{% extends "transaction_base.html" %}
+
+{% block content %}
+
+<table>
+<th>Description</th>
+{% for object in object_list %}
+<tr>
+<td>{{ object.description }}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
