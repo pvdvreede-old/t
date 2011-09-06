@@ -1,22 +1,30 @@
 from django.forms import ModelForm, DateField
 from t.transactions.models import *
 
-class UserModelForm(ModelForm):
+class UserModelForm(ModelForm): 
+    user = None
     
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop("user", None)
+        super(UserModelForm, self).__init__(*args, **kwargs)
+        if user:
+           self.user = user
+
     def save(self):
-        self.instance.user = self.request.user
+        self.instance.user = self.user
         return super(UserModelForm, self).save()
     
     class Meta:
-        includes=('name')
-        excludes=('description')
+        excludes=("user",)
 
-class TransactionForm(ModelForm):
-    class Meta:
+class TransactionForm(UserModelForm):
+    class Meta(UserModelForm.Meta):
         model=Transaction
-
-               
+             
 class CategoryForm(UserModelForm):
-    class Meta:
+    class Meta(UserModelForm.Meta):
         model=Category
-        includes=('name')
+
+class AccountForm(UserModelForm):
+    class Meta(UserModelForm.Meta):
+        model=Account

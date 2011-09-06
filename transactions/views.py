@@ -5,6 +5,19 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+class UserBaseCreateView(CreateView):  
+    action_message = "Item created!"
+
+    def form_valid(self, form):
+        value = super(UserBaseCreateView, self).form_valid(form)
+        messages.success(self.request, self.action_message)
+        return value
+
+    def get_form_kwargs(self):
+        kwargs = super(UserBaseCreateView, self).get_form_kwargs()
+        kwargs.update({ "user" : self.request.user })
+        return kwargs
+
 
 class TransactionsListView(ListView):
     model=Transaction
@@ -23,16 +36,12 @@ class TransactionsListView(ListView):
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user)
   
-class TransactionFormView(CreateView):
+class TransactionFormView(UserBaseCreateView):
     model=Transaction
     template_name="transaction_form.html"
     form_class=TransactionForm
     success_url="/transaction"
     
-    def form_valid(self, form):
-        value = super(TransactionFormView, self).form_valid(form)
-        messages.success(self.request, "Transaction item created!")
-        return value
     
 class TransactionEditView(UpdateView):
     model=Transaction
@@ -58,16 +67,11 @@ class CategoryListView(ListView):
     def get_queryset(self):
         return Category.objects.filter(user=self.request.user)
     
-class CategoryFormView(CreateView):
+class CategoryFormView(UserBaseCreateView):
     model=Category
     template_name="transaction_form.html"
     form_class=CategoryForm
     success_url="/category"
-    
-    def form_valid(self, form):
-        value = super(CategoryFormView, self).form_valid(form)
-        messages.success(self.request, "Category item created!")
-        return value
     
 class CategoryEditView(UpdateView):
     model=Category
@@ -79,3 +83,9 @@ class CategoryEditView(UpdateView):
         value = super(CategoryEditView, self).form_valid(form)
         messages.success(self.request, "Category item edited!")
         return value
+    
+class AccountCreateView(UserBaseCreateView):
+    model=Account
+    template_name="transaction_form.html"
+    form_class=AccountForm
+    success_url="/account"
