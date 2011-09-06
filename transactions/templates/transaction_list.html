@@ -4,9 +4,8 @@
 
 {% block secondary-nav %}
 <ul id="account-menu" class="nav secondary-nav">
-	<li><a href="#">Account:</a></li>
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle">{{ current_account }}</a>
+		<a href="#" class="dropdown-toggle">Account: {{ current_account }}</a>
 		<ul class="dropdown-menu">
 			<li><a href="/transaction">All</a></li>
 			{% for account in accounts %}
@@ -20,7 +19,7 @@
 {% endblock %}
 
 {% block content %}
-
+{% if object_list %}
 <table class="zebra-striped">
 <thead>
 <th>Account</th>
@@ -62,6 +61,12 @@
         {% endif %}
     </ul>
 </div>
+{% endif %}
+
+{% else %}
+
+<p>You haven't created any transactions yet!</p>
+
 {% endif %}
 
 <p><a class="btn" href="/transaction/new">New</a></p>
