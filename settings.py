@@ -103,7 +103,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 't.urls'
 
 TEMPLATE_DIRS = (
-    '/home/paul/workspace/t/t/templates'
+    os.getcwd() + '/templates'
 )
 
 INSTALLED_APPS = (
