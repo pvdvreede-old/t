@@ -1,3 +1,5 @@
+import os
+
 # Django settings for t project.
 
 DEBUG = True
@@ -69,7 +71,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/home/paul/workspace/t/t/static/',
+    os.getcwd() + '/static/',
 )
 
 # List of finder classes that know how to find static files in
