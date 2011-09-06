@@ -19,8 +19,16 @@
 			            <li {% block trans-active %} {% endblock %}><a href="/transaction/">Transactions</a></li>
 			            <li {% block cat-active %} {% endblock %}><a href="/category/">Categories</a></li>
 			        </ul>
+			        <ul id="user-menu" class="nav secondary-nav">
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle">Welcome, {{ user }}</a>
+							<ul class="dropdown-menu">
+								<li><a href="/accounts/logout">Logout</a></li>								
+							</ul>
+						</li>
+					</ul>
 			        {% block secondary-nav %}
-			        {% endblock %}
+			        {% endblock %}		        
 		    	</div>
 	    	</div>
     	</div>
