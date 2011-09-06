@@ -4,17 +4,25 @@
 Transactions
 {% endblock %}
 
+{% block scripts %}
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/actions.js"></script>
+{% endblock %}
+
 {% block trans-active %} class="active" {% endblock %}
 
 {% block secondary-nav %}
-<ul class="nav secondary-nav">
+{% if accounts %}
+<ul id="account-menu" class="nav secondary-nav">
 	<li><a href="#">Account:</a></li>
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle">Name 1</a>
+		<a href="#" class="dropdown-toggle">{{ current_account }}</a>
 		<ul class="dropdown-menu">
-			<li><a href="#">test</a></li>
-			<li><a href="#">test2</a></li>
+			{% for account in accounts %}
+			<li><a href="#">{{ account.name }}</a></li>
+			{% endfor %}
 		</ul>
 	</li>
 </ul>
+{% endif %}
 {% endblock %}

@@ -3,12 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css">
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css">
+    {% block scripts %}
+    {% endblock %}
     <title>t - {% block title %}{% endblock %}</title>
 </head>
 
 <body>
-    <div id="masthead" class="topbar-wrapper">
+    <div id="masthead" class="topbar-wrapper" style="z-index:5;">
     	<div class="topbar">
 	    	<div class="topbar-inner">
 		    	<div class="container">

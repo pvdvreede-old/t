@@ -5,6 +5,17 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
+class AccountMixin:
+    def get_context_data(self, **kwargs):
+        if self.request.GET.__contains__("account"):
+            kwargs["current_account"] = Account.objects.get(pk=self.request.GET["account"]).name
+        else:
+            kwargs["current_account"] = "All"
+            
+        kwargs["accounts"] = Account.objects.filter(user=self.request.user)
+        return kwargs
+
+
 class UserBaseCreateView(CreateView):  
     action_message = "Item created!"
 
@@ -33,20 +44,11 @@ class UserBaseUpdateView(UpdateView):
 
 
 
-class TransactionsListView(ListView):
+class TransactionsListView(AccountMixin, ListView):
     model=Transaction
     template_name="transaction_list.html" 
     paginated_by=2
-    
-   ## @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(TransactionsListView, self).dispatch(*args, **kwargs)
-    
-    def get_context_data(self, **kwargs):
-        context = super(TransactionsListView, self).get_context_data(**kwargs)
-        context['url'] = 'transaction'
-        return context
-    
+       
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user)
   
