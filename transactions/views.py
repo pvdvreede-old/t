@@ -50,7 +50,11 @@ class TransactionsListView(AccountMixin, ListView):
     paginated_by=2
        
     def get_queryset(self):
-        return Transaction.objects.filter(user=self.request.user)
+        objects = Transaction.objects.filter(user=self.request.user)
+        if self.request.GET.__contains__("account"):
+            objects = objects.filter(account=self.request.GET["account"])
+        
+        return objects
   
 class TransactionCreateView(UserBaseCreateView):
     model=Transaction
@@ -95,10 +99,10 @@ class AccountCreateView(UserBaseCreateView):
     model=Account
     template_name="transaction_form.html"
     form_class=AccountForm
-    success_url="/account"
+    success_url="/transaction"
     
 class AccountUpdateView(UserBaseUpdateView):
     model=Account
     template_name="transaction_form.html"
     form_class=AccountForm
-    success_url="/account"
+    success_url="/transaction"

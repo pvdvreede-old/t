@@ -18,9 +18,12 @@ Transactions
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle">{{ current_account }}</a>
 		<ul class="dropdown-menu">
+			<li><a href="/transaction">All</a></li>
 			{% for account in accounts %}
-			<li><a href="#">{{ account.name }}</a></li>
+			<li><a href="/transaction/?account={{ account.id }}">{{ account.name }}</a> <a href="/account/{{ account.id }}">edit</a></li>
 			{% endfor %}
+			<li class="divider"></li>
+			<li><a href="/account/new">New account</a></li>
 		</ul>
 	</li>
 </ul>
