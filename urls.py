@@ -12,4 +12,4 @@ urlpatterns = patterns('',
 from transactions import urls
 
 urlpatterns += staticfiles_urlpatterns()
-urlpatterns += ('', url(r'^$', TransactionsListView.as_view()),)
+#urlpatterns += ('', url(r'^$', TransactionsListView.as_view()),)

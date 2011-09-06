@@ -4,6 +4,7 @@ from t.transactions.forms import *
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 
 class AccountMixin:
     def get_context_data(self, **kwargs):
@@ -14,6 +15,26 @@ class AccountMixin:
             
         kwargs["accounts"] = Account.objects.filter(user=self.request.user)
         return kwargs
+
+
+class BaseDeleteView(View):
+    model=None
+    success_url=None
+    action_message="Items deleted!"
+    
+    def get_success_url(self):
+        return self.success_url
+    
+    def post(self, request):
+        for id in request.POST.getlist("ids"):
+            object = self.model.objects.get(pk=id)
+            object.delete()
+        
+        messages.success(self.request, self.action_message) 
+            
+        return HttpResponseRedirect(self.get_success_url())
+        
+        
 
 
 class UserBaseCreateView(CreateView):  
@@ -60,15 +81,18 @@ class TransactionCreateView(UserBaseCreateView):
     model=Transaction
     template_name="transaction_form.html"
     form_class=TransactionForm
-    success_url="/transaction"
-    
+    success_url="/transaction"   
     
 class TransactionUpdateView(UserBaseUpdateView):
     model=Transaction
     template_name="transaction_form.html"
     form_class=TransactionForm
     success_url="/transaction"
-    
+
+class TransactionDeleteView(BaseDeleteView):
+    model=Transaction
+    success_url="/transaction"
+
     
 class CategoryListView(ListView):
     model=Category
@@ -87,6 +111,10 @@ class CategoryUpdateView(UserBaseUpdateView):
     model=Category
     template_name="transaction_form.html"
     form_class=CategoryForm
+    success_url="/category"
+
+class CategoryDeleteView(BaseDeleteView):
+    model=Category
     success_url="/category"
 
     
