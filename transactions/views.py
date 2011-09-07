@@ -26,12 +26,8 @@ class BaseDeleteView(View):
         return self.success_url
     
     def post(self, request):
-        for id in request.POST.getlist("ids"):
-            object = self.model.objects.get(pk=id)
-            object.delete()
-        
-        messages.success(self.request, self.action_message) 
-            
+        self.model.objects.filter(user=request.user).filter(id__in=request.POST.getlist("ids")).delete()     
+        messages.success(self.request, self.action_message)        
         return HttpResponseRedirect(self.get_success_url())
         
         
