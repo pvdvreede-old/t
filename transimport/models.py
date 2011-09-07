@@ -17,6 +17,7 @@ class TransStaging(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
+    account = models.ForeignKey(Account)
     user = models.ForeignKey(User)
     status = models.IntegerField()
     created_date = models.DateTimeField()
