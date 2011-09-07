@@ -1,3 +1,10 @@
-# Create your views here.
-def import_setup(request):
+
+
+class ProcessUpload(View):
+  
+    def get(self):
+      
+      
+      
     
+    def post(self):
