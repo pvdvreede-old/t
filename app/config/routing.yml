@@ -1,2 +1,0 @@
-t_frontend_bundle:
-  resource: "@VdvreedeTFrontendBundle/Resources/config/routing.yml"
