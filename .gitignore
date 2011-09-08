@@ -1,4 +1,4 @@
-.idea
-app/cache
-app/logs
-web/bundles
+*.log
+*.pot
+*.pyc
+local_settings.py
