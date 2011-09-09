@@ -64,17 +64,20 @@ class TransactionsListView(ListView):
     paginate_by=10
      
     def get_queryset(self):
-        objects = Transaction.objects.filter(user=self.request.user).order_by("-date")
+        objects = Transaction.objects.filter(user=self.request.user)
         if self.request.GET.__contains__("account"):
-            objects = objects.filter(account=self.request.GET["account"])
+            objects = objects.filter(account__in=self.request.GET.getlist("account"))
+        if self.request.GET.__contains__("category"):
+            objects = objects.filter(category__in=self.request.GET.getlist("category"))
+        objects.order_by("-date")
         return objects
      
     def get_context_data(self, **kwargs):
         if self.request.GET.__contains__("account"):
-            kwargs["current_account"] = Account.objects.get(pk=self.request.GET["account"]).name
-        else:
-            kwargs["current_account"] = "All"
-            
+            kwargs["selected_accounts"] = self.request.GET.getlist("account")
+        if self.request.GET.__contains__("category"):
+            kwargs["selected_categories"] = self.request.GET.getlist("category")
+        
         kwargs["accounts"] = Account.objects.filter(user=self.request.user)
         kwargs["categories"] = Category.objects.filter(user=self.request.user)
         return kwargs

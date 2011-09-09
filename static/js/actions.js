@@ -12,6 +12,7 @@ $(document).ready(function() {
 	 * Function to remove message boxes when the 'x' is clicked.
 	 */
 	$("a.close").click(function() {
+		$(this).parent().slideUp('slow');
 		$(this).parent().remove();
 	});
 	
@@ -39,7 +40,7 @@ $(document).ready(function() {
 	/**
 	 * Function to hide and show checkbox context items.
 	 */
-	$("input[type='checkbox']").click(function() {
+	$("#content input[type='checkbox']").click(function() {
 		var found = false;
 		$("input[type='checkbox']").each(function(i) {
 		    if ($(this).attr("checked")) {
