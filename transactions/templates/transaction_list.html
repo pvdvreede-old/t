@@ -6,23 +6,27 @@
 
 <ul id="account-menu" class="nav secondary-nav">
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle">Account: {{ request.GET.account }}</a>
+		<a href="#" class="dropdown-toggle">Filter Account {{ request.GET.account }}</a>
 		<ul class="dropdown-menu">
 			{% for account in accounts %}
 			<li>&nbsp;&nbsp; <input type="checkbox" name="account" value="{{ account.id }}" /> {{ account.name }}</li>
 			{% endfor %}
 			<li class="divider"></li>
 			<li>&nbsp;&nbsp; <input type="submit" value="Filter" /></li>
+			<li class="divider"></li>
+			<li><a href="/account/new">New Account</a></li>
 		</ul>
 	</li>
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle">Category: </a>
+		<a href="#" class="dropdown-toggle">Filter Category </a>
 		<ul class="dropdown-menu">
 			{% for category in categories %}
-			<li>&nbsp;&nbsp; <input type="checkbox" name="category" value="{{ category.id }}" /> {{ category.name }}</li>
+			<li>&nbsp;&nbsp; <input type="checkbox" name="category" value="{{ category.id }}" /> <a href="">{{ category.name }}</a></li>
 			{% endfor %}
 			<li class="divider"></li>
 			<li>&nbsp;&nbsp; <input type="submit" value="Filter" /></li>
+			<li class="divider"></li>
+			<li><a href="/category/new">New Category</a></li>
 		</ul>
 	</li>
 </ul>
