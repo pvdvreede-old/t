@@ -67,7 +67,7 @@ class TransactionsListView(AccountMixin, ListView):
     paginated_by=2
        
     def get_queryset(self):
-        objects = Transaction.objects.filter(user=self.request.user)
+        objects = Transaction.objects.filter(user=self.request.user).order_by("-date")
         if self.request.GET.__contains__("account"):
             objects = objects.filter(account=self.request.GET["account"])
         

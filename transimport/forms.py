@@ -26,7 +26,7 @@ class ImportForm(forms.Form):
 	    
             object = TransStaging()
             object.date = datetime.datetime.today()
-            object.description = "dfdf"#item.memo
+            object.description = item.payee
             object.amount = item.amount
             object.user = self.user
             object.account = self.cleaned_data["account"]
