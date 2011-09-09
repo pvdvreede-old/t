@@ -1,4 +1,3 @@
-
 """
 A simple class to represent a Quicken (QIF) file, and a parser to
 load a QIF file into a sequence of those classes.
@@ -93,10 +92,3 @@ def parseQif(infile):
 
         line = infile.readline()
     return items
-
-if __name__ == "__main__":
-    # read from stdin and write CSV to stdout
-    items = parseQif(sys.stdin)
-    print repr(items[0])
-    for item in items[1:]:
-        print item.dataString()
