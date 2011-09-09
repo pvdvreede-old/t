@@ -20,7 +20,7 @@ $(document).ready(function() {
 	 */
 	$("#check-all").click(function() {
 		$(".id-checkbox").each(function(i) {
-		  if (!$("#check-all").attr("checked")) {
+		  if ($("#check-all").attr("checked")) {
 		    $(this).attr("checked", false);
 		  } else {
 		    $(this).attr("checked", true);

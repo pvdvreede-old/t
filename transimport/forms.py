@@ -22,8 +22,7 @@ class ImportForm(forms.Form):
         parser = QifParser()
         items = parser.parseQif(imported_file)
         
-        for item in items:
-	    
+        for item in items:	    
             object = TransStaging()
             object.date = datetime.datetime.today()
             object.description = item.payee

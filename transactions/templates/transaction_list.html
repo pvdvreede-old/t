@@ -25,7 +25,7 @@
 
 <table class="zebra-striped">
 <thead>
-<th><input type="checkbox" value="0" /></th>
+<th><input id="check-all" type="checkbox" value="0" /></th>
 <th>Account</th>
 <th>Date</th>
 <th>Description</th>
@@ -35,7 +35,7 @@
 <tbody>
 {% for object in object_list %}
 <tr>
-<td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
+<td><input class="id-checkbox" type="checkbox" name="ids" value="{{ object.id }}" /></td>
 <td>{{ object.account }}</td>
 <td>{{ object.date }}</td>
 <td><a href="/transaction/{{ object.id }}">{{ object.description }}</a></td>
