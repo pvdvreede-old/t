@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Add</h1>
-<form action="" method="post">{% csrf_token %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
 {% for field in form %}
 <div class="clearfix{% if field.errors %} error{% endif %}">
 	{{ field.label_tag }}
