@@ -28,9 +28,28 @@ $(document).ready(function() {
 		});
 	});
 	
+	/**
+	 * Function to set action to delete on transactions for deletion
+	 */
 	$("#delete-button").click(function() {
 		$("input[name='action']").val("delete");	  
 		$("#trans-list-form").submit();
+	});
+	
+	/**
+	 * Function to hide and show checkbox context items.
+	 */
+	$("input[type='checkbox']").click(function() {
+		var found = false;
+		$("input[type='checkbox']").each(function(i) {
+		    if ($(this).attr("checked")) {
+			$("#checkbox-actions").slideDown('slow');
+			found = true;
+			return;
+		    }	
+		});
+		if (!found)
+		  $("#checkbox-actions").slideUp('slow');
 	});
 
 });

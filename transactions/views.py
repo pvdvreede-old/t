@@ -4,18 +4,7 @@ from t.transactions.forms import *
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect
-
-class TransactionMixin:
-    def get_context_data(self, **kwargs):
-        if self.request.GET.__contains__("account"):
-            kwargs["current_account"] = Account.objects.get(pk=self.request.GET["account"]).name
-        else:
-            kwargs["current_account"] = "All"
-            
-        kwargs["accounts"] = Account.objects.filter(user=self.request.user)
-        kwargs["categories"] = Category.objects.filter(user=self.request.user)
-        return kwargs
+from django.http import HttpResponseRedirect  
 
 class BaseDeleteView(View):
     model=None
@@ -68,17 +57,27 @@ class TransactionActionView(View):
 	return HttpResponseRedirect("/transaction") 
       
 
-class TransactionsListView(TransactionMixin, ListView):
+class TransactionsListView(ListView):
     model=Transaction
     template_name="transaction_list.html" 
-    paginated_by=2
-       
+    context_object_name="object_list"
+    paginate_by=10
+     
     def get_queryset(self):
         objects = Transaction.objects.filter(user=self.request.user).order_by("-date")
         if self.request.GET.__contains__("account"):
             objects = objects.filter(account=self.request.GET["account"])
-        
         return objects
+     
+    def get_context_data(self, **kwargs):
+        if self.request.GET.__contains__("account"):
+            kwargs["current_account"] = Account.objects.get(pk=self.request.GET["account"]).name
+        else:
+            kwargs["current_account"] = "All"
+            
+        kwargs["accounts"] = Account.objects.filter(user=self.request.user)
+        kwargs["categories"] = Category.objects.filter(user=self.request.user)
+        return kwargs
         
   
 class TransactionCreateView(UserBaseCreateView):
