@@ -3,4 +3,5 @@
 *.pyc
 *.py~
 *.html~
+*.js~
 local_settings.py

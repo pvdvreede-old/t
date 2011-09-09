@@ -28,6 +28,7 @@ class ImportStagingView(ListView):
 	new_trans.user = self.request.user
 	new_trans.save()
 	
+      objects.delete()
       messages.success(self.request, "Items imported!")
       return HttpResponseRedirect("/transaction")
     
