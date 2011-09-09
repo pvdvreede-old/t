@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 
-class AccountMixin:
+class TransactionMixin:
     def get_context_data(self, **kwargs):
         if self.request.GET.__contains__("account"):
             kwargs["current_account"] = Account.objects.get(pk=self.request.GET["account"]).name
@@ -14,6 +14,7 @@ class AccountMixin:
             kwargs["current_account"] = "All"
             
         kwargs["accounts"] = Account.objects.filter(user=self.request.user)
+        kwargs["categories"] = Category.objects.filter(user=self.request.user)
         return kwargs
 
 class BaseDeleteView(View):
@@ -67,7 +68,7 @@ class TransactionActionView(View):
 	return HttpResponseRedirect("/transaction") 
       
 
-class TransactionsListView(AccountMixin, ListView):
+class TransactionsListView(TransactionMixin, ListView):
     model=Transaction
     template_name="transaction_list.html" 
     paginated_by=2
@@ -79,9 +80,6 @@ class TransactionsListView(AccountMixin, ListView):
         
         return objects
         
-    def get_context_data(self, **kwargs):   
-        kwargs["categories"] = Category.objects.filter(user=self.request.user)
-        return kwargs
   
 class TransactionCreateView(UserBaseCreateView):
     model=Transaction
