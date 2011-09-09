@@ -16,7 +16,6 @@ class AccountMixin:
         kwargs["accounts"] = Account.objects.filter(user=self.request.user)
         return kwargs
 
-
 class BaseDeleteView(View):
     model=None
     success_url=None
@@ -28,10 +27,7 @@ class BaseDeleteView(View):
     def post(self, request):
         self.model.objects.filter(user=request.user).filter(id__in=request.POST.getlist("ids")).delete()     
         messages.success(self.request, self.action_message)        
-        return HttpResponseRedirect(self.get_success_url())
-        
-        
-
+        return HttpResponseRedirect(self.get_success_url())        
 
 class UserBaseCreateView(CreateView):  
     action_message = "Item created!"
@@ -59,7 +55,17 @@ class UserBaseUpdateView(UpdateView):
         kwargs.update({ "user" : self.request.user })
         return kwargs
 
-
+class TransactionActionView(View):
+    def post(self, request):
+	if request.POST["action"] == "delete":
+	  Transaction.objects.filter(user=request.user).filter(id__in=request.POST.getlist("ids")).delete()
+	  messages.success(self.request, "Items deleted!")
+	elif request.POST["action"] == "category":
+	  Transaction.objects.filter(user=request.user).filter(id__in=request.POST.getlist("ids")).update(category=request.POST["category"])
+	  messages.success(self.request, "Items updated!")
+	
+	return HttpResponseRedirect("/transaction") 
+      
 
 class TransactionsListView(AccountMixin, ListView):
     model=Transaction
@@ -72,6 +78,10 @@ class TransactionsListView(AccountMixin, ListView):
             objects = objects.filter(account=self.request.GET["account"])
         
         return objects
+        
+    def get_context_data(self, **kwargs):   
+        kwargs["categories"] = Category.objects.filter(user=self.request.user)
+        return kwargs
   
 class TransactionCreateView(UserBaseCreateView):
     model=Transaction

@@ -27,5 +27,10 @@ $(document).ready(function() {
 		  }
 		});
 	});
+	
+	$("#delete-button").click(function() {
+		$("input[name='action']").val("delete");	  
+		$("#trans-list-form").submit();
+	});
 
 });

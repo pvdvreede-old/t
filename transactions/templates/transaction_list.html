@@ -20,9 +20,23 @@
 
 {% block content %}
 {% if object_list %}
-<form method="post" action="/transaction/delete">
+<form id="trans-list-form" method="post" action="/transaction/actions">
 {% csrf_token %}
-
+<input type="hidden" name="action" value="category" />
+<div class="row">
+<div class="span14 columns">
+<select name="category">
+  <option value="0">Select a category...</option>
+{% for category in categories %}
+  <option value="{{ category.id }}">{{ category.name }}</option>
+{% endfor %}
+</select>
+<input id="category-button" class="btn" type="submit" value="Change" />
+</div>
+<div class="span2 columns">
+<input id="delete-button" class="btn danger" type="button" value="Delete" />
+</div>
+</div>
 <table class="zebra-striped">
 <thead>
 <th><input id="check-all" type="checkbox" value="0" /></th>
@@ -39,7 +53,7 @@
 <td>{{ object.account }}</td>
 <td>{{ object.date }}</td>
 <td><a href="/transaction/{{ object.id }}">{{ object.description }}</a></td>
-<td>{{ object.amount }}</td>
+<td>${{ object.amount }}</td>
 <td>{{ object.category }}</td>
 </tr>
 {% endfor %}
@@ -68,7 +82,7 @@
 </div>
 {% endif %}
 
-<input id="delete-button" class="btn danger" type="submit" value="Delete" />
+
 
 </form>
 
