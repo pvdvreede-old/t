@@ -9,6 +9,8 @@ class TransImport(models.Model):
     date_field = models.IntegerField()
     amount_field = models.IntegerField()
     user = models.ForeignKey(User)
+    created_date = models.DateTimeField(editable=False, auto_now_add=True)
+    modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
     
     def __unicode__(self):
         return self.name
@@ -20,7 +22,8 @@ class TransStaging(models.Model):
     account = models.ForeignKey(Account)
     user = models.ForeignKey(User)
     status = models.IntegerField()
-    created_date = models.DateTimeField()
+    created_date = models.DateTimeField(editable=False, auto_now_add=True)
+    modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
     
     def __unicode__(self):
         return self.description

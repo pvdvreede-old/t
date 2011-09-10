@@ -60,7 +60,6 @@ class TransactionActionView(View):
 class TransactionsListView(ListView):
     model=Transaction
     template_name="transaction_list.html" 
-    context_object_name="object_list"
     paginate_by=10
      
     def get_queryset(self):
@@ -73,14 +72,15 @@ class TransactionsListView(ListView):
         return objects
      
     def get_context_data(self, **kwargs):
+	context = super(TransactionsListView, self).get_context_data(**kwargs)	
         if self.request.GET.__contains__("account"):
-            kwargs["selected_accounts"] = self.request.GET.getlist("account")
+            context["selected_accounts"] = self.request.GET.getlist("account")
         if self.request.GET.__contains__("category"):
-            kwargs["selected_categories"] = self.request.GET.getlist("category")
+            context["selected_categories"] = self.request.GET.getlist("category")
         
-        kwargs["accounts"] = Account.objects.filter(user=self.request.user)
-        kwargs["categories"] = Category.objects.filter(user=self.request.user)
-        return kwargs
+        context["accounts"] = Account.objects.filter(user=self.request.user)
+        context["categories"] = Category.objects.filter(user=self.request.user)
+        return context
         
   
 class TransactionCreateView(UserBaseCreateView):
