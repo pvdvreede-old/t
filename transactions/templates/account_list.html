@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% load includes %}
 
-{% block cat-active %} class="active" {% endblock %}
+{% block acc-active %} class="active" {% endblock %}
 
 {% block title %}
-Categories
+Accounts
 {% endblock %}
 
 {% block content %}
 
 {% if object_list %}
-<form method="post" action="/category/delete">
+<form method="post" action="/account/delete">
 {% csrf_token %}
 
 
@@ -18,17 +18,15 @@ Categories
 <thead>
 <th><input type="checkbox" value="0" /></th>
 <th>Name</th>
-<th>Colour</th>
-<th>Reportable</th>
-<th>Total spent</th>
+<th>Type</th>
+<th>Current Balance</th>
 </thead>
 <tbody>
 {% for object in object_list %}
 <tr>
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
-<td><a href="/category/{{ object.id }}">{{ object.name }}</a></td>
-<td>{{ object.colour }}</td>
-<td>{{ object.reportable }}</td>
+<td><a href="/account/{{ object.id }}">{{ object.name }}</a></td>
+<td>{{ object.type }}</td>
 <td></td>
 </tr>
 {% endfor %}
@@ -49,6 +47,6 @@ Categories
 
 {% endif %}
 
-<p><a class="btn" href="/category/new">New</a></p>
+<p><a class="btn" href="/account/new">New</a></p>
 
 {% endblock %}

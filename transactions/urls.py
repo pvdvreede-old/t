@@ -13,4 +13,5 @@ urlpatterns += patterns('',
     url(r'^category/', CategoryListView.as_view()),
     url(r'^account/new', AccountCreateView.as_view()),  
     url(r'^account/(?P<pk>\d)', AccountUpdateView.as_view()),  
+    url(r'^account/', AccountListView.as_view()),
 )

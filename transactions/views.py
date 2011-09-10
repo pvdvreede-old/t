@@ -129,16 +129,26 @@ class CategoryDeleteView(BaseDeleteView):
     model=Category
     success_url="/category"
 
-   
+
+class AccountListView(ListView):
+    model=Account
+    template_name="account_list.html"
+    
+    def get_queryset(self):
+        return Account.objects.filter(user=self.request.user)
    
 class AccountCreateView(UserBaseCreateView):
     model=Account
-    template_name="transaction_form.html"
+    template_name="account_form.html"
     form_class=AccountForm
-    success_url="/transaction"
+    success_url="/account"
     
 class AccountUpdateView(UserBaseUpdateView):
     model=Account
-    template_name="transaction_form.html"
+    template_name="account_form.html"
     form_class=AccountForm
-    success_url="/transaction"
+    success_url="/account"
+    
+class AccountDeleteView(BaseDeleteView):
+    model=Account
+    success_url="/account"
