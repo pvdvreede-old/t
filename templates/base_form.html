@@ -1,0 +1,22 @@
+<form action="" method="post" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
+{% csrf_token %}
+{% for field in form %}
+<div class="clearfix{% if field.errors %} error{% endif %}">
+	{{ field.label_tag }}
+	<div class="input">
+		{{ field }}
+		{% if field.errors %}
+		<span class="help-inline">
+			{% for error in field.errors %}
+			{{ error }} <br />
+			{% endfor %}
+		</span>
+		{% endif %}
+	</div> 
+</div>
+{% endfor %}
+<div class="actions">
+<input type="submit" class="btn primary" value="Save" />
+<a href="{{ cancel_url }}" class="btn">Cancel</a>
+</div>
+</form>

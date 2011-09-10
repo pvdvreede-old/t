@@ -21,7 +21,12 @@ class BaseDeleteView(View):
 
 class UserBaseCreateView(CreateView):  
     action_message = "Item created!"
-
+    
+    def get_context_data(self, **kwargs):
+	context = super(UserBaseCreateView, self).get_context_data(**kwargs)
+	context["cancel_url"] = self.success_url
+	return context
+    
     def form_valid(self, form):
         value = super(UserBaseCreateView, self).form_valid(form)
         messages.success(self.request, self.action_message)
@@ -110,13 +115,13 @@ class CategoryListView(ListView):
     
 class CategoryCreateView(UserBaseCreateView):
     model=Category
-    template_name="transaction_form.html"
-    form_class=CategoryForm
+    template_name="category_form.html"
+    form_class=CategoryForm  
     success_url="/category"
     
 class CategoryUpdateView(UserBaseUpdateView):
     model=Category
-    template_name="transaction_form.html"
+    template_name="category_form.html"
     form_class=CategoryForm
     success_url="/category"
 

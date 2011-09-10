@@ -1,5 +1,6 @@
 {% extends "transaction_base.html" %}
 {% load ifinlist %}
+{% load includes %}
 
 {% block trans-active %} class="active" {% endblock %}
 
@@ -25,8 +26,6 @@
 			{% endfor %}
 			<li class="divider"></li>
 			<li>&nbsp;&nbsp; <input type="submit" value="Filter" /></li>
-			<li class="divider"></li>
-			<li><a href="/category/new">New Category</a></li>
 		</ul>
 	</li>
 </ul>
@@ -77,7 +76,7 @@
 </form>
 
 {% if is_paginated %}
-  {% load pagination %}
+
   {% get_pagination %}
 {% endif %}
 
@@ -88,5 +87,7 @@
 {% endif %}
 
 <p><a class="btn" href="/transaction/new">New</a></p>
+
+{% get_modal %}
 
 {% endblock %}
