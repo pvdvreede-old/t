@@ -1,5 +1,6 @@
 {% extends "transaction_base.html" %}
 
+
 {% block trans-active %} class="active" {% endblock %}
 
 {% block secondary-nav %}
@@ -74,31 +75,12 @@
   </tbody>
 </table>
 
-{% if is_paginated %}
-<div class="pagination">
-    <ul>
-        {% if paginator.has_previous %}
-            <li class="prev"><a href="#">&larr; Previous</a></li>
-        {% else %}    
-            <li class="prev disabled"><a href="#">&larr; Previous</a></li>
-        {% endif %}
-		
-		
-		
-        <span class="current">
-            Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
-        </span>
-
-        {% if object_list.has_next %}
-            <a href="?page={{ object_list.next_page_number }}">next</a>
-        {% endif %}
-    </ul>
-</div>
-{% endif %}
-
-
-
 </form>
+
+{% if is_paginated %}
+  {% load pagination %}
+  {% get_pagination %}
+{% endif %}
 
 {% else %}
 

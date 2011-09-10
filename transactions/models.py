@@ -28,8 +28,6 @@ class Category(models.Model):
     created_date = models.DateTimeField(editable=False, auto_now_add=True)
     modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
     
-   
-    
     def __unicode__(self):
         return self.name
     

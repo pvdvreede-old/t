@@ -4,7 +4,7 @@ from t.transactions.forms import *
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponseRedirect  
+from django.http import HttpResponseRedirect 
 
 class BaseDeleteView(View):
     model=None
@@ -45,6 +45,8 @@ class UserBaseUpdateView(UpdateView):
         kwargs.update({ "user" : self.request.user })
         return kwargs
 
+
+
 class TransactionActionView(View):
     def post(self, request):
 	if request.POST["action"] == "delete":
@@ -56,7 +58,6 @@ class TransactionActionView(View):
 	
 	return HttpResponseRedirect("/transaction") 
       
-
 class TransactionsListView(ListView):
     model=Transaction
     template_name="transaction_list.html" 
@@ -82,7 +83,6 @@ class TransactionsListView(ListView):
         context["categories"] = Category.objects.filter(user=self.request.user)
         return context
         
-  
 class TransactionCreateView(UserBaseCreateView):
     model=Transaction
     template_name="transaction_form.html"
@@ -99,7 +99,8 @@ class TransactionDeleteView(BaseDeleteView):
     model=Transaction
     success_url="/transaction"
 
-    
+
+
 class CategoryListView(ListView):
     model=Category
     template_name="category_list.html"
@@ -123,7 +124,8 @@ class CategoryDeleteView(BaseDeleteView):
     model=Category
     success_url="/category"
 
-    
+   
+   
 class AccountCreateView(UserBaseCreateView):
     model=Account
     template_name="transaction_form.html"
