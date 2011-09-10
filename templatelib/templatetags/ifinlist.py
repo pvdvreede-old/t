@@ -7,4 +7,5 @@ register = template.Library()
 def in_list(value, arg):
     value = str(value)
     return value in arg
+    
    
