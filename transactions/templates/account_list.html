@@ -26,8 +26,8 @@ Accounts
 <tr>
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
 <td><a href="/account/{{ object.id }}">{{ object.name }}</a></td>
-<td>{{ object.type }}</td>
-<td></td>
+<td>{{ object.account_type }}</td>
+<td>{{ object.balance }}</td>
 </tr>
 {% endfor %}
 </tbody>
@@ -43,7 +43,7 @@ Accounts
 
 {% else %}
 
-<p>You haven't created any categories yet!</p>
+<p>You haven't created any accounts yet!</p>
 
 {% endif %}
 
