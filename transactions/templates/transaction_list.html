@@ -1,16 +1,15 @@
 {% extends "transaction_base.html" %}
-
+{% load ifinlist %}
 
 {% block trans-active %} class="active" {% endblock %}
 
 {% block secondary-nav %}
-
 <ul id="account-menu" class="nav secondary-nav">
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle">Filter Account {{ request.GET.account }}</a>
+		<a href="#" class="dropdown-toggle">Filter Account{% if selected_accounts %}: Active{% endif %}</a>
 		<ul class="dropdown-menu">
 			{% for account in accounts %}
-			<li>&nbsp;&nbsp; <input type="checkbox" name="account" value="{{ account.id }}" /> {{ account.name }}</li>
+			<li>&nbsp;&nbsp; <input type="checkbox" name="account" value="{{ account.id }}" {% if account.id|in_list:selected_accounts %}checked{% endif %} /> {{ account.name }}</li>
 			{% endfor %}
 			<li class="divider"></li>
 			<li>&nbsp;&nbsp; <input type="submit" value="Filter" /></li>
@@ -19,10 +18,10 @@
 		</ul>
 	</li>
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle">Filter Category </a>
+		<a href="#" class="dropdown-toggle">Filter Category{% if selected_categories %}: Active{% endif %} </a>
 		<ul class="dropdown-menu">
 			{% for category in categories %}
-			<li>&nbsp;&nbsp; <input type="checkbox" name="category" value="{{ category.id }}" /> <a href="">{{ category.name }}</a></li>
+			<li>&nbsp;&nbsp; <input type="checkbox" name="category" value="{{ category.id }}" {% if category.id|in_list:selected_categories %}checked{% endif %} /> <a href="">{{ category.name }}</a></li>
 			{% endfor %}
 			<li class="divider"></li>
 			<li>&nbsp;&nbsp; <input type="submit" value="Filter" /></li>
