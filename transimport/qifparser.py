@@ -40,7 +40,12 @@ class QifItem:
         return tmpstring
 
 class QifParser:
-
+    
+    def stripLineEndings(self, string):
+	string = string.replace("\r","")
+	#string = string.replace("\n","")
+	return string
+    
     def parseQif(self, infile):
 	"""
 	Parse a qif file and return a list of entries.
@@ -51,7 +56,7 @@ class QifParser:
 
 	items = []
 	curItem = QifItem()
-	line = infile.readline()
+	line = self.stripLineEndings(infile.readline())
 	while line != '':
 	    if line[0] == '\n': # blank line
 		pass
@@ -92,5 +97,5 @@ class QifParser:
 		# don't recognise this line; ignore it
 		print >> sys.stderr, "Skipping unknown line:\n", line
 
-	    line = infile.readline()
+	    line = self.stripLineEndings(infile.readline())
 	return items

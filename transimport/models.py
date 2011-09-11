@@ -27,3 +27,10 @@ class TransStaging(models.Model):
     
     def __unicode__(self):
         return self.description
+               
+class DateFormat(models.Model):
+    expression = models.CharField(max_length=20)
+    human_readable = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.human_readable

@@ -15,7 +15,7 @@ def update_account_balance(sender, **kwargs):
 def pre_update_account_balance(sender, **kwargs):
     print "Pre save fired."
     instance = kwargs["instance"]
-    if Transaction.objects.filter(pk=instance.id).count() > 0:
+    if instance.id:
       current_instance = Transaction.objects.get(pk=instance.id)
       instance.account.balance = instance.account.balance - current_instance.amount
       instance.account.save()
