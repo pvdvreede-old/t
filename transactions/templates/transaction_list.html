@@ -1,5 +1,5 @@
 {% extends "transaction_base.html" %}
-{% load ifinlist %}
+{% load filters %}
 {% load includes %}
 
 {% block trans-active %} class="active" {% endblock %}
@@ -52,24 +52,26 @@
     <input id="delete-button" class="btn danger" type="button" value="Delete Transactions" />
   </div>
 </div>
+
 <table class="zebra-striped">
   <thead>
     <th><input id="check-all" type="checkbox" value="0" /></th>
     <th>Account</th>
+    <th>Category</th>
     <th>Date</th>
     <th>Description</th>
-    <th>Amount</th>
-    <th>Category</th>
+    <th style="text-align: right">Amount</th>
   </thead>
   <tbody>
   {% for object in object_list %}
     <tr>
     <td><input class="id-checkbox" type="checkbox" name="ids" value="{{ object.id }}" /></td>
     <td>{{ object.account }}</td>
+    <td>{{ object.category }}</td>
     <td>{{ object.date }}</td>
     <td><a href="/transaction/{{ object.id }}">{{ object.description }}</a></td>
-    <td>{{ object.amount }}</td>
-    <td>{{ object.category }}</td>
+    <td style="text-align: right">{{ object.amount|currency }}</td>
+
     </tr>
   {% endfor %}
   </tbody>

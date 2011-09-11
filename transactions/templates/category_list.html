@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load includes %}
+{% load filters %}
 
 {% block cat-active %} class="active" {% endblock %}
 
@@ -20,7 +21,7 @@ Categories
 <th>Name</th>
 <th>Colour</th>
 <th>Reportable</th>
-<th>Total spent</th>
+<th style="text-align: right">Total spent</th>
 </thead>
 <tbody>
 {% for object in object_list %}
@@ -29,7 +30,7 @@ Categories
 <td><a href="/category/{{ object.id }}">{{ object.name }}</a></td>
 <td>{{ object.colour }}</td>
 <td>{{ object.reportable }}</td>
-<td>{{ object.spent }}</td>
+<td style="text-align: right">{{ object.spent|currency }}</td>
 </tr>
 {% endfor %}
 </tbody>

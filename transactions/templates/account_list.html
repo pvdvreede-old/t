@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load includes %}
+{% load filters %}
 
 {% block acc-active %} class="active" {% endblock %}
 
@@ -19,7 +20,7 @@ Accounts
 <th><input type="checkbox" value="0" /></th>
 <th>Name</th>
 <th>Type</th>
-<th>Current Balance</th>
+<th style="text-align: right">Current Balance</th>
 </thead>
 <tbody>
 {% for object in object_list %}
@@ -27,7 +28,7 @@ Accounts
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
 <td><a href="/account/{{ object.id }}">{{ object.name }}</a></td>
 <td>{{ object.account_type }}</td>
-<td>{{ object.balance }}</td>
+<td style="text-align: right">{{ object.balance|currency }}</td>
 </tr>
 {% endfor %}
 </tbody>
