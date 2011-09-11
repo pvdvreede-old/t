@@ -74,7 +74,7 @@ class TransactionsListView(ListView):
             objects = objects.filter(account__in=self.request.GET.getlist("account"))
         if self.request.GET.__contains__("category"):
             objects = objects.filter(category__in=self.request.GET.getlist("category"))
-        objects.order_by("-date")
+        objects = objects.order_by("-date")
         return objects
      
     def get_context_data(self, **kwargs):
