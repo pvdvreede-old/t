@@ -67,7 +67,7 @@
     <tr>
     <td><input class="id-checkbox" type="checkbox" name="ids" value="{{ object.id }}" /></td>
     <td>{{ object.account }}</td>
-    <td>{{ object.category }}</td>
+    <td><span style="padding: 5px; background-color: #{{ object.category.colour }};">{{ object.category }}</span></td>
     <td>{{ object.date }}</td>
     <td><a href="/transaction/{{ object.id }}">{{ object.description }}</a></td>
     <td style="text-align: right">{{ object.amount|currency }}</td>

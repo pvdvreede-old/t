@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load includes %}
 
+{% block scripts %}
+<link rel="stylesheet" media="screen" type="text/css" href="{{ STATIC_URL }}colour/css/colorpicker.css" />
+<script type="text/javascript" src="{{ STATIC_URL }}colour/js/colorpicker.js"></script>
+{% endblock %}
+
 {% block cat-active %} class="active" {% endblock %}
 
 {% block title %}

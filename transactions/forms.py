@@ -1,6 +1,6 @@
 from django.forms import ModelForm, DateField
 from t.transactions.models import *
-from t.transactions.widgets import DatePickerWidget
+from t.transactions.widgets import DatePickerWidget, ColourPickerWidget
 
 class UserModelForm(ModelForm): 
     user = None
@@ -30,6 +30,9 @@ class TransactionForm(UserModelForm):
 class CategoryForm(UserModelForm):
     class Meta(UserModelForm.Meta):
         model=Category
+        widgets={
+	    'colour' : ColourPickerWidget(),
+	}
 
 class AccountForm(UserModelForm):
     class Meta(UserModelForm.Meta):

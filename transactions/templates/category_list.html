@@ -28,7 +28,7 @@ Categories
 <tr>
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
 <td><a href="/category/{{ object.id }}">{{ object.name }}</a></td>
-<td>{{ object.colour }}</td>
+<td><span style="padding: 5px; background-color: #{{ object.colour }};">{{ object.colour }}</span></td>
 <td>{{ object.reportable }}</td>
 <td style="text-align: right">{{ object.spent|currency }}</td>
 </tr>
