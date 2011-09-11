@@ -1,10 +1,11 @@
+{% load tags %}
 
 <div class="pagination">
   <ul>
-    <li class="prev {% if not page_obj.has_previous %}disabled{% endif %}"><a href="{% if page_obj.has_previous %}{{ request.get_full_path }}&page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">&larr; Previous</a></li> 
+    <li class="prev {% if not page_obj.has_previous %}disabled{% endif %}"><a href="{% if page_obj.has_previous %}{% append_to_get page=page_obj.previous_page_number %}{% else %}#{% endif %}">&larr; Previous</a></li> 
     {% for page in page_obj.paginator.page_range %}
-    <li {% if page = page_obj.number %}class="active"{% endif %}><a href="{{ request.get_full_path }}&page={{ page }}">{{ page }}</a></li>
+    <li {% if page = page_obj.number %}class="active"{% endif %}><a href="{% append_to_get page=page %}">{{ page }}</a></li>
     {% endfor %}
-    <li class="next {% if not page_obj.has_next %}disabled{% endif %}"><a href="{% if page_obj.has_next %}{{ request.get_full_path }}&page={{ page_obj.next_page_number }}{% else %}#{% endif %}">Next &rarr;</a></li>
+    <li class="next {% if not page_obj.has_next %}disabled{% endif %}"><a href="{% if page_obj.has_next %}{% append_to_get page=page_obj.next_page_number %}{% else %}#{% endif %}">Next &rarr;</a></li>
   </ul>
 </div>
