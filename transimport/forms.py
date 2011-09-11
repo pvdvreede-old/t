@@ -28,10 +28,17 @@ class ImportForm(forms.Form):
         parser = QifParser()
         items = parser.parseQif(imported_file)
         
-        for item in items:	    
+        for item in items:
+	    if hasattr(item, "description"):
+		description = item.description
+	    elif hasattr(item, "memo"):
+		description = item.memo
+	    else:
+		description = item.payee
+	  
             object = TransStaging()
             object.date = datetime.datetime.strptime(item.date, self.cleaned_data["date_format"].expression)
-            object.description = item.payee
+            object.description = description
             object.amount = item.amount
             object.user = self.user
             object.account = self.cleaned_data["account"]
