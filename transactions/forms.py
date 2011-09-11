@@ -1,5 +1,6 @@
 from django.forms import ModelForm, DateField
 from t.transactions.models import *
+from t.transactions.widgets import DatePickerWidget
 
 class UserModelForm(ModelForm): 
     user = None
@@ -18,9 +19,13 @@ class UserModelForm(ModelForm):
         excludes=("user",)
 
 class TransactionForm(UserModelForm):
+    
     class Meta(UserModelForm.Meta):
         model=Transaction
         exclude=("split_parent")
+        widgets={
+	    'date' : DatePickerWidget(),
+	}
              
 class CategoryForm(UserModelForm):
     class Meta(UserModelForm.Meta):
