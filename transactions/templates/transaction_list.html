@@ -6,6 +6,7 @@
 
 {% block secondary-nav %}
 <ul id="account-menu" class="nav secondary-nav">
+	{% if accounts %}
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle">Filter Account{% if selected_accounts %}: Active{% endif %}</a>
 		<ul class="dropdown-menu">
@@ -16,6 +17,8 @@
 			<li>&nbsp;&nbsp; <input type="submit" value="Filter" /></li>
 		</ul>
 	</li>
+	{% endif %}
+	{% if categories %}
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle">Filter Category{% if selected_categories %}: Active{% endif %} </a>
 		<ul class="dropdown-menu">
@@ -26,6 +29,7 @@
 			<li>&nbsp;&nbsp; <input type="submit" value="Filter" /></li>
 		</ul>
 	</li>
+	{% endif %}
 </ul>
 {% endblock %}
 
