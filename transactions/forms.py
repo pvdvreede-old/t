@@ -20,6 +20,7 @@ class UserModelForm(ModelForm):
 class TransactionForm(UserModelForm):
     class Meta(UserModelForm.Meta):
         model=Transaction
+        exclude=("split_parent")
              
 class CategoryForm(UserModelForm):
     class Meta(UserModelForm.Meta):

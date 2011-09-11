@@ -18,7 +18,7 @@ class Account(models.Model):
     name = models.CharField(max_length=50)
     account_type = models.ForeignKey(AccountType)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, editable=False)
     created_date = models.DateTimeField(editable=False, auto_now_add=True)
     modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
     
@@ -29,11 +29,12 @@ class Account(models.Model):
 	unique_together = ("name", "user", "account_type")
     
 class Category(models.Model): 
+    parent = models.ForeignKey('self', blank=True, null=True)
     name = models.CharField(max_length=50)
     colour = models.CharField(max_length=10)
-    reportable = models.BooleanField()
+    reportable = models.BooleanField(default=True)
     spent = models.DecimalField(max_digits=10, decimal_places=2, editable=False, default=0.00)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, editable=False)
     created_date = models.DateTimeField(editable=False, auto_now_add=True)
     modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
     
@@ -47,10 +48,11 @@ class Transaction(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=200)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    reportable = models.BooleanField()
+    split_parent = models.ForeignKey('self', blank=True, null=True)
+    reportable = models.BooleanField(default=True)
     account = models.ForeignKey(Account)
     category = models.ForeignKey(Category, blank=True, null=True)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, editable=False)
     created_date = models.DateTimeField(editable=False, auto_now_add=True)
     modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
     
