@@ -66,7 +66,7 @@ class TransactionActionView(View):
 class TransactionsListView(ListView):
     model=Transaction
     template_name="transaction_list.html" 
-    paginate_by=10
+    paginate_by=25
      
     def get_queryset(self):
         objects = Transaction.objects.filter(user=self.request.user)
@@ -109,6 +109,7 @@ class TransactionDeleteView(BaseDeleteView):
 class CategoryListView(ListView):
     model=Category
     template_name="category_list.html"
+    paginate_by=25
     
     def get_queryset(self):
         return Category.objects.filter(user=self.request.user)
@@ -133,6 +134,7 @@ class CategoryDeleteView(BaseDeleteView):
 class AccountListView(ListView):
     model=Account
     template_name="account_list.html"
+    paginate_by=25
     
     def get_queryset(self):
         return Account.objects.filter(user=self.request.user)

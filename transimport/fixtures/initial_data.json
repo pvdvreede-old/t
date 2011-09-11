@@ -1,0 +1,42 @@
+[
+ {
+  "pk": 1, 
+  "model": "transimport.dateformat", 
+  "fields": {
+   "human_readable": "DD/MM/YY", 
+   "expression": "%d/%m/%y"
+  }
+ },
+ {
+  "pk": 2, 
+  "model": "transimport.dateformat", 
+  "fields": {
+   "human_readable": "DD/MM/YYYY", 
+   "expression": "%d/%m/%Y"
+  }
+ },
+ {
+  "pk": 3, 
+  "model": "transimport.dateformat", 
+  "fields": {
+   "human_readable": "DD-MM-YY", 
+   "expression": "%d-%m-%y"
+  }
+ },
+ {
+  "pk": 4, 
+  "model": "transimport.dateformat", 
+  "fields": {
+   "human_readable": "DD-MM-YYYY", 
+   "expression": "%d-%m-%y"
+  }
+ },
+ {
+  "pk": 5, 
+  "model": "transimport.dateformat", 
+  "fields": {
+   "human_readable": "YYYY-MM-DD", 
+   "expression": "%Y-%m-%d"
+  }
+ }
+]
