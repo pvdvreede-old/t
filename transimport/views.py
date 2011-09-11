@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect
 class ProcessUploadView(UserBaseCreateView):
     form_class=ImportForm  
     success_url="/import/staging"
-    template_name="transaction_form.html"
+    template_name="transimport_form.html"
     
 class ImportStagingView(ListView):
     model=TransStaging

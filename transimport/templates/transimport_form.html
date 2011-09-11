@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load includes %}
+
+{% block import-active %} class="active" {% endblock %}
+
+{% block title %}
+Import Transactions
+{% endblock %}
+
+{% block content %}
+<h3>Import Transactions</h3>
+
+{% get_form %}
+
+{% endblock %}
