@@ -50,7 +50,7 @@ $(document).ready(function() {
 		    }	
 		});
 		if (!found)
-		  $("#checkbox-actions").slideUp('slow');
+		$("#checkbox-actions").slideUp('slow');
 	});
 
 });

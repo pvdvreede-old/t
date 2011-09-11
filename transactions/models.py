@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from django.db import models
 from datetime import datetime
+from django.dispatch import receiver
+from django.db.models.signals import post_save, pre_save
+import sys
 
 class AccountType(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -54,3 +57,4 @@ class Transaction(models.Model):
     def __unicode__(self):
         return self.description
 
+import receivers
