@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'transactions',
     'transimport',
     'templatelib',
+    'budget',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
