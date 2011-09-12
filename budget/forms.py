@@ -2,6 +2,7 @@ from django.forms import ChoiceField
 from django.forms.formsets import BaseFormSet
 from t.transactions.forms import UserModelForm
 from t.budget.models import *
+from t.transactions.widgets import DatePickerWidget
 
 BUDGET_TYPES = (
     ("week", "Weekly"),
@@ -15,5 +16,7 @@ class BudgetForm(UserModelForm):
     
     class Meta(UserModelForm.Meta):
         model=Budget
-
+	widgets={
+	    'rollover_start' : DatePickerWidget(),
+	}
     
