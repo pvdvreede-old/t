@@ -12,4 +12,5 @@ def in_list(value, arg):
     
 @register.filter()
 def currency(value):
-    return locale.currency(value, grouping=True)
+    if value != None:
+      return locale.currency(value, grouping=True)
