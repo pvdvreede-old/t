@@ -1,8 +1,12 @@
 import os
 
 import json
-with open('env_details.json') as f:
-  env = json.load(f)
+try:
+  with open('env_details.json') as f:
+    env = json.load(f)
+except:
+  with open('../env_details.json') as f:
+    env = json.load(f)
 
 # Django settings for t project.
 
