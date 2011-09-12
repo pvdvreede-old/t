@@ -19,8 +19,10 @@ Budget
 <thead>
 <th><input type="checkbox" value="0" /></th>
 <th>Category</th>
+<th>Type</th>
 <th>Limit</th>
 <th>Rollover</th>
+<th>Rollover started from</th>
 <th>Initial amount</th>
 </thead>
 <tbody>
@@ -28,9 +30,11 @@ Budget
 <tr>
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
 <td><a href="/budget/{{ object.id }}">{{ object.category }}</a></td>
-<td>{{ object.limit }}</td>
+<td>{{ object.type }} </td>
+<td>{{ object.limit|currency }}</td>
 <td>{{ object.rollover }}</td>
-<td>{{ object.rollover_initial_amount }}</td>
+<td>{{ object.rollover_start }}</td>
+<td>{{ object.rollover_initial_amount|currency }}</td>
 </tr>
 {% endfor %}
 </tbody>

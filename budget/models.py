@@ -10,6 +10,8 @@ class Budget(models.Model):
     rollover_start = models.DateField(blank=True, null=True)
     rollover_initial_amount = models.DecimalField(blank=True, null=True, max_digits=10, decimal_places=2, default=0.00)
     user = models.ForeignKey(User)
+    created_date = models.DateTimeField(editable=False, auto_now_add=True)
+    modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
     
 class BudgetItem(models.Model):
     category = models.ForeignKey(Category)
@@ -22,3 +24,5 @@ class BudgetItem(models.Model):
     limit = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     rollover = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     spent = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    created_date = models.DateTimeField(editable=False, auto_now_add=True)
+    modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)

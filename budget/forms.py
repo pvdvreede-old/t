@@ -5,9 +5,9 @@ from t.budget.models import *
 from t.transactions.widgets import DatePickerWidget
 
 BUDGET_TYPES = (
-    ("week", "Weekly"),
-    ("month", "Monthly"),
-    ("year", "Yearly"),
+    ("Weekly", "Weekly"),
+    ("Monthly", "Monthly"),
+    ("Yearly", "Yearly"),
 )
 
 class BudgetForm(UserModelForm):
