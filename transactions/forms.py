@@ -16,7 +16,7 @@ class UserModelForm(ModelForm):
         return super(UserModelForm, self).save()
     
     class Meta:
-        excludes=("user",)
+        exclude=("user",)
 
 class TransactionForm(UserModelForm):
     

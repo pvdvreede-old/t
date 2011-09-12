@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load includes %}
+{% load filters %}
+
+{% block budg-active %} class="active" {% endblock %}
+
+{% block title %}
+Budget
+{% endblock %}
+
+{% block content %}
+
+{% if object_list %}
+<form method="post" action="/budget/delete">
+{% csrf_token %}
+
+
+<table class="zebra-striped">
+<thead>
+<th><input type="checkbox" value="0" /></th>
+<th>Category</th>
+<th>Limit</th>
+<th>Rollover</th>
+<th>Initial amount</th>
+</thead>
+<tbody>
+{% for object in object_list %}
+<tr>
+<td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
+<td><a href="/budget/{{ object.id }}">{{ object.category }}</a></td>
+<td>{{ object.limit }}</td>
+<td>{{ object.rollover }}</td>
+<td>{{ object.rollover_initial_amount }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<input id="delete-button" class="btn danger" type="submit" value="Delete" />
+
+</form>
+
+{% if is_paginated %}
+  {% get_pagination %}
+{% endif %}
+
+{% else %}
+
+<p>You haven't created any budgets yet!</p>
+
+{% endif %}
+
+<p><a class="btn" href="/budget/new">New</a></p>
+
+{% endblock %}

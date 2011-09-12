@@ -1,13 +1,28 @@
-from django.forms.formsets import form_factory
+from django.views.generic import *
+from t.transactions.views import UserBaseCreateView, UserBaseUpdateView, BaseDeleteView
 from t.budget.forms import BudgetForm
+from t.budget.models import Budget
 
+class BudgetListView(ListView):
+    model=Budget
+    template_name="budget_list.html"
+    paginate_by=15
+    
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)
+    
+class BudgetCreateView(UserBaseCreateView):
+    model=Budget
+    template_name="budget_form.html"
+    form_class=BudgetForm  
+    success_url="/budget"
+    
+class BudgetUpdateView(UserBaseUpdateView):
+    model=Budget
+    template_name="budget_form.html"
+    form_class=BudgetForm
+    success_url="/budget"
 
-def budget_new(request):
-    BudgetFormSet = form_factory(BudgetForm, formset=BaseBudgetFormSet)
-    if request.method == 'POST':
-        pass
-    else:
-        form_set = BudgetFormSet()
-    return render_to_response('budget_form.html', {
-          'form_set' : form_set
-      })
+class BudgetDeleteView(BaseDeleteView):
+    model=Budget
+    success_url="/budget"
