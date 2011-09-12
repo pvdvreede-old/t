@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
-from t.transactions.views import *
-from t.urls import urlpatterns
+from transactions.views import *
+from urls import urlpatterns
 
 urlpatterns += patterns('',
     url(r'^transaction/new', TransactionCreateView.as_view()),

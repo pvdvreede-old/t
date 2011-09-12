@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from t.transactions.models import Category
+from transactions.models import Category
 
 class Budget(models.Model):
     category = models.ForeignKey(Category)

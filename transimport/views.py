@@ -1,9 +1,9 @@
 from django.views.generic import *
-from t.transimport.forms import ImportForm
-from t.transactions.views import UserBaseCreateView
-from t.transimport.qifparser import *
-from t.transimport.models import TransStaging
-from t.transactions.models import Transaction
+from transimport.forms import ImportForm
+from transactions.views import UserBaseCreateView
+from transimport.qifparser import *
+from transimport.models import TransStaging
+from transactions.models import Transaction
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 

@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-from t.transactions.models import Account
+from transactions.models import Account
 
 class TransImport(models.Model):
     name = models.CharField(max_length=50)

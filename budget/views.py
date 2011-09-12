@@ -1,7 +1,7 @@
 from django.views.generic import *
-from t.transactions.views import UserBaseCreateView, UserBaseUpdateView, BaseDeleteView
-from t.budget.forms import BudgetForm
-from t.budget.models import Budget
+from transactions.views import UserBaseCreateView, UserBaseUpdateView, BaseDeleteView
+from budget.forms import BudgetForm
+from budget.models import Budget
 
 class BudgetListView(ListView):
     model=Budget
