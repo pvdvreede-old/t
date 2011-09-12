@@ -1,0 +1,58 @@
+[
+ {
+  "pk": 1, 
+  "model": "transactions.category", 
+  "fields": {
+   "modified_date": "2011-09-11 02:33:45", 
+   "name": "cat1", 
+   "parent": null, 
+   "colour": "39cf32", 
+   "spent": "0.00", 
+   "reportable": true, 
+   "user": 3, 
+   "created_date": "2011-09-10 22:56:27"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "transactions.category", 
+  "fields": {
+   "modified_date": "2011-09-11 02:35:58", 
+   "name": "cat2", 
+   "parent": null, 
+   "colour": "1d1dcc", 
+   "spent": "0.00", 
+   "reportable": true, 
+   "user": 3, 
+   "created_date": "2011-09-11 00:14:12"
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "transactions.category", 
+  "fields": {
+   "modified_date": "2011-09-11 02:21:08", 
+   "name": "cat3", 
+   "parent": null, 
+   "colour": "4141c9", 
+   "spent": "0.00", 
+   "reportable": true, 
+   "user": 4, 
+   "created_date": "2011-09-11 00:14:18"
+  }
+ }, 
+ {
+  "pk": 4, 
+  "model": "transactions.category", 
+  "fields": {
+   "modified_date": "2011-09-11 02:19:49", 
+   "name": "cat4", 
+   "parent": null, 
+   "colour": "b312b3", 
+   "spent": "0.00", 
+   "reportable": true, 
+   "user": 4, 
+   "created_date": "2011-09-11 02:19:49"
+  }
+ }
+]

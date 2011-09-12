@@ -1,0 +1,50 @@
+[
+ {
+  "pk": 1, 
+  "model": "transactions.account", 
+  "fields": {
+   "modified_date": "2011-09-11 00:35:45", 
+   "account_type": 1, 
+   "name": "Account1", 
+   "user": 3, 
+   "created_date": "2011-09-10 22:54:39", 
+   "balance": "0.00"
+  }
+ }, 
+ {
+  "pk": 2, 
+  "model": "transactions.account", 
+  "fields": {
+   "modified_date": "2011-09-11 02:33:16", 
+   "account_type": 2, 
+   "name": "Account2", 
+   "user": 3, 
+   "created_date": "2011-09-10 22:55:34", 
+   "balance": "0.00"
+  }
+ }, 
+ {
+  "pk": 3, 
+  "model": "transactions.account", 
+  "fields": {
+   "modified_date": "2011-09-11 00:56:46", 
+   "account_type": 3, 
+   "name": "Account3", 
+   "user": 4, 
+   "created_date": "2011-09-11 00:40:03", 
+   "balance": "0.00"
+  }
+ }, 
+ {
+  "pk": 4, 
+  "model": "transactions.account", 
+  "fields": {
+   "modified_date": "2011-09-11 01:59:23", 
+   "account_type": 4, 
+   "name": "Account4", 
+   "user": 4, 
+   "created_date": "2011-09-11 00:41:31", 
+   "balance": "0.00"
+  }
+ }
+]
