@@ -1,8 +1,12 @@
 import os
 
+import json
+with open('env_details.json') as f:
+  env = json.load(f)
+
 # Django settings for t project.
 
-DEBUG = True
+DEBUG = env["DEBUG"]
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -14,11 +18,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'dj_t_dev',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': env['DB_SQL_NAME'],                      # Or path to database file if using sqlite3.
+        'USER': env['DB_SQL_LOGIN'],                      # Not used with sqlite3.
+        'PASSWORD': env['DB_SQL_PASSWORD'],                  # Not used with sqlite3.
+        'HOST': env['DB_SQL_HOST'],                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': int(env['DB_SQL_PORT']),                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
