@@ -8,5 +8,5 @@ class BudgetForm(UserModelForm):
     class Meta(UserModelForm.Meta):
         model=Budget
     
-class BudgetFormSet(BaseFormSet):
+class BaseBudgetFormSet(BaseFormSet):
     pass

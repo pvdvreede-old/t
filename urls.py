@@ -11,6 +11,7 @@ urlpatterns = patterns('',
 
 from transactions import urls
 from transimport import urls
+from budget import urls
 
 urlpatterns += staticfiles_urlpatterns()
 #urlpatterns += ('', url(r'^$', TransactionsListView.as_view()),)
