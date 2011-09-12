@@ -8,11 +8,11 @@ import datetime
 
 class ImportForm(forms.Form):
     FILE_CHOICES = (
-	("qif", "Quicken Format")
+	("qif", "Quicken Format"),
     )
   
     account = forms.ModelChoiceField(queryset=Account.objects)
-    #file_type = forms.ChoiceField(choices=FILE_CHOICES)
+    file_type = forms.ChoiceField(choices=FILE_CHOICES)
     date_format = forms.ModelChoiceField(queryset=DateFormat.objects)
     import_file = forms.FileField()
     
