@@ -38,3 +38,6 @@ def recalculate_amount(instance):
     amount = Transaction.objects.filter(user=instance.user).filter(account=instance.account).aggregate(Sum('amount'))   
     instance.account.balance = amount["amount__sum"]
     instance.account.save()
+    
+	
+	

@@ -30,6 +30,10 @@ class BaseTestTransaction():
     def test_update(self):
         response = self.client.get('/%s/1' % self.url_part)       
         self.assertEqual(response.status_code, 200)
+     
+    def test_user_field_not_visible(self):
+	response = self.client.get('/%s/1' % self.url_part)
+	self.assertFalse('user' in response.context["form"])
 	  
             
 class AccountsTest(BaseTestTransaction, TestCase):

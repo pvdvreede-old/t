@@ -22,7 +22,7 @@ class TransactionForm(UserModelForm):
     
     class Meta(UserModelForm.Meta):
         model=Transaction
-        exclude=("split_parent")
+        exclude=("user", "split_parent")
         widgets={
 	    'date' : DatePickerWidget(),
 	}
