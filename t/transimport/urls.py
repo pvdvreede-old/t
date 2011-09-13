@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from transimport.views import *
+from t.transimport.views import *
 
 url_import = patterns('',
     url(r'^$', ProcessUploadView.as_view()), 

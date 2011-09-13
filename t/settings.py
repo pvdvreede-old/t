@@ -79,7 +79,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.getcwd() + '/files/',
+    os.path.dirname(__file__) + '/files/',
 )
 
 # List of finder classes that know how to find static files in
@@ -117,10 +117,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 't.urls'
 
 TEMPLATE_DIRS = (
-    os.getcwd() + '/templates'
+    os.path.dirname(__file__) + '/templates'
 )
 
 INSTALLED_APPS = (
@@ -130,10 +130,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'transactions',
-    'transimport',
-    'templatelib',
-    'budget',
+    't.transactions',
+    't.transimport',
+    't.templatelib',
+    't.budget',
     'django.contrib.admin',
 )
 

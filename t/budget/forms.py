@@ -1,8 +1,8 @@
 from django.forms import ChoiceField
 from django.forms.formsets import BaseFormSet
-from transactions.forms import UserModelForm
-from budget.models import *
-from transactions.widgets import DatePickerWidget
+from t.transactions.forms import UserModelForm
+from t.budget.models import *
+from t.transactions.widgets import DatePickerWidget
 
 BUDGET_TYPES = (
     ("Weekly", "Weekly"),

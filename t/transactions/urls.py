@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from transactions.views import *
+from t.transactions.views import *
 
 url_accounts = patterns('',
     url(r'^new', AccountCreateView.as_view()),  

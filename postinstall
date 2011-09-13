@@ -1,4 +1,4 @@
 #!/bin/sh
-python manage.py syncdb --noinput
+python t/manage.py syncdb --noinput
 mkdir -p /home/dotcloud/data/media /home/dotcloud/data/static
-python manage.py collectstatic --noinput
+python t/manage.py collectstatic --noinput

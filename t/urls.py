@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from transactions.urls import *
-from transimport.urls import *
-from budget.urls import *
+from t.transactions.urls import *
+from t.transimport.urls import *
+from t.budget.urls import *
 
 from django.contrib import admin
 admin.autodiscover()

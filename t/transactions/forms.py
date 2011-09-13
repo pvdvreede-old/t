@@ -1,6 +1,6 @@
 from django.forms import ModelForm, DateField
-from transactions.models import *
-from transactions.widgets import DatePickerWidget, ColourPickerWidget
+from t.transactions.models import *
+from t.transactions.widgets import DatePickerWidget, ColourPickerWidget
 
 class UserModelForm(ModelForm): 
     user = None

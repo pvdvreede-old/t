@@ -1,5 +1,5 @@
 from django.contrib import admin
-from transimport.models import TransImport, DateFormat
+from t.transimport.models import TransImport, DateFormat
 
 class TransImportAdmin(admin.ModelAdmin):
     pass

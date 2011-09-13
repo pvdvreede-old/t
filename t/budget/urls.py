@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import patterns, url
-from budget.views import *
+from t.budget.views import *
 
 url_budget = patterns('',
     url(r'^new', BudgetCreateView.as_view()),

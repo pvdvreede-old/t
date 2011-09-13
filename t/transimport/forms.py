@@ -1,7 +1,7 @@
 from django import forms
-from transactions.models import Account
-from transimport.models import TransStaging, DateFormat
-from transimport.qifparser import *
+from t.transactions.models import Account
+from t.transimport.models import TransStaging, DateFormat
+from t.transimport.qifparser import *
 import time
 import string
 import datetime

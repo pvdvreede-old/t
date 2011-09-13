@@ -1,5 +1,5 @@
 from django.contrib import admin
-from transactions.models import *
+from t.transactions.models import *
 
 class AccountTypeAdmin(admin.ModelAdmin):
     pass
