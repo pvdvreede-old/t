@@ -7,6 +7,7 @@ Replace this with more appropriate tests for your application.
 
 from django.test import TestCase
 from django.test.client import Client
+from decimal import *
 import sys
 
 
@@ -75,3 +76,32 @@ class TransactionTest(BaseTestTransaction, TestCase):
     def test_access_only_my_objects(self):
 	response = self.client.get('/%s/7' % self.url_part)
 	self.assertEqual(response.status_code, 404)
+	
+    def test_account_balance_sum(self):
+	response = self.client.get('/account/1')
+	self.assertEqual(response.context["form"].instance.balance, 25.00)
+	response = self.client.get('/account/2')
+	self.assertEqual(Decimal(response.context["form"].instance.balance), Decimal('-975.79'))
+	
+    def test_account_balance_sum_after_delete(self):
+	response = self.client.post('/transaction/actions', {
+	      'action' : 'delete',
+	      'ids' : '3'
+	    })
+	response = self.client.get('/account/1')
+	self.assertEqual(response.context["form"].instance.balance, 145.00)
+	
+    def test_category_balance_sum(self):
+	response = self.client.get('/category/1')
+	self.assertEqual(response.context["form"].instance.spent, 145.00)
+	response = self.client.get('/category/2')
+	self.assertEqual(Decimal(response.context["form"].instance.spent), Decimal('-240.00'))
+	
+    def test_category_balance_sum_after_delete(self):
+	response = self.client.post('/transaction/actions', {
+	      'action' : 'delete',
+	      'ids' : '4'
+	    })
+	response = self.client.get('/category/2')
+	self.assertEqual(Decimal(response.context["form"].instance.spent), Decimal('-120.00'))
+	
