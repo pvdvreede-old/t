@@ -33,7 +33,6 @@ class Category(models.Model):
     name = models.CharField(max_length=50)
     colour = models.CharField(max_length=10)
     reportable = models.BooleanField(default=True)
-    spent = models.DecimalField(max_digits=10, decimal_places=2, editable=False, default=0.00)
     user = models.ForeignKey(User)
     created_date = models.DateTimeField(editable=False, auto_now_add=True)
     modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
@@ -58,5 +57,3 @@ class Transaction(models.Model):
     
     def __unicode__(self):
         return self.description
-
-import receivers
