@@ -12,6 +12,13 @@ class Budget(models.Model):
     user = models.ForeignKey(User)
     created_date = models.DateTimeField(editable=False, auto_now_add=True)
     modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
+
+    """
+    Used for loading the actual budgets dynamically with SQL queries so not DB fields.
+    """
+    spent=None
+    balance=None
+  #  count=None
     
 class BudgetItem(models.Model):
     category = models.ForeignKey(Category)
