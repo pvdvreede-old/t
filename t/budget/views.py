@@ -1,3 +1,4 @@
+import string
 from django.core.paginator import Paginator
 from django.db.models.aggregates import Sum
 from django.template.response import TemplateResponse
@@ -52,6 +53,18 @@ class BudgetShowView(ListView):
         return paginator
 
     def get_queryset(self):
+        if string.lower(self.budget_type) == "yearly":
+            start_date = "'%s-01-01'" % self.budget_date
+            end_date = "'%s-12-31'" % self.budget_date
+        elif string.lower(self.budget_type) == "monthly":
+            year = self.budget_date[:4]
+            month = self.budget_date[4:6]
+            start_date = "'{0}-{1}-01'".format(year, month)
+            end_date = "LAST_DAY(%s)" % start_date
+        elif string.lower(self.budget_type) == "weekly":
+            start_date = "str_to_date('{0} Sunday', '%%X%%V %%W')".format(self.budget_date)
+            end_date = "str_to_date('{0} Saturday', '%%X%%V %%W')".format(self.budget_date)
+
         budgets =  Budget.objects.raw(r'''
             select  b.id as id
                     , c.id as category_id
@@ -68,9 +81,10 @@ class BudgetShowView(ListView):
             where t.user_id = {0}
             and t.amount < 0
             and b.type = '{1}'
-            and t.date >= '2011-08-01'
-            and t.date <= '2011-08-30'
+            and t.date >= {2}
+            and t.date <= {3}
             group by c.id
-        '''.format(self.request.user.id, self.budget_type))
+        '''.format(self.request.user.id, self.budget_type, start_date, end_date))
+
         return budgets
 
