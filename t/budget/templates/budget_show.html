@@ -14,12 +14,11 @@ Budget
 <form method="post" action="/budget/delete">
 {% csrf_token %}
 
-
+<h2>Showing your {{ type }} budget from {{  date }}.</h2>
 <table class="zebra-striped">
 <thead>
 <th><input type="checkbox" value="0" /></th>
 <th>Category</th>
-<th>Type</th>
 <th>Limit</th>
 <th>Spent</th>
 <th>Balance</th>
@@ -29,7 +28,6 @@ Budget
 <tr>
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
 <td><a href="/budget/{{ object.id }}">{{ object.category }}</a></td>
-<td>{{ object.type }} </td>
 <td>{{ object.limit|currency }}</td>
 <td>{{ object.spent|currency }}</td>
 <td>{{ object.balance|currency }}</td>

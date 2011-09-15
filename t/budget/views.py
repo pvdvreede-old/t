@@ -52,6 +52,12 @@ class BudgetShowView(ListView):
         paginator._count = len(list(queryset))
         return paginator
 
+    def get_context_data(self, **kwargs):
+        context = super(BudgetShowView, self).get_context_data(**kwargs)
+        context["date"] = self.budget_date
+        context["type"] = self.budget_type
+        return context
+
     def get_queryset(self):
         if string.lower(self.budget_type) == "yearly":
             start_date = "'%s-01-01'" % self.budget_date
