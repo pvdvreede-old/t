@@ -10,6 +10,14 @@ Budget
 
 {% block content %}
 
+<div id="budget-type-nav">
+<ul class="pills">
+    <li {% if type == "yearly" %}class="active"{% endif %}><a href="/budget/show/yearly/today">Yearly</a></li>
+    <li {% if type == "monthly" %}class="active"{% endif %}><a href="/budget/show/monthly/today">Monthly</a></li>
+    <li {% if type == "weekly" %}class="active"{% endif %}><a href="/budget/show/weekly/today">Weekly</a></li>
+</ul>
+</div>
+
 {% if object_list %}
 <form method="post" action="/budget/delete">
 {% csrf_token %}
