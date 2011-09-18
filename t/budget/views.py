@@ -99,6 +99,7 @@ class BudgetShowView(ListView):
             and b.type = '{1}'
             and t.date >= {2}
             and t.date <= {3}
+            and t.reportable = 1
             group by c.id
         '''.format(self.request.user.id, self.budget_type, start_date, end_date))
 
