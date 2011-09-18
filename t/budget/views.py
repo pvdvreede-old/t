@@ -6,6 +6,7 @@ from django.views.generic import *
 from t.transactions.views import UserBaseCreateView, UserBaseUpdateView, BaseDeleteView
 from t.budget.forms import BudgetForm
 from t.budget.models import Budget
+from datetime import datetime
 
 
 class BudgetListView(ListView):
@@ -59,6 +60,15 @@ class BudgetShowView(ListView):
         return context
 
     def get_queryset(self):
+        if self.budget_date == 'today':
+            current_date = datetime.today()
+            if string.lower(self.budget_type) == 'yearly':
+                self.budget_date = current_date.year
+            elif string.lower(self.budget_type) == 'monthly':
+                self.budget_date = str(current_date.year) + str(current_date.month)
+            elif string.lower(self.budget_type) == 'weekly':
+                self.budget_date = str(current_date.year) + str(current_date.isocalendar()[1])
+
         if string.lower(self.budget_type) == "yearly":
             start_date = "'%s-01-01'" % self.budget_date
             end_date = "'%s-12-31'" % self.budget_date

@@ -7,5 +7,5 @@ url_budget = patterns('',
     url(r'^(?P<pk>\d)', BudgetUpdateView.as_view()),
     url(r'^$', BudgetListView.as_view()),
     url(r'^show/(?P<type>[a-zA-Z]+)/(?P<date>\d+)', BudgetShowView.as_view()),
-    url(r'^show/today', BudgetShowView.as_view(), { 'type' : 'monthly', 'date' : '201109'}),
+    url(r'^show/(?P<type>[a-zA-Z]+)/today', BudgetShowView.as_view(), { 'date' : 'today' }),
 )
