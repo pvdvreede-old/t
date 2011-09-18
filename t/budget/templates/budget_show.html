@@ -26,6 +26,7 @@ Budget
 <table class="zebra-striped">
 <thead>
 <th>Category</th>
+<th>Status</th>
 <th style="text-align: right">Limit</th>
 <th style="text-align: right">Spent</th>
 <th style="text-align: right">Balance</th>
@@ -34,6 +35,7 @@ Budget
 {% for object in object_list %}
 <tr>
 <td><a href="/budget/{{ object.id }}">{{ object.category }}</a></td>
+<td>{% if object.balance < 0 %}<span class="label important">Over budget</span>{% else %}<span class="label success">On track</span>{% endif %}</td>
 <td style="text-align: right">{{ object.limit|currency }}</td>
 <td style="text-align: right">{{ object.spent|currency }}</td>
 <td style="text-align: right">{{ object.balance|currency }}</td>
