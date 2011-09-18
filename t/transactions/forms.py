@@ -1,4 +1,5 @@
 from django.forms import ModelForm, DateField
+from django.forms.widgets import Textarea
 from t.transactions.models import *
 from t.transactions.widgets import DatePickerWidget, ColourPickerWidget
 
@@ -24,15 +25,16 @@ class TransactionForm(UserModelForm):
         model=Transaction
         exclude=("user", "split_parent")
         widgets={
-	    'date' : DatePickerWidget(),
-	}
+            'date' : DatePickerWidget(),
+            'description' : Textarea(attrs={'rows' : '5'}),
+	    }
              
 class CategoryForm(UserModelForm):
     class Meta(UserModelForm.Meta):
         model=Category
         widgets={
-	    'colour' : ColourPickerWidget(),
-	}
+	        'colour' : ColourPickerWidget(),
+	    }
 
 class AccountForm(UserModelForm):
     class Meta(UserModelForm.Meta):
