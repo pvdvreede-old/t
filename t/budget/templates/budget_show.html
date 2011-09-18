@@ -25,26 +25,22 @@ Budget
 <h2>Showing your {{ type }} budget from {{  date }}.</h2>
 <table class="zebra-striped">
 <thead>
-<th><input type="checkbox" value="0" /></th>
 <th>Category</th>
-<th>Limit</th>
-<th>Spent</th>
-<th>Balance</th>
+<th style="text-align: right">Limit</th>
+<th style="text-align: right">Spent</th>
+<th style="text-align: right">Balance</th>
 </thead>
 <tbody>
 {% for object in object_list %}
 <tr>
-<td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
 <td><a href="/budget/{{ object.id }}">{{ object.category }}</a></td>
-<td>{{ object.limit|currency }}</td>
-<td>{{ object.spent|currency }}</td>
-<td>{{ object.balance|currency }}</td>
+<td style="text-align: right">{{ object.limit|currency }}</td>
+<td style="text-align: right">{{ object.spent|currency }}</td>
+<td style="text-align: right">{{ object.balance|currency }}</td>
 </tr>
 {% endfor %}
 </tbody>
 </table>
-
-<input id="delete-button" class="btn danger" type="submit" value="Delete" />
 
 </form>
 
@@ -58,6 +54,6 @@ Budget
 
 {% endif %}
 
-<p><a class="btn" href="/budget/new">New</a></p>
+<p><a class="btn" href="/budget/new">New</a> <a class="btn" href="/budget">Edit budgets</a></p>
 
 {% endblock %}
