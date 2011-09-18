@@ -92,7 +92,7 @@ class BudgetShowView(ListView):
             from transactions_category c
             inner join transactions_transaction t
                 on c.id = t.category_id
-            inner join budget_budget b
+            left join budget_budget b
                 on b.category_id = c.id
             where t.user_id = {0}
             and t.amount < 0

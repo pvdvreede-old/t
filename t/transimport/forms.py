@@ -29,12 +29,14 @@ class ImportForm(forms.Form):
         items = parser.parseQif(imported_file)
         
         for item in items:
-	    if hasattr(item, "description"):
-		description = item.description
-	    elif hasattr(item, "memo"):
-		description = item.memo
-	    else:
-		description = item.payee
+            if hasattr(item, "description") and item.description is not None:
+                description = item.description
+            elif hasattr(item, "memo") and item.memo is not None:
+                description = item.memo
+            elif hasattr(item, "payee") and item.payee is not None:
+                description = item.payee
+            else:
+                description = "No description provided."
 	  
             object = TransStaging()
             object.date = datetime.datetime.strptime(item.date, self.cleaned_data["date_format"].expression)
