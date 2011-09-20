@@ -2,7 +2,7 @@
 {% load includes %}
 {% load filters %}
 
-{% block cat-active %} class="active" {% endblock %}
+{% block rul-active %} class="active" {% endblock %}
 
 {% block title %}
 Categories
@@ -11,7 +11,7 @@ Categories
 {% block content %}
 
 {% if object_list %}
-<form method="post" action="/category/delete">
+<form method="post" action="/rule/delete">
 {% csrf_token %}
 
 
@@ -27,7 +27,7 @@ Categories
 {% for object in object_list %}
 <tr>
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
-<td><a href="/category/{{ object.id }}">{{ object.name }}</a></td>
+<td><a href="/rule/{{ object.id }}">{{ object.name }}</a></td>
 <td><span style="padding: 5px; background-color: #{{ object.colour }};">{{ object.colour }}</span></td>
 <td>{{ object.reportable }}</td>
 <td style="text-align: right"></td>
@@ -50,6 +50,6 @@ Categories
 
 {% endif %}
 
-<p><a class="btn" href="/category/new">New</a></p>
+<p><a class="btn" href="/rule/new">New</a></p>
 
 {% endblock %}

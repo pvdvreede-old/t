@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^transaction/', include(url_transactions)),
     url(r'^import/', include(url_import)),
     url(r'^budget/', include(url_budget)),
+    url(r'^rule/', include(url_rules)),
 )
 
 urlpatterns += staticfiles_urlpatterns()

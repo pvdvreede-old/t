@@ -26,7 +26,7 @@ class Account(models.Model):
         return self.name
         
     class Meta:
-	unique_together = ("name", "user", "account_type")
+	    unique_together = ("name", "user", "account_type")
     
 class Category(models.Model): 
     parent = models.ForeignKey('self', blank=True, null=True)
@@ -41,8 +41,19 @@ class Category(models.Model):
         return self.name
         
     class Meta:
-	unique_together = ("name", "user")
-    
+	    unique_together = ("name", "user")
+
+class Rule(models.Model):
+    user = models.ForeignKey(User)
+    category = models.ForeignKey(Category)
+    type = models.CharField(max_length=10)
+    value = models.CharField(max_length=250)
+    created_date = models.DateTimeField(editable=False, auto_now_add=True)
+    modified_date = models.DateTimeField(null=False, editable=False, auto_now=True)
+
+    def __unicode__(self):
+        return self.type + self.value
+
 class Transaction(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=200)

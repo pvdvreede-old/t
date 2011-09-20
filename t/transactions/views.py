@@ -43,7 +43,6 @@ class UserBaseUpdateView(UpdateView):
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user).filter(id=self.kwargs.get('pk', None))
 
-
     def form_valid(self, form):
         value = super(UserBaseUpdateView, self).form_valid(form)
         messages.success(self.request, self.action_message)
@@ -82,12 +81,11 @@ class TransactionsListView(ListView):
         return objects
      
     def get_context_data(self, **kwargs):
-	context = super(TransactionsListView, self).get_context_data(**kwargs)	
+	context = super(TransactionsListView, self).get_context_data(kwargs)
         if self.request.GET.__contains__("account"):
             context["selected_accounts"] = self.request.GET.getlist("account")
         if self.request.GET.__contains__("category"):
             context["selected_categories"] = self.request.GET.getlist("category")
-        
         context["accounts"] = Account.objects.filter(user=self.request.user)
         context["categories"] = Category.objects.filter(user=self.request.user)
         return context
@@ -133,6 +131,33 @@ class CategoryUpdateView(UserBaseUpdateView):
 class CategoryDeleteView(BaseDeleteView):
     model=Category
     success_url="/category"
+
+
+    
+class RuleListView(ListView):
+    model=Rule
+    template_name="rule_list.html"
+    paginate_by=15
+
+    def get_queryset(self):
+        return Rule.objects.filter(user=self.request.user)
+
+class RuleCreateView(UserBaseCreateView):
+    model=Rule
+    template_name="rule_form.html"
+    form_class=RuleForm
+    success_url="/rule"
+
+class RuleUpdateView(UserBaseUpdateView):
+    model=Rule
+    template_name="rule_form.html"
+    form_class=RuleForm
+    success_url="/rule"
+
+class RuleDeleteView(BaseDeleteView):
+    model=Rule
+    success_url="/rule"
+
 
 
 class AccountListView(ListView):

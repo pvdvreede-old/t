@@ -22,3 +22,9 @@ url_transactions = patterns('',
     url(r'^$', TransactionsListView.as_view()),
 )
 
+url_rules = patterns('',
+    url(r'^new', RuleCreateView.as_view()),
+    url(r'^delete', RuleDeleteView.as_view()),
+    url(r'^(?P<pk>\d+)', RuleUpdateView.as_view()),
+    url(r'^$', RuleListView.as_view()),
+)

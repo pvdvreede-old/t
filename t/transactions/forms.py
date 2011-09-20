@@ -36,6 +36,11 @@ class CategoryForm(UserModelForm):
 	        'colour' : ColourPickerWidget(),
 	    }
 
+class RuleForm(UserModelForm):
+    class Meta(UserModelForm.Meta):
+        model=Rule
+
+
 class AccountForm(UserModelForm):
     class Meta(UserModelForm.Meta):
         model=Account
