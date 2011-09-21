@@ -14,7 +14,7 @@ def run_rules(user_id):
         where t.user_id = %d
         and lower(t.description) like concat('%', lower(r.value), '%');
         """,
-        user_id
+        [user_id]
     )
 
     transaction.commit_unless_managed()
