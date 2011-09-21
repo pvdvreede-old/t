@@ -46,6 +46,7 @@ class Category(models.Model):
 class Rule(models.Model):
     user = models.ForeignKey(User)
     category = models.ForeignKey(Category)
+    field = models.CharField(max_length=100)
     type = models.CharField(max_length=10)
     value = models.CharField(max_length=250)
     created_date = models.DateTimeField(editable=False, auto_now_add=True)
