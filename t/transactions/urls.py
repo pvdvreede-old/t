@@ -27,4 +27,5 @@ url_rules = patterns('',
     url(r'^delete', RuleDeleteView.as_view()),
     url(r'^(?P<pk>\d+)', RuleUpdateView.as_view()),
     url(r'^$', RuleListView.as_view()),
+    url(r'^run', RuleRunView.as_view()),
 )

@@ -1,4 +1,5 @@
 from django.views.generic import *
+from t.transactions.functions import run_rules
 from t.transactions.models import *
 from t.transactions.forms import *
 from django.utils.decorators import method_decorator
@@ -132,7 +133,13 @@ class CategoryDeleteView(BaseDeleteView):
     model=Category
     success_url="/category"
 
+class RuleRunView(RedirectView):
+    url="/rule"
 
+    def get(self, request, *args, **kwargs):
+        import t.transactions.functions
+        run_rules(request.user)
+        return super(RuleRunView, self).get(request, *args, **kwargs)
     
 class RuleListView(ListView):
     model=Rule
