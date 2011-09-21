@@ -16,6 +16,14 @@ Budget
     <li {% if type == "monthly" %}class="active"{% endif %}><a href="/budget/show/monthly/today">Monthly</a></li>
     <li {% if type == "weekly" %}class="active"{% endif %}><a href="/budget/show/weekly/today">Weekly</a></li>
 </ul>
+<p>
+{% for k, v in times1.items %}
+<a href="/budget/show/{{ type }}/{{ k }}">{{ v }}</a>
+{% if forloop.last == False %}
+    |
+{% endif %}
+{% endfor %}
+</p>
 </div>
 
 {% if object_list %}

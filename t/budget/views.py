@@ -6,7 +6,8 @@ from django.views.generic import *
 from t.transactions.views import UserBaseCreateView, UserBaseUpdateView, BaseDeleteView
 from t.budget.forms import BudgetForm
 from t.budget.models import Budget
-from datetime import datetime
+from datetime import datetime, date
+import calendar
 
 
 class BudgetListView(ListView):
@@ -47,7 +48,6 @@ class BudgetShowView(ListView):
     """
     Need to override because or rawqueryset not being countable
     """
-
     def get_paginator(self, queryset, per_page, orphans=0, allow_empty_first_page=True):
         paginator = Paginator(queryset, per_page, orphans=0, allow_empty_first_page=True)
         paginator._count = len(list(queryset))
@@ -57,6 +57,30 @@ class BudgetShowView(ListView):
         context = super(BudgetShowView, self).get_context_data(**kwargs)
         context["date"] = self.budget_date
         context["type"] = self.budget_type
+
+        if self.budget_type == 'yearly':
+            year = datetime.today().year
+            times = {}
+            for _ in range(5):
+                times[str(year)] = str(year)
+                year = year - 1
+            context["times1"] = times
+        elif self.budget_type == 'monthly':
+            year = datetime.today().year
+            month = datetime.today().month
+            times = {}
+            for _ in range(5):
+                times[str(year) + str(month)] = calendar.month_name[month]
+                month = month - 1
+            context["times1"] = times
+        elif self.budget_type == 'weekly':
+            year = datetime.today().year
+            week = date.today().isocalendar()[1]
+            times = {}
+            for _ in range(5):
+                times[str(year) + str(week)] = week
+                week = week - 1
+            context["times1"] = times
         return context
 
     def get_queryset(self):
