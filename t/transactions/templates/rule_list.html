@@ -19,18 +19,18 @@ Categories
 <thead>
 <th><input id="check-all" type="checkbox" value="0" /></th>
 <th>Name</th>
-<th>Colour</th>
-<th>Reportable</th>
-<th style="text-align: right">Total spent</th>
+<th>Field</th>
+<th>Type</th>
+<th>Value</th>
 </thead>
 <tbody>
 {% for object in object_list %}
 <tr>
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
 <td><a href="/rule/{{ object.id }}">{{ object.name }}</a></td>
-<td><span style="padding: 5px; background-color: #{{ object.colour }};">{{ object.colour }}</span></td>
-<td>{{ object.reportable }}</td>
-<td style="text-align: right"></td>
+<td>{{  object.field }}</td>
+<td>{{ object.type }}</td>
+<td>{{ object.value }}</td>
 </tr>
 {% endfor %}
 </tbody>
@@ -46,7 +46,7 @@ Categories
 
 {% else %}
 
-<p>You haven't created any categories yet!</p>
+<p>You haven't created any rules yet!</p>
 
 {% endif %}
 
