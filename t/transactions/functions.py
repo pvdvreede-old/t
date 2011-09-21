@@ -9,10 +9,10 @@ def run_rules(user_id):
 
     cursor.execute(
         """
-        update transactions_transaction t, `transactions_rule` r
+        update transactions_transaction t, transactions_rule r
         set t.category_id = r.category_id
-        where t.user_id = %d
-        and lower(t.description) like concat('%', lower(r.value), '%');
+        where t.user_id = %s
+        and lower(t.description) like concat('%%', lower(r.value), '%%');
         """,
         [user_id]
     )

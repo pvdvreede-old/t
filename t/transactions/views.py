@@ -139,6 +139,7 @@ class RuleRunView(RedirectView):
     def get(self, request, *args, **kwargs):
         import t.transactions.functions
         run_rules(request.user.id)
+        messages.success(self.request, 'Transactions have been updated!')
         return super(RuleRunView, self).get(request, *args, **kwargs)
     
 class RuleListView(ListView):
