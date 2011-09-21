@@ -18,7 +18,7 @@ Categories
 <table class="zebra-striped">
 <thead>
 <th><input id="check-all" type="checkbox" value="0" /></th>
-<th>Name</th>
+<th>Category</th>
 <th>Field</th>
 <th>Type</th>
 <th>Value</th>
@@ -27,8 +27,8 @@ Categories
 {% for object in object_list %}
 <tr>
 <td><input type="checkbox" name="ids" value="{{ object.id }}" /></td>
-<td><a href="/rule/{{ object.id }}">{{ object.name }}</a></td>
-<td>{{  object.field }}</td>
+<td><a href="/rule/{{ object.id }}">{{ object.category }}</a></td>
+<td>{{ object.field }}</td>
 <td>{{ object.type }}</td>
 <td>{{ object.value }}</td>
 </tr>

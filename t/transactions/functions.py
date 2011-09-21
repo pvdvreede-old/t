@@ -11,9 +11,10 @@ def run_rules(user_id):
         """
         update transactions_transaction t, `transactions_rule` r
         set t.category_id = r.category_id
-        where t.user_id = %s
+        where t.user_id = %d
         and lower(t.description) like concat('%', lower(r.value), '%');
-        """, user_id
+        """,
+        user_id
     )
 
     transaction.commit_unless_managed()
