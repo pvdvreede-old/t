@@ -81,7 +81,7 @@ class TransactionsListView(ListView):
         return objects
      
     def get_context_data(self, **kwargs):
-	context = super(TransactionsListView, self).get_context_data(kwargs)
+	context = super(TransactionsListView, self).get_context_data(**kwargs)
         if self.request.GET.__contains__("account"):
             context["selected_accounts"] = self.request.GET.getlist("account")
         if self.request.GET.__contains__("category"):
