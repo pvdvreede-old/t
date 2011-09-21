@@ -41,6 +41,11 @@ class UserBaseCreateView(CreateView):
 class UserBaseUpdateView(UpdateView):
     action_message = "Item updated!"
 
+    def get_context_data(self, **kwargs):
+        context = super(UserBaseUpdateView, self).get_context_data(**kwargs)
+        context["cancel_url"] = self.success_url
+        return context
+
     def get_queryset(self):
         return self.model.objects.filter(user=self.request.user).filter(id=self.kwargs.get('pk', None))
 
