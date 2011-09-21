@@ -138,7 +138,7 @@ class RuleRunView(RedirectView):
 
     def get(self, request, *args, **kwargs):
         import t.transactions.functions
-        run_rules(request.user)
+        run_rules(request.user.id)
         return super(RuleRunView, self).get(request, *args, **kwargs)
     
 class RuleListView(ListView):
