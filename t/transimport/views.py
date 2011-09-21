@@ -20,13 +20,13 @@ class ImportStagingView(ListView):
     def get(self, request):
       objects = TransStaging.objects.filter(user=self.request.user)
       for object in objects:
-	new_trans = Transaction()
-	new_trans.date = object.date
-	new_trans.amount = object.amount
-	new_trans.description = object.description
-	new_trans.account = object.account
-	new_trans.user = self.request.user
-	new_trans.save()
+        new_trans = Transaction()
+        new_trans.date = object.date
+        new_trans.amount = object.amount
+        new_trans.description = object.description
+        new_trans.account = object.account
+        new_trans.user = self.request.user
+        new_trans.save()
 	
       objects.delete()
       messages.success(self.request, "Items imported!")

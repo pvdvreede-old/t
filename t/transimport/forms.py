@@ -46,7 +46,7 @@ class ImportForm(forms.Form):
             object.account = self.cleaned_data["account"]
             object.status=1
             object.save()
-            
+
         return object          
             
     
