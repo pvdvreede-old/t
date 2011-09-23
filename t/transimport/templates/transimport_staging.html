@@ -9,10 +9,9 @@ Importing
 {% endblock %}
 
 {% block content %}
-
-{% if object_list %}
 <form method="post" action="/import/complete">
 {% csrf_token %}
+{% if object_list %}
 <p>The following items appear to be duplicates already in the system. These items will NOT be imported unless you un check the box next them.</p>
 <p><input type="submit" value="Complete import" class="btn" /></p>
 <table class="zebra-striped">
@@ -34,17 +33,9 @@ Importing
 </tbody>
 </table>
 
-
-</form>
-
-{% if is_paginated %}
-  {% get_pagination %}
-{% endif %}
-
 {% else %}
-
-<p>You haven't created any categories yet!</p>
-
+<p>There were no duplicates found. Click complete to finish the import.</p>
+<p><input type="submit" value="Complete import" class="btn" /></p>
 {% endif %}
-
+</form>
 {% endblock %}
